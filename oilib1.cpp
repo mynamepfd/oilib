@@ -190,7 +190,7 @@ namespace p62 {
 				for (int k = 0; k <= m[i] && k * a[i] <= j; k++)
 					dp[i + 1][j] |= dp[i][j - k * a[i]];
 
-		if (dp[n][K] > 0)
+		if (dp[n][K])
 			cout << "Yes" << endl;
 		else
 			cout << "No" << endl;
@@ -301,7 +301,7 @@ namespace p68 {
 	}
 }
 
-namespace p84 {
+namespace p87 {
 
 	int par[MAX_N], rank[MAX_N];
 
@@ -334,11 +334,45 @@ namespace p84 {
 
 namespace p88 {
 
+	using namespace p87;
+
 	int N, K;
 	int T[MAX_K], X[MAX_K], Y[MAX_K];//第i条信息的类型,X_i,y_i
 
 	void solve() {
+		// x,x+N,x+2*N分别表示x-A,x-B,x-C
+		init(3 * N);
 
+		int ans = 0;
+		rep(i, 0, K) {
+			int t = T[i], x = X[i]-1, y = Y[i]-1;
+
+			if (x < 0 || x >= N || y < 0 || y >= N) {
+				ans++;
+				continue;
+			}
+
+			if (t == 1) { // x和y同类
+				if (same(x,y+N) || same(x,y+2*N)) {
+					ans++;
+					continue;
+				}
+				unite(x,y);
+				unite(x+N,y+N);
+				unite(x+2*N,y+2*N);
+			}
+			else { // x吃y
+				if (same(x, y) || same(x, y+2*N)) {
+					ans++;
+					continue;
+				}
+				unite(x, y+N);
+				unite(x + N, y + 2*N);
+				unite(x + 2 * N, y);
+			}
+		}
+
+		cout << ans << endl;
 	}
 }
 
@@ -369,7 +403,6 @@ namespace p97 {
 	}
 }
 
-// 图算法 - Bellmsn-Ford算法
 namespace p100 {
 
 	vector<edge> es;	//图
@@ -457,12 +490,12 @@ namespace p103 {
 
 namespace p104 {
 
-	int cost[MAXV][MAXV];
-	int d[MAXV];
-	bool used[MAXV];
+	int cost[MAX_V][MAX_V];
+	int d[MAX_V];
+	bool used[MAX_V];
 	int V;
 
-	int pre[MAXV];
+	int pre[MAX_V];
 
 	void dijkstra(int s)
 	{
@@ -493,17 +526,34 @@ namespace p104 {
 
 namespace p105 {
 
-	int cost[MAXV][MAXV];	//图
-	int V;					//顶点数
+	int cost[MAX_V][MAX_V], V;
+	int mincost[MAX_V];
+	bool used[MAX_V];
 
-	void prim(int s) {
-
+	int prim(int s) {
+		rep(i, 0, V) {
+			mincost[i] = INF;
+			used[i] = false;
+		}
+		mincost[0] = 0;
+		int res = 0;
+		while (true) {
+			int v = -1;
+			rep(u, 0, V)
+				if (!used[u] && (v == -1 || mincost[u] < mincost[v])) v = u;
+			if (v == -1)break;
+			used[v] = true;
+			res += mincost[v];
+			rep(u, 0, V)
+				mincost[u] = min(mincost[u], cost[v][u]);
+		}
+		return res;
 	}
 }
 
 namespace p107 {
 
-	using namespace p84;
+	using namespace p87;
 
 	vector<edge> es;		//图
 	int V, E;			//顶点数,边数
@@ -525,7 +575,7 @@ namespace p107 {
 	}
 }
 
-namespace p113 {
+namespace p114 {
 	int gcd(int a, int b) {
 		if (b == 0) return a;
 		return gcd(b, a % b);
@@ -630,7 +680,6 @@ namespace p122 {
 	}
 }
 
-// lower_bound的实现
 namespace p138 {
 	int n, k, a[MAX_N];
 
@@ -639,7 +688,7 @@ namespace p138 {
 		int lb = -1, ub = n - 1;
 		while (ub - lb > 1) {
 			int mid = (ub + lb) / 2;
-			if (a[mid] >= k)
+			if (a[mid] >= k) // 由此可见,lower_bound实质是最小化答案,这里的答案指的是k的索引
 				ub = mid;
 			else
 				lb = mid;
@@ -657,7 +706,7 @@ namespace p140 {
 	bool C(double x) {
 		int num = 0;
 		rep(i, 0, N) {
-			num += L[i] / x;
+			num += (int)(L[i] / x);
 		}
 		return num >= K;
 	}
@@ -665,7 +714,7 @@ namespace p140 {
 	void solve()
 	{
 		double lb = 0, ub = INF;
-		rep(i, 0, 100) {
+		rep(i, 0, 100) { // 对于浮点数答案，只能尝试一定次数
 			double mid = (lb + ub) / 2;
 			if (C(mid)) lb = mid;
 			else ub = mid;
@@ -695,7 +744,7 @@ namespace p142 {
 		int lb = 0, ub = INF;
 		while (ub - lb > 1) {
 			int mid = (ub + lb) / 2;
-			if (C(mid)) lb = mid;
+			if (C(mid)) lb = mid; // 这里实质是最大化答案,这里的答案指的是两牛之间的距离
 			else ub = mid;
 		}
 		cout << lb;
@@ -732,6 +781,7 @@ namespace p143 {
 
 namespace p146 {
 
+	// 给定长度为n的数列a，整数S。找出最短的总和不小于S的连续子序列。
 	int n, S;
 	int a[MAX_N];
 
@@ -780,10 +830,45 @@ namespace p149 {
 namespace p150 {
 	
 	int N;
-	int dir[MAX_N];
+	int dir[MAX_N]; // 牛的方向(0代表F,1代表B)
 
-	void solve() {
+	int f[MAX_N]; //f[i]表示区间[i,i+K-1]是否反转了
 
+	int calc(int K) {
+		fill(f, f + N, 0);
+		int res = 0;
+		int sum = 0;
+		rep(i, 0, N - K + 1) {
+			if ((dir[i] + sum) % 2 != 0) {
+				res++;
+				f[i] = 1;
+			}
+			sum += f[i];
+			if (i - K + 1 >= 0)
+				sum += f[i - K + 1];
+		}
+		rep(i, N - K + 1, N) {
+			if ((dir[i] + sum) % 2 != 0) {
+				return -1;
+			}
+			if (i - K + 1 >= 0)
+				sum -= f[i - K + 1];
+		}
+
+		return res;
+	}
+
+	void solve()
+	{
+		int K = 1, M = N;
+		rep(k, 1, N + 1) {
+			int m = calc(k);
+			if (m >= 0 && M > m) {
+				M = m;
+				K = k;
+			}
+		}
+		cout << K << " " << M << endl;
 	}
 }
 
@@ -860,7 +945,7 @@ namespace p158 {
 	double calc(int T) {
 		if (T < 0) return H;
 		double t = sqrt(2 * H / g);
-		int k = T / t;
+		int k = (int)(T / t);
 		if (k % 2 == 0) {
 			double d = T - k * t;
 			return H - g * d * d / 2;
@@ -970,6 +1055,7 @@ namespace p164 {
 			}
 		}
 
+		// main模板中的sort_unique就是用来进行离散化的
 		sort(xs.begin(), xs.end());
 		xs.erase(unique(xs.begin(), xs.end()), xs.end());
 
@@ -1017,7 +1103,11 @@ namespace p164 {
 	}
 }
 
-namespace p169 {
+namespace p167 {
+
+	// 这种线段树的写法表现了线段树的实质，即数组中的一个索引实际对应于一个线段，数组中保存的是线段需要维护的信息。
+	// 我并不喜欢这种写法，我更喜欢将线段树封装到一个类中。这里为了使原书代码保持一致，照搬了原书的写法。
+
 	int n, dat[2 * MAX_N - 1];
 
 	void init(int n_) {
@@ -1099,6 +1189,87 @@ namespace p170 {
 			change(s, a - prv[s], 0, 0, N);
 			prv[s] = a;
 			printf("%.2f %.2f\n", vx[0], vy[0]);
+		}
+	}
+}
+
+namespace p177 {
+	LL sum(LL* bit, int i) { LL s = 0; while (i > 0) s += bit[i], i -= (i & -i); return s; }
+	void add(LL* bit, int n, int i, int v) { while (i <= n) bit[i] += v, i += (i & -i); }
+}
+
+namespace p179 {
+
+	const int DAT_SIZE = (1 << 18) - 1;
+
+	int N, Q;
+	int A[MAX_N];
+	char T[MAX_Q];
+	int L[MAX_Q], R[MAX_Q], X[MAX_Q];
+	LL dat_a[DAT_SIZE], dat_b[DAT_SIZE];
+
+	void add(int a, int b, int x, int k, int l, int r) {
+		if (b <= l || a >= r) return; // [l,r)不在[a,b)中
+		else if (a <= l && r <= b) { // [l,r)被包在[a,b)中
+			dat_a[k] += x; // 这个节点整个加上x
+			return;
+		}
+		dat_b[k] += (min(b, r) - max(a, l)) * x; // [l,r)和[a,b)有交集,计算这个节点实际增加的值
+		add(a, b, x, 2 * k + 1, l, (l + r) / 2);
+		add(a, b, x, 2 * k + 2, (l + r) / 2, r);
+	}
+
+	LL sum(int a, int b, int k, int l, int r) {
+		if (b <= l || a >= r) return 0; // [l,r)不在[a,b)中
+		else if (a <= l && r <= b) // [l,r)被包在[a,b)中
+			return dat_a[k] * (r - l) + dat_b[k];
+
+		LL res = (min(b, r) - max(a, l)) * dat_a[k];// [l,r)和[a,b)有交集
+		res += sum(a, b, 2 * k + 1, l, (l + r) / 2);
+		res += sum(a, b, 2 * k + 2, (l + r) / 2, r);
+
+		return res;
+	}
+
+	void solve()
+	{
+		rep(i, 0, N) add(i, i + 1, A[i], 0, 0, N);
+		rep(i, 0, Q) {
+			if (T[i] == 'C')
+				add(L[i], R[i] + 1, X[i], 0, 0, N);
+			else
+				cout << sum(L[i], R[i] + 1, 0, 0, N) << endl;
+		}
+	}
+}
+
+namespace p181 {
+
+	int N, Q;
+	int A[MAX_N];
+	char T[MAX_Q];
+	int L[MAX_Q], R[MAX_Q], X[MAX_Q];
+
+	LL bit0[MAX_N + 1], bit1[MAX_N + 1]; // [1,n]
+	using namespace p177;
+
+	void solve()
+	{
+		rep(i, 1, N + 1)
+			add(bit0, N, i, A[i]);
+		rep(i, 0, Q) {
+			if (T[i] == 'C') {
+				add(bit0, N, L[i], -X[i] * (L[i] - 1));
+				add(bit1, N, L[i], X[i]);
+				add(bit0, N, R[i] + 1, X[i] * R[i]);
+				add(bit1, N, R[i] + 1, -X[i]);
+			}
+			else {
+				LL res = 0;
+				res += sum(bit0, R[i]) + sum(bit1, R[i]) * R[i];
+				res -= sum(bit0, L[i] - 1) + sum(bit1, L[i] - 1) * (L[i] - 1);
+				cout << res << endl;
+			}
 		}
 	}
 }
@@ -1407,10 +1578,8 @@ namespace p209 {
 	bool used[MAX_V];
 
 	void add_edge(int from, int to, int cap) {
-		edge e1 = { to, cap, G[to].size() };
-		edge e2 = { from, 0, G[from].size() - 1 };
-		G[from].push_back(e1);
-		G[to].push_back(e2);
+		G[from].push_back({ to, cap, (int)G[to].size() });
+		G[to].push_back({ from, 0, (int)G[from].size() - 1 });
 	}
 
 	int dfs(int v, int t, int f) {
@@ -1944,6 +2113,12 @@ namespace p250_part2 {
 
 namespace p255 {
 
+	int N, V, X, Y;
+	int L[MAX_N], B[MAX_N], R[MAX_N], T[MAX_N];
+
+	void solve() {
+		// TODO
+	}
 }
 
 namespace p258 {
@@ -2123,6 +2298,9 @@ namespace p286 {
 					rep(k, i + 1, n + 1)
 					B[j][k] -= B[j][i] * B[i][k];
 		}
+		vec x(n);
+		rep(i, 0, n) x[i] = B[i][n];
+		return x;
 	}
 }
 
@@ -2134,5 +2312,50 @@ namespace p291 {
 		int x, y;
 		extgcd(a, m, x, y);
 		return (m + x % m) % m;
+	}
+}
+
+/*
+欧拉函数
+*/
+namespace p292 {
+	int euler_phi(int n) {
+		int res = n;
+		for (int i = 2; i * i <= n; i++) {
+			if (n % i == 0) {
+				res = res / i * (i - 1);
+				for (; n % i == 0; n /= i);
+			}
+		}
+		if (n != 1)res = res / n * (n - 1);
+		return res;
+	}
+
+	int euler[MAX_N];
+
+	void euler_phi2() {
+		rep(i, 0, MAX_N) euler[i] = i;
+		rep(i, 2, MAX_N) {
+			if (euler[i] == i)
+				for (int j = i; j < MAX_N; j += i)
+					euler[j] = euler[j] / i * (i - 1);
+		}
+	}
+}
+
+namespace p293 {
+	using namespace p114;
+	using namespace p291;
+
+	PII linear_congruence(VI& A, VI& B, VI& M) {
+		int x = 0, m = 1;
+		rep(i, 0, A.size()) {
+			int a = A[i] * m, b = B[i] - A[i] * x, d = gcd(M[i], a);
+			if (b % d != 0) return make_pair(0, -1);
+			int t = b / d * mod_inverse(a / d, M[i] / d) % (M[i] / d);
+			x = x + m * t;
+			m *= M[i] / d;
+		}
+		return make_pair(x % m, m);
 	}
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-// 隐式图的dfs - 部分和问题
+// dfs - 部分和问题
 namespace p30 {
 	const int MAX_N = 20;
 	
@@ -10,7 +10,7 @@ namespace p30 {
 	void solve(); 
 }
 
-// 八方向dfs - Lake Counting (POJ 2386)
+// dfs - POJ 2386. Lake Counting
 namespace p32 {
 	const int MAX_N = 20;
 	const int MAX_M = 20;
@@ -146,10 +146,8 @@ namespace p68 {
 	void solve();
 }
 
-/*
-并查集
-*/
-namespace p84 {
+// 并查集
+namespace p87 {
 
 	const int MAX_N = 1;
 
@@ -174,7 +172,7 @@ namespace p88 {
 
 // 图算法 - 二分图判定
 namespace p97 {
-	const int MAX_V = 1000;
+	const int MAX_V = 1;
 
 	extern VI G[MAX_V];	//图
 	extern int V;		//顶点数
@@ -184,7 +182,7 @@ namespace p97 {
 
 // 图算法 - Bellmsn-Ford算法
 namespace p100 {
-	const int INF = 1000000;
+	const int INF = 1000000000;
 	
 	struct edge { int from, to, cost; };
 	extern vector<edge> es;	//图
@@ -196,8 +194,8 @@ namespace p100 {
 
 // 图算法 - 邻接矩阵Dijkstra算法
 namespace p101 {
-	const int INF = 1000000;
-	const int MAX_V = 100;
+	const int INF = 1000000000;
+	const int MAX_V = 1;
 
 	extern int cost[MAX_V][MAX_V];	//图
 	extern int V;					//顶点数
@@ -207,8 +205,8 @@ namespace p101 {
 
 // 图算法 - 邻接表Dijkstra算法
 namespace p102 {
-	const int INF = 1000000;
-	const int MAX_V = 1000;
+	const int INF = 1000000000;
+	const int MAX_V = 1;
 
 	struct edge { int to, cost; };
 	extern vector<edge> G[MAX_V];	//图
@@ -219,7 +217,7 @@ namespace p102 {
 
 // 图算法 - Floyd算法
 namespace p103 {
-	const int INF = 1000000;
+	const int INF = 1000000000;
 	const int MAX_V = 1000;
 
 	extern int d[MAX_V][MAX_V];	//图
@@ -230,10 +228,10 @@ namespace p103 {
 
 // 图算法 - 路径还原
 namespace p104 {
-	const int INF = 1000000;
-	const int MAXV = 100;
+	const int INF = 1000000000;
+	const int MAX_V = 1;
 
-	extern int cost[MAXV][MAXV];	//图
+	extern int cost[MAX_V][MAX_V];	//图
 	extern int V;					//顶点数
 
 	void dijkstra(int s);
@@ -242,13 +240,12 @@ namespace p104 {
 
 // 图算法 - 最小生成树Prim算法
 namespace p105 {
-	const int INF = 1000000;
-	const int MAXV = 100;
+	const int INF = 1000000000;
+	const int MAX_V = 1;
 
-	extern int cost[MAXV][MAXV];	//图
-	extern int V;					//顶点数
+	extern int cost[MAX_V][MAX_V], V;	//图,顶点数
 
-	void prim(int s);
+	int prim();
 }
 
 // 图算法 - 最小生成树Kruskal算法
@@ -262,7 +259,7 @@ namespace p107 {
 }
 
 // 欧几里得算法
-namespace p113 {
+namespace p114 {
 	int gcd(int a, int b); // 求(a,b)
 }
 
@@ -335,17 +332,14 @@ namespace p142 {
 
 // 最大化平均值
 namespace p143 {
-	const int INF = 1000000;
+	const int INF = 1000000000;
 	const int MAX_N = 10000;
 	extern int n, k, w[MAX_N], v[MAX_N];
 
 	void solve();
 }
 
-/*
-尺取法 -  POJ 3061. Subsequence
-给定长度为n的数列a，整数S。找出最短的总和不小于S的连续子序列。
-*/
+// 尺取法 -  POJ 3061. Subsequence
 namespace p146 {
 
 	const int MAX_N = 100000;
@@ -355,9 +349,7 @@ namespace p146 {
 	void solve();
 }
 
-/*
-尺取法 -  POJ 3320. Jessica's Reading Problem
-*/
+//尺取法 -  POJ 3320. Jessica's Reading Problem
 namespace p149 {
 
 	const int MAX_P = 1000000;
@@ -366,9 +358,7 @@ namespace p149 {
 	void solve();
 }
 
-/*
-开关问题 - POJ 3276. Face the Right Way
-*/
+//开关问题 - POJ 3276. Face the Right Way
 namespace p150 {
 	const int MAX_N = 5000;
 	extern int N;
@@ -377,9 +367,7 @@ namespace p150 {
 	void solve();
 }
 
-/*
-开关问题 - POJ 3279. Fliptile
-*/
+//开关问题 - POJ 3279. Fliptile
 namespace p153 {
 	const int MAX_M = 15, MAX_N = 15;
 	extern int M, N;
@@ -388,18 +376,14 @@ namespace p153 {
 	void solve();
 }
 
-/*
-弹性碰撞 - POJ 3684. Physics Experiment
-*/
+//弹性碰撞 - POJ 3684. Physics Experiment
 namespace p158 {
 	const int MAX_N = 100;
 	extern int N,H,R,T;
 	void solve();
 }
 
-/*
-折半枚举 - POJ 2785. 4 values whose sum is 0
-*/
+//折半枚举 - POJ 2785. 4 values whose sum is 0
 namespace p160 {
 	const int  MAX_N = 4000;
 
@@ -408,9 +392,7 @@ namespace p160 {
 	void solve();
 }
 
-/*
-折半枚举 - 超大背包问题
-*/
+//折半枚举 - 超大背包问题
 namespace p162 {
 	const int  INF = 1000000;
 	const int  MAX_N = 40;
@@ -420,9 +402,7 @@ namespace p162 {
 	void solve();
 }
 
-/*
-坐标离散化 - 区域的个数
-*/
+//坐标离散化 - 区域的个数
 namespace p164 {
 	const int MAX_N = 500;
 
@@ -431,10 +411,8 @@ namespace p164 {
 	void solve();
 }
 
-/*
-线段树 - RMQ问题
-*/
-namespace p169 {
+//线段树 - RMQ问题
+namespace p167 {
 	const int MAX_N = 1 << 17; // 取一个大于N的2的幂
 
 	void init(int n_);
@@ -442,9 +420,7 @@ namespace p169 {
 	int query(int a, int b, int k, int l, int r);
 }
 
-/*
-线段树 - POJ 2991. Crane
-*/
+//线段树 - POJ 2991. Crane
 namespace p170 {
 	const int MAX_N = 10000;
 	const int MAX_C = 10000;
@@ -456,35 +432,42 @@ namespace p170 {
 	void solve();
 }
 
-/*
-树状数组
-*/
+//树状数组
 namespace p177 {
-	struct BIT {
-		VI a;
-		BIT(int n) { a = VI(n + 1); }
-		int query(int i) { int s = 0; while (i > 0) s += a[i], i -= (i & -i); return s; }
-		void add(int i, int v) { while (i < a.size()) a[i] += v, i += (i & -i); }
-	};
+	LL sum(LL* bit, int i);
+	void add(LL* bit, int n, int i, int v);
 }
 
-/*
-线段树 - POj 3468. 一个简单的整数问题
-*/
+//线段树 - POj 3468. 一个简单的整数问题，做法一
 namespace p179 {
-	
+
+	const int MAX_N = 100000;
+	const int MAX_Q = 100000;
+
+	extern int N, Q;
+	extern int A[MAX_N];
+	extern char T[MAX_Q];
+	extern int L[MAX_Q], R[MAX_Q], X[MAX_Q];
+
+	void solve();
 }
 
-/*
-树状数组 - POj 3468. 一个简单的整数问题
-*/
+
+//树状数组 - POJ 3468. 一个简单的整数问题，做法二
 namespace p181 {
 
+	const int MAX_N = 100000;
+	const int MAX_Q = 100000;
+
+	extern int N, Q;
+	extern int A[MAX_N];
+	extern char T[MAX_Q];
+	extern int L[MAX_Q], R[MAX_Q], X[MAX_Q];
+
+	void solve();
 }
 
-/*
-平方分割 - POj 2104. K-th number
-*/
+//平方分割 - POj 2104. K-th number
 namespace p185 {
 
 	const int MAX_N = 100000;
@@ -497,9 +480,7 @@ namespace p185 {
 	void solve();
 }
 
-/*
-线段树 - POj 2104. K-th number
-*/
+//线段树 - POj 2104. K-th number
 namespace p188 {
 	const int MAX_N = 100000;
 	const int MAX_M = 5000;
@@ -511,26 +492,22 @@ namespace p188 {
 	void solve();
 }
 
-/*
-状压DP - 旅行商问题
-*/
+//状压DP - 旅行商问题
 namespace p191 {
 	const int MAX_N = 15;
-	const int INF = 1e9;
+	const int INF = 1000000000;
 
 	extern int n;
 	extern int d[MAX_N][MAX_N];
 	void solve();
 }
 
-/*
-状压DP - POJ 2686. Travelling by Stagecoach
-*/
+//状压DP - POJ 2686. Travelling by Stagecoach
 namespace p193 {
 
 	const int MAX_N = 8;
 	const int MAX_M = 30;
-	const int INF = 1e9;
+	const int INF = 1000000000;
 
 	extern int n, m, a, b;
 	extern int t[MAX_N];
@@ -538,23 +515,19 @@ namespace p193 {
 	void solve();
 }
 
-/*
-状压DP - 铺砖问题
-*/
+//状压DP - 铺砖问题
 namespace p196 {
 
 	const int MAX_N = 15;
 	const int MAX_M = 15;
-	const int INF = 1e9;
+	const int INF = 1000000000;
 
 	extern int n, m, M;
 	extern int color[MAX_N][MAX_M];
 	void solve();
 }
 
-/*
-矩阵幂 - 斐波那契数列
-*/
+//矩阵幂 - 斐波那契数列
 namespace p199_part1 {
 	typedef vector<int> vec;
 	typedef vector<vec> mat;
@@ -562,26 +535,19 @@ namespace p199_part1 {
 	mat pow(mat a, LL n);
 }
 
-
-/*
-矩阵幂 - 斐波那契数列
-*/
+//矩阵幂 - 斐波那契数列
 namespace p199_part2 {
 	extern LL n;
 	void solve();
 }
 
-/*
-矩阵幂 - POJ 3734. Blocks
-*/
+//矩阵幂 - POJ 3734. Blocks
 namespace p202 {
 	extern int N;
 	void solve();
 }
 
-/*
-矩阵幂 - 长度为K的路径计数
-*/
+//矩阵幂 - 长度为K的路径计数
 namespace p203 {
 
 	const int MAX_N = 100;
@@ -591,9 +557,7 @@ namespace p203 {
 	void solve();
 }
 
-/*
-矩阵幂 - POJ 3233. Matrix Power Series
-*/
+//矩阵幂 - POJ 3233. Matrix Power Series
 namespace p204 {
 
 	using namespace p199_part1;
@@ -603,12 +567,10 @@ namespace p204 {
 	void solve();
 }
 
-/*
-最大流 - Ford-Fulkerson算法
-*/
+//最大流 - Ford-Fulkerson算法
 namespace p209 {
 
-	const int INF = 1e9;
+	const int INF = 1000000000;
 	const int MAX_V = 1;
 
 	struct edge { int to, cap, rev; };
@@ -617,12 +579,10 @@ namespace p209 {
 	extern int max_flow(int s, int t);
 }
 
-/*
-最大流 - Dinic算法
-*/
+//最大流 - Dinic算法
 namespace p216 {
 
-	const int INF = 1e9;
+	const int INF = 1000000000;
 	const int MAX_V = 1;
 
 	struct edge { int to, cap, rev; };
@@ -631,9 +591,7 @@ namespace p216 {
 	extern int max_flow(int s, int t);
 }
 
-/*
-二分图匹配 - 指派问题
-*/
+//二分图匹配 - 指派问题
 namespace p219 {
 
 	const int MAX_V = 1;
@@ -645,12 +603,10 @@ namespace p219 {
 	int biparite_matching();
 }
 
-/*
-最小费用流
-*/
+//最小费用流
 namespace p222 {
 
-	const int INF = 1e9;
+	const int INF = 1000000000;
 	const int MAX_V = 1;
 
 	struct edge { int to, cap, cost, rev; };
@@ -660,9 +616,7 @@ namespace p222 {
 	int min_cost_flow(int s, int t, int f);
 }
 
-/*
-二分图匹配 - POJ 3041. Asteroids
-*/
+//二分图匹配 - POJ 3041. Asteroids
 namespace p228 {
 	const int MAX_K = 10000;
 	extern int N, K, R[MAX_K], C[MAX_K];
@@ -670,9 +624,7 @@ namespace p228 {
 	void solve();
 }
 
-/*
-二分图匹配 - POJ 3057. Evacuation
-*/
+//二分图匹配 - POJ 3057. Evacuation
 namespace p230 {
 	const int MAX_X = 12, MAX_Y = 12;
 	extern int X, Y;
@@ -681,9 +633,7 @@ namespace p230 {
 	void solve();
 }
 
-/*
-最大流 - POJ 3281. Dining
-*/
+//最大流 - POJ 3281. Dining
 namespace p234 {
 	const int MAX_N = 100, MAX_F = 100, MAX_D = 100;
 
@@ -694,9 +644,7 @@ namespace p234 {
 	void solve();
 }
 
-/*
-最大流 - POJ 3469. Dual Core CPU
-*/
+//最大流 - POJ 3469. Dual Core CPU
 namespace p236 {
 	const int MAX_N = 20000;
 	const int MAX_M = 200000;
@@ -708,9 +656,7 @@ namespace p236 {
 	void solve();
 }
 
-/*
-最小费用流 - POJ 2135. Farm Tour
-*/
+//最小费用流 - POJ 2135. Farm Tour
 namespace p238 {
 	const int MAX_M = 10000;
 
@@ -720,9 +666,7 @@ namespace p238 {
 	void solve();
 }
 
-/*
-最小费用流 - POJ 2135. Evacuation Plan,方法一
-*/
+//最小费用流 - POJ 2135. Evacuation Plan,方法一
 namespace p240 {
 	const int MAX_N = 100, MAX_M = 100;
 
@@ -734,9 +678,7 @@ namespace p240 {
 	void solve();
 }
 
-/*
-最小费用流 - POJ 2135. Evacuation Plan,方法二
-*/
+//最小费用流 - POJ 2135. Evacuation Plan,方法二
 namespace p242 {
 	const int MAX_N = 100, MAX_M =100;
 
@@ -748,9 +690,7 @@ namespace p242 {
 	void solve();
 }
 
-/*
-最小费用流 - POJ 3686. The Windy's
-*/
+//最小费用流 - POJ 3686. The Windy's
 namespace p243 {
 	const int MAX_N = 50, MAX_M = 50;
 
@@ -760,9 +700,7 @@ namespace p243 {
 	void solve();
 }
 
-/*
-最小费用流 - POJ 3680. Intervals
-*/
+//最小费用流 - POJ 3680. Intervals
 namespace p246 {
 	const int MAX_N = 200;
 
@@ -772,9 +710,7 @@ namespace p246 {
 	void solve();
 }
 
-/*
-计算几何基础 - 点与线段
-*/
+//计算几何基础 - POJ 1127. Jack Straws
 namespace p250_part1 {
 	struct P {
 		double x, y;
@@ -790,9 +726,7 @@ namespace p250_part1 {
 	P intersection(P p1, P p2, P q1, P q2);// 计算两直线的交点
 }
 
-/*
-计算几何基础 - POJ 1127. Jack Straws
-*/
+//计算几何基础 - POJ 1127. Jack Straws
 namespace p250_part2 {
 	const int MAX_N = 12, MAX_M = 10000;
 	
@@ -806,16 +740,15 @@ namespace p250_part2 {
 	void solve();
 }
 
-/*
-极限情况 - AOJ 2308. White Bird
-*/
+//极限情况 - AOJ 2308. White Bird
 namespace p255 {
-
+	const int MAX_N = 50;
+	extern int N, V, X, Y;
+	extern int L[MAX_N], B[MAX_N], R[MAX_N], T[MAX_N];
+	void solve();
 }
 
-/*
-平面扫描 - POJ 2932. Coneology
-*/
+//平面扫描 - POJ 2932. Coneology
 namespace p258 {
 	const int MAX_N = 40000;
 	extern int N;
@@ -823,9 +756,7 @@ namespace p258 {
 	void solve();
 }
 
-/*
-凸包 - POJ 2187. Beauty Contest
-*/
+//凸包 - POJ 2187. Beauty Contest
 namespace p260 {
 	using namespace p250_part1;
 
@@ -835,13 +766,11 @@ namespace p260 {
 	void solve();
 }
 
-/*
-3.6.5数值积分 - AOJ 1313. Intersection of Two Prisms
-*/
+//数值积分 - AOJ 1313. Intersection of Two Prisms
 namespace p263 {
 	const int MAX_M = 100;
 	const int MAX_N = 100;
-	const int INF = 1e9;
+	const int INF = 1000000000;
 
 	extern int M, N;
 	extern int X1[MAX_M], Y1[MAX_M];
@@ -850,9 +779,7 @@ namespace p263 {
 	void solve();
 }
 
-/*
-高斯消元法
-*/
+//高斯消元法
 namespace p286 {
 	typedef vector<double> vec;
 	typedef vector<vec> mat;
@@ -860,16 +787,26 @@ namespace p286 {
 	vec gauss_jordan(const mat& A, const vec& b);
 }
 
-/*
-高斯消元法 - Random Walk
-*/
+//高斯消元法 - Random Walk
 namespace p288 {
 	
 }
 
-/*
-模运算的世界
-*/
+//求逆元
 namespace p291 {
 	int mod_inverse(int a, int m);
+}
+
+//欧拉函数
+namespace p292 {
+	int euler_phi(int n); // 求欧拉函数值
+
+	const int MAX_N = 10000;
+	extern int euler[MAX_N];
+	void euler_phi2(); // O(MAX_N)时间筛出欧拉函数值的表
+}
+
+//线性同余方程组
+namespace p293 {
+	PII linear_congruence(VI& A, VI& B, VI& M);
 }
