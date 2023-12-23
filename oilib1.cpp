@@ -1,6 +1,8 @@
 #include "types.h"
 #include "oilib1.h"
 
+namespace lib1 {
+
 namespace p30 {
 	int a[MAX_N];
 	int n, k;
@@ -2358,4 +2360,6 @@ namespace p293 {
 		}
 		return make_pair(x % m, m);
 	}
+}
+
 }

@@ -1,0 +1,8 @@
+Hello everyone. I'm Daniel Du, a Chinese programmer.
+
+This is a C++ library which contains solutions written by me for problems in competitive programming. Initially, I was going to write a library of algorithms, but then I found it was too difficult, because many algorithms can't be extracted from a solution, and many of them are more like ideas. For example, 
+
+for(int i=0; i<n; i++) v[i] += v[i-1];
+
+so v[r]-v[l-1] is the sum of v[l] to v[r]. The code above is a very common snippet, which helps you to calculate the sum of an interval quickly, but I can't give it a appropriate name. I mean I know the name of this technique is 前缀和 in Chinese, but I can't extract a general pattern to represent this technique. You may say "It's easy. Just define a function and encapsulate all the code in it." But I think that defining a function is not a good idea.
+Anyway, finally I decided to give algorithms within solutions instead of abstract functions. I've mainly learned algorithms (or problem-solving techniques) from two bookes, one is 《挑战程序设计竞赛》, another one is 《算法竞赛进阶指南》. Sorry, I'm not sure whether they have english version or not, so I give the id of every problem in comments in the code. I want to do more things for the lirary in the future, for example, extract some algrithm patterns from the library, but now I need to fill oilib1, oilib2, oilib3 and more. So you may ask what is the value of the library? Well, I created a template to encapsulate all solutions in several cpp files. I think it's the value of the library, LOL. Sorry again, I wrote these solutions over years in cpp or python, so I need a lot of time to reorgnize them. If you have any questions, please contact me at mynamepfd@163.com. Anyway, I hope it will help you.

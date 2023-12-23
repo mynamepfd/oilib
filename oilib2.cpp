@@ -1,6 +1,8 @@
 #include "types.h"
 #include "oilib2.h"
 
+namespace lib2 {
+
 namespace p122 {
 
 	const int MAX_N = 200001;
@@ -809,4 +811,325 @@ namespace p133 {
 		}
 		print(ans);
 	}
+}
+
+namespace p134 {
+	
+	const int MAX_N = 1000;
+
+	int n, m, k;
+	int D[MAX_N];
+	int t[MAX_N], a[MAX_N], b[MAX_N];
+
+	void read_case() {
+		read(n, m, k);
+		rep(i, 1, n)
+			read(D[i]);
+		rep(i, 0, m)
+			read(t[i], a[i], b[i]);
+	}
+
+	int MAXN;
+	int c[MAX_N];
+	int last[MAX_N], e[MAX_N];
+	void solve() {
+		MAXN = n + 1;
+		rep(i, 0, m) {
+			last[a[i]] = max(last[a[i]], t[i]);
+			c[b[i]] += 1;
+		}
+		rep(i, 1, n)
+			e[i + 1] = max(e[i], last[i]) + D[i];
+		int ans = 0;
+		rep(i, 0, m) {
+			int tm = e[b[i]] - t[i];
+			ans += tm;
+		}
+			
+		rep(_, 0, k) {
+			int max_save = 0;
+			int this_i = 0;
+			rep(i, 1, n) {
+				int save = 0; //计算对D[i]使用加速器能节约的时间
+				if (D[i] > 0)
+					rep(j, i + 1, MAXN) { //从j开始抵达时间都会减一
+					save += c[j];
+					if (e[j] <= last[j]) //意味着从j + 1开始抵达时间不会变化
+						break;
+				}
+				if (save > max_save) {
+					max_save = save;
+					this_i = i;
+				}
+			}
+			ans -= max_save;
+			D[this_i] -= 1;
+			rep(i, this_i, n)
+				e[i + 1] = max(e[i], last[i]) + D[i];
+		}
+		print(ans);
+	}
+}
+
+namespace p135 {
+
+	const int MAX_N = 100000, MAX_M = 100000;
+
+	int n,m;
+	int A[MAX_N], B[MAX_N];
+	int C[MAX_M], D[MAX_M], K[MAX_M];
+
+	void read_case()
+	{
+		read(n);
+		rep(i, 0, n)
+			read(A[i], B[i]);
+		read(m);
+		rep(i, 0, m)
+			read(C[i], D[i], K[i]);
+	}
+
+	struct v4
+	{
+		int lo, hi, k, i;
+	};
+	bool cmp_lo(const v4& l, const v4& r) { return l.lo < r.lo; }
+
+	v4 a[MAX_N];
+	v4 b[MAX_M];
+	int ans[MAX_N];
+
+	void solve()
+	{
+		rep(i, 0, n) // 重新组织数据
+			a[i] = { A[i], B[i], 0, i };
+		rep(i, 0, m)
+			b[i] = { C[i], D[i], K[i], i };
+		sort(a, a + n, cmp_lo);
+		sort(b, b + m, cmp_lo);
+
+		bool found = true;
+
+		set<pair<int, int> > s;
+		int j = 0;
+		for (int i = 0; i < n; i++)
+		{
+			while (j < m && b[j].lo <= a[i].lo)
+			{
+				s.insert(make_pair(b[j].hi, j));
+				j += 1;
+			}
+			set<pair<int, int> >::iterator iter = s.lower_bound(make_pair(a[i].hi, 0)); //找到大于等于a[i].hi的第一个元素 
+			if (iter == s.end())
+			{
+				found = false;
+				break;
+			}
+			int this_j = iter->second;
+			ans[a[i].i] = b[this_j].i + 1;
+			b[this_j].k -= 1;
+			if (b[this_j].k == 0)
+				s.erase(iter);
+		}
+
+		if (found)
+		{
+			printf("YES\n");
+			for (int i = 0; i < n; i++)
+				printf("%d ", ans[i]);
+		}
+		else
+		{
+			printf("NO");
+		}
+	}
+}
+
+namespace p136 {
+
+	const int MAXN = 100009;
+	int n, m;
+	int c[MAXN], w[MAXN];
+
+	void read_case() {
+		scanf("%d %d", &n, &m);
+		for (int i = 1; i <= n; i++)
+			scanf("%d", &c[i]);
+		for (int i = 1; i <= n; i++)
+			scanf("%d", &w[i]);
+	}
+
+	struct cmp
+	{
+		bool operator()(int i, int j)
+		{
+			int a = w[i] * (100 - c[i] % 100);
+			int b = w[j] * (100 - c[j] % 100);
+			if (a <= b)
+				return false;
+			else
+				return true;
+		}
+	};
+
+	int ans[MAXN][2]; // ans[i][0]:在第i天花费的100元纸币数 ans[i][1]:花费的1元硬币数
+	LL sum; // 愤怒值.注意!要使用ll否则会溢出
+
+	void solve() {
+		priority_queue<int, std::vector<int>, cmp> q;
+
+		for (int i = 1; i <= n; i++)
+		{
+			int k = c[i] % 100;
+			ans[i][0] = c[i] / 100;
+			ans[i][1] = k;
+			m -= k;
+			if (k > 0)
+			{
+				q.push(i);
+				if (m < 0)
+				{
+					int day = q.top(); q.pop();
+					m += 100;
+					ans[day][0]++;
+					ans[day][1] = 0;
+					sum += w[day] * (100 - c[day] % 100);
+				}
+			}
+		}
+		printf("%lld\n", sum);
+		for (int i = 1; i <= n; i++)
+			printf("%d %d\n", ans[i][0], ans[i][1]);
+	}
+}
+
+namespace p137 {
+	const int MAX_N = 100000, MAX_M = 100000;
+
+	int n, m;
+	int a[MAX_N], b[MAX_M], p[MAX_M];
+
+	void read_case() {
+		read(n, m);
+		rep(i, 0, n) read(a[i]);
+		rep(i, 0, m) read(b[i]);
+		rep(i, 0, m) read(p[i]);
+	}
+
+	
+	void solve() {
+		vector<VI> l;
+		rep(i, 0, m)
+			l.push_back({ b[i], p[i] });
+		sort(all(l));
+		priority_queue<int, vector<int>, greater<int> > Q;
+		int count = 0;
+		int j = 0;
+		repd(i, n - 1, -1) {
+			while (j < m && l[j][0] <= a[i]) {
+				Q.push(l[j][1]);
+				j += 1;
+			}
+			int cost = 0;
+			while (Q.size() > 0) {
+				if (cost + Q.top() <= a[i]) {
+					cost += Q.top();
+					Q.pop();
+					count += 1;
+				}
+				else
+					break;
+			}
+			int rem = a[i] - cost;
+			if (Q.size() > 0) {
+				int v = Q.top();
+				v -= rem;
+				Q.push(v);
+			}
+		}
+		print(count);
+	}
+}
+
+namespace p138 {
+
+	typedef long long ll;
+	typedef struct IDA // int data arr
+	{
+		ll p, t, acc_t, min, max;
+	}IDA, * IDA_PTR;
+
+	const int MAXN = 150009;
+	int n;
+	ll T;
+	IDA ida[MAXN];
+
+	void read_case() {
+		scanf("%d", &n);
+		for (int i = 1; i <= n; i++)
+			scanf("%lld", &ida[i].p);
+		for (int i = 1; i <= n; i++)
+		{
+			scanf("%lld", &ida[i].t);
+			T += ida[i].t;
+		}
+	}
+
+	int cmp1(IDA_PTR i, IDA_PTR j)
+	{
+		ll a = 1LL * i->t * j->p;
+		ll b = 1LL * i->p * j->t;
+		if (a < b)
+			return(-1);
+		else if (a == b)
+			return(0);
+		else
+			return(1);
+	}
+
+	int cmp2(IDA_PTR i, IDA_PTR j)
+	{
+		if (i->p < j->p)
+			return(-1);
+		else if (i->p == j->p)
+			return(0);
+		else
+			return(1);
+	}
+
+	int check(double mid)
+	{
+		double max_score = -1e18, _max_score = 1e18;
+		for (int i = 1; i <= n; i++)
+		{
+			if (ida[i].p != ida[i - 1].p) _max_score = max_score;
+			double score = ida[i].p * (1.0 - mid * ida[i].max / T);
+			if (score < _max_score) // 最晚做得分最低,如果不允许这道题最晚做说明给定的C不可行
+				return(0);
+			score = ida[i].p * (1.0 - mid * ida[i].min / T);
+			printf("%f\n", score);
+			max_score = max(max_score, score); // 更新最高得分
+		}
+		return(1);
+	}
+
+	void solve() {
+		qsort(ida + 1, n, sizeof(IDA), (int (*)(const void*, const void*))cmp1); // 根据 t[i]/p[i]排序得到的做题顺序是最优的
+		for (int i = 1; i <= n; i++) // 统计前缀时间,用于计算最终得分
+			ida[i].acc_t = ida[i - 1].acc_t + ida[i].t;
+		for (int i = 1, j; i <= n; i = j)
+		{
+			for (j = i; j <= n && cmp1(&ida[i], &ida[j]) == 0; j++)
+				;
+			for (int k = i; k < j; k++) // 对于ti/pi相同的几道题,在这段时间内不论做题顺序如何最终得分之和是一样的
+			{
+				ida[k].min = ida[i - 1].acc_t + ida[k].t;
+				ida[k].max = ida[j - 1].acc_t;
+			}
+		}
+		qsort(ida + 1, n, sizeof(IDA), (int (*)(const void*, const void*))cmp2); // 再根据p排序
+		check(0.328125);
+	}
+}
+
 }
