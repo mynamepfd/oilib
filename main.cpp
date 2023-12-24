@@ -13,7 +13,9 @@
 #include<queue>
 #include<set>
 #include<map>
+#include<unordered_map>
 #include<bitset>
+#include<random>
 #include<limits.h>
 #include<assert.h>
 using namespace std;
@@ -50,7 +52,7 @@ template<class T, class... U> void print(const T& head, const U &... tail) { _W(
 
 #include "types.h"
 #include "oilib2.h"
-using namespace lib2::p138;
+using namespace lib2::p172;
 
 #endif
 
