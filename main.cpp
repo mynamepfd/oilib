@@ -1,4 +1,4 @@
-#ifndef _DEBUG
+#ifndef WIN32
 #include<cstdio>
 #include<cstdlib>
 #include<cstring>
@@ -52,16 +52,14 @@ template<class T, class... U> void print(const T& head, const U &... tail) { _W(
 
 #include "types.h"
 #include "oilib2.h"
-using namespace lib2::p334;
+using namespace lib2::p245_part2;
 
 #endif
 
 int main()
 {
-//#ifdef _DEBUG
-//    freopen("1.in", "r", stdin);
-//    //freopen("tmp.out","w",stdout);
-//#endif
+    //freopen(".\\data\\P4135_1.in", "r", stdin);
+    //freopen("tmp.out","w",stdout);
 
     read_case();
     solve();

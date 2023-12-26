@@ -260,7 +260,7 @@ namespace lib2 {
 		void solve();
 	}
 
-	// DP - 线性DP - POJ3481. Computers
+	// DP - 线性DP - POJ 3481. Computers
 	namespace p231 {
 		void read_case();
 		void solve();
@@ -308,22 +308,26 @@ namespace lib2 {
 
 	// DP - 背包问题 - 01背包
 	namespace p241_part1 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// DP - 背包问题 - 完全背包
 	namespace p241_part2 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// DP - 背包问题 - 多重背包
 	namespace p242_part1 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// DP - 背包问题 - 多重背包的二进制优化
 	namespace p242_part2 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// DP - 背包问题 - 多重背包的单调队列优化
@@ -339,12 +343,14 @@ namespace lib2 {
 
 	// DP - 背包问题 - CF864E. Fire
 	namespace p245_part1 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// DP - 背包问题 - POJ 1742. Coins
 	namespace p245_part2 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// DP - 背包问题 - CF755F. PolandBall and Gifts

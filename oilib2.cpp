@@ -2194,6 +2194,98 @@ namespace p163 {
 
 namespace p171 {
 
+	struct SqrtDecomp {
+		struct Block {
+			int l, r;
+			VI v;
+		};
+		vector<Block> blocks;
+		VI a;
+		int n;
+		int sz;//块大小
+
+		SqrtDecomp(VI &a_, int n_) {
+			a = a_;
+			n = n_;
+			sz = (int)ceil(sqrt(n));
+			for(int l=1; l<=n; l+=sz) {
+				int r = min(l + sz - 1, n);
+				Block block;
+				block.l = l;
+				block.r = r;
+				rep(i, l, r+1)
+					block.v.push_back(i);
+				blocks.push_back(block);
+			}
+		}
+
+		// 计算交换后会产生的逆序对的数量
+		int calc(int l, int r) {
+			int res = 0;
+
+			LL cnt1 = query(l + 1, r - 1, a[l]);
+			LL cnt2 = query(l + 1, r - 1, a[r]);
+
+			//设
+			//x1表示区间内小于a[l]的数的个数
+			//y1表示区间内大于a[l]的数的个数
+			//x2表示区间内小于a[r]的数的个数
+			//y2表示区间内大于a[r]的数的个数
+			//有
+			//x1 + y1 = r-l+1
+			//x2 + y2 = r-l+1
+			//交换后
+			//ans = (y1-x1) + (x2-y2) = ... = 2*(y1-y2)
+
+			res = 2 * (cnt1 - cnt2);
+			if (a[l] > a[r])
+				res--;
+			else // a[l]<a[r]
+				res++;
+
+			return res;
+		}
+
+		// find the number of integers which greater than s
+		LL query(int l, int r, int v)
+		{
+			int b1 = (l-1) / sz;
+			int b2 = (r-1) / sz;
+
+			LL cnt = 0;
+			if (b1 == b2) {
+				rep(i, l, r + 1)
+					if (a[i] > v)
+						cnt++;
+			}
+			else {
+				rep(i, l, blocks[b1].r + 1) {
+					if (a[i] > v)
+						cnt++;
+				}
+				rep(i, b1+1, b2) {
+					cnt += blocks[i].v.end() - upper_bound(all(blocks[i].v), v);
+				}
+				rep(i, blocks[b2].l, r + 1) {
+					if (a[i] > v)
+						cnt++;
+				}
+			}
+
+			return cnt;
+		}
+
+		void change(int l, int r) {
+			int b1 = (l - 1) / sz;
+			int b2 = (r - 1) / sz;
+			blocks[b1].v.erase(lower_bound(all(blocks[b1].v), a[l]));
+			blocks[b1].v.insert(upper_bound(all(blocks[b1].v), a[r]), a[r]);
+			blocks[b2].v.erase(lower_bound(all(blocks[b2].v), a[r]));
+			blocks[b2].v.insert(upper_bound(all(blocks[b2].v), a[l]), a[l]);
+			swap(a[l], a[r]);
+		}
+	};
+
 	const int MAXN = 200000;
 	const int MAX_Q = 50000;
 	int n, q, L[MAX_Q], R[MAX_Q];
@@ -2204,16 +2296,11 @@ namespace p171 {
 			read(L[i], R[i]);
 	}
 
-	const int MAXB = 450;
-	int a[MAXN + 1], btot, bl[MAXB], br[MAXB], id[MAXN + 1];
-	VI b[MAXB];
-	void divide();
-	LL query(int l, int r, int v);
-
 	void solve() {
+		VI a = VI(n+1);
 		rep(i, 1, n + 1)
 			a[i] = i;
-		divide();
+		SqrtDecomp decomp(a, n);
 		LL ans = 0;
 		rep(i, 0, q)
 		{
@@ -2227,70 +2314,121 @@ namespace p171 {
 			if (l > r) // NOTE!!!
 				swap(l, r);
 
-			LL cnt1 = query(l + 1, r - 1, a[l]);
-			LL cnt2 = query(l + 1, r - 1, a[r]);
-			ans += 2 * (cnt1 - cnt2);
-			if (a[l] > a[r])
-				ans--;
-			else // a[l]<a[r]
-				ans++;
+			ans += decomp.calc(l, r);
+			decomp.change(l, r); // 交换
 			print(ans);
-
-			b[id[l]].erase(lower_bound(all(b[id[l]]), a[l]));
-			b[id[l]].insert(upper_bound(all(b[id[l]]), a[r]), a[r]);
-			b[id[r]].erase(lower_bound(all(b[id[r]]), a[r]));
-			b[id[r]].insert(upper_bound(all(b[id[r]]), a[l]), a[l]);
-			swap(a[l], a[r]);
-
 		}
-	}
-
-	void divide()
-	{
-		int sz = int(ceil(sqrt(n)));
-		btot = n / sz + (n % sz > 0);
-		rep(i, 1, btot + 1)
-		{
-			bl[i] = (i - 1) * sz + 1;
-			br[i] = min(n, i * sz);
-			rep(j, bl[i], br[i] + 1)
-			{
-				id[j] = i;
-				b[i].push_back(j);
-			}
-		}
-	}
-
-	// find the number of integers which greater than s
-	LL query(int l, int r, int v)
-	{
-		if (l > r)
-			return 0;
-		LL cnt = 0;
-		if (id[l] == id[r]) {
-			rep(i, l, r + 1)
-				if (a[i] > v)
-					cnt++;
-		}
-		else {
-			rep(i, l, br[id[l]] + 1) {
-				if (a[i] > v)
-					cnt++;
-			}
-			rep(i, id[l] + 1, id[r]) {
-				cnt += b[i].end() - upper_bound(all(b[i]), v);
-			}
-			rep(i, bl[id[r]], r + 1) {
-				if (a[i] > v)
-					cnt++;
-			}
-		}
-
-		return cnt;
 	}
 }
 
 namespace p172 {
+
+	// 用map<int,int>会TLE
+
+	struct SqrtDecomp {
+		struct Block {
+			int l, r;
+		};
+		vector<Block> blocks;
+		VI a;
+		int n, c; // c表示字符的最大编号
+		int sz;//块大小
+
+		vector<VI> h; // h[i]保存字符i出现的位置
+		vector<VI> f; // f[i][j]表示第i块到第j块的答案
+
+		SqrtDecomp(VI& a_, int n_, int c_) {
+			a = a_;
+			n = n_;
+			c = c_;
+			sz = (int)ceil(sqrt(n));
+			for (int l = 1; l <= n; l += sz) {
+				int r = min(l + sz - 1, n);
+				Block block = { l,r };
+				blocks.push_back(block);
+			}
+
+			h = vector<VI>(c + 1);
+			rep(i, 1, n)
+				h[a[i]].push_back(i);
+
+			int m = blocks.size(); // 块总数
+			f = vector<VI>(m, VI(m));
+
+			rep(i, 0, m) {
+				VI cnt(c_ + 1);
+				int res = 0;
+				rep(j, i, m){
+					rep(k, blocks[j].l, blocks[j].r + 1) { //注意这里是j
+						if (cnt[a[k]] > 0 && cnt[a[k]] % 2 == 0)
+							res -= 1; // 偶变奇
+						else if (cnt[a[k]] % 2 == 1)
+							res += 1; // 奇变偶
+						cnt[a[k]]++;
+					}
+					f[i][j] = res;
+				}
+			}
+		}
+
+		int query(int l, int r)
+		{
+			int b1 = (l - 1) / sz;
+			int b2 = (r - 1) / sz;
+
+			int res = 0;
+			if (b1 == b2 || b1+1==b2) { // 如果在同一块或在相邻块
+				VI mp(c + 1);
+				rep(i, l, r + 1)
+					mp[a[i]]++;
+				rep(i,0,c+1)
+					if (mp[i]>0 && mp[i]%2==0)
+						res++;
+			}
+			else {
+				VI mp(c+1); 
+				VI key;
+				rep(i, l, blocks[b1].r + 1) {
+					if (mp[a[i]]++ == 0)
+						key.push_back(a[i]);
+				}
+				rep(i, blocks[b2].l, r + 1) {
+					if (mp[a[i]]++ == 0)
+						key.push_back(a[i]);
+				}
+				res = f[b1 + 1][b2 - 1];
+				rep(i, 0, key.size()) {
+					int c = key[i];
+					int cnt = upper_bound(all(h[c]), blocks[b2].l-1) - // 找出字符c在块b1到b2之间的出现次数
+						lower_bound(all(h[c]), blocks[b1].r+1);
+					if (cnt == 0) { // 如果c没出现
+						if (mp[c] % 2 == 0)
+							res++;
+					}
+					else {
+						if (cnt % 2 == 0) { // 如果本来出现了偶数次,即c已被算入res
+							if (mp[c] % 2 == 0) { // 如果在两端也出现了偶数次,那么c仍然出现了偶数次
+
+							}
+							else { // 如果在两端出现了奇数次,那么c实际出现了奇数次
+								res--;
+							}
+						}
+						else if (cnt % 2 == 1) { // 如果本来出现了奇数次,即c未被算入res
+							if (mp[c] % 2 == 0) { // 如果在两端出现了偶数次
+
+							}
+							else { // 如果在两端出现了奇数次
+								res++;
+							}
+						}
+					}
+				}
+			}
+
+			return res;
+		}
+	};
 
 	const int MAX_N = 100000, MAX_M = 100000;
 	int n, c, m; // 读取文章字数、汉字种类数、询问数
@@ -2304,119 +2442,24 @@ namespace p172 {
 			read(L[i], R[i]);
 	}
 
-	struct SqrtDecomp {
-		VI a;
-		vector<VI> h;
-		int n, m, sz; // 数列长度,块数量,块大小
-
-		vector<VI> f;
-		SqrtDecomp(VI& a_, int c_, int M) { // c_表示a_中数字的范围
-			a = a_;
-			n = a.size();
-			//sz = pow(n,1.0/3); // 让块变小,减少二分的次数
-			sz = max(1, (int)(n / sqrt(M * log2(n)))); // 最优值
-			m = n / sz + 1;
-
-			h = vector<VI>(c_ + 1);
-			rep(i, 0, a.size()) {
-				h[a[i]].push_back(i);
-			}
-
-			f = vector<VI>(m, VI(m));
-			rep(i, 0, m) {
-				VI cnt(c_ + 1);
-				int ans = 0; // 出现偶数次的字符的数量
-				rep(j, i, m) {
-					//print(i,j);
-					rep(k, j * sz, min((j + 1) * sz, n)) { //注意这里是j
-						if (cnt[a[k]] > 0 && cnt[a[k]] % 2 == 0)
-							ans -= 1; // 偶变奇
-						else if (cnt[a[k]] % 2 == 1)
-							ans += 1; // 奇变偶
-						cnt[a[k]]++;
-					}
-					f[i][j] = ans;
-				}
-			}
-
-			mp = VI(c_ + 1);
-		}
-
-		// 打印第i块到第j块的元素,用于调试
-		//void print(int lb, int rb) {
-		//	VI t;
-		//	rep(i, lb * sz, min((rb + 1) * sz, n))
-		//		t.push_back(a[i]);
-		//	print(t);
-		//}
-
-		VI q, mp;
-		int query(int l, int r) {
-			int lb = l / sz;
-			int rb = r / sz;
-			if (lb == rb || lb + 1 == rb) {
-				/* TODO (#1#): 当l,r在同一块或相邻块 */
-				q.clear();
-				rep(i, l, r)
-					if (mp[a[i]]++ == 0) q.push_back(a[i]);
-				int ans = 0;
-				rep(i, 0, q.size()) {
-					if (mp[q[i]] % 2 == 0)ans++;
-					mp[q[i]] = 0;
-				}
-				return ans;
-			}
-			else {
-				q.clear();
-				rep(i, l, (lb + 1) * sz) {
-					if (mp[a[i]]++ == 0) q.push_back(a[i]);
-				}
-				rep(i, rb * sz, r) {
-					if (mp[a[i]]++ == 0) q.push_back(a[i]);
-				}
-
-				int ans = f[lb + 1][rb - 1];
-				//print(lb+1,rb-1);
-
-				rep(i, 0, q.size()) {
-					int t = upper_bound(all(h[q[i]]), rb * sz - 1) -
-						lower_bound(all(h[q[i]]), (lb + 1) * sz);
-					if (t == 0) {
-						if (mp[q[i]] % 2 == 0)
-							ans += 1;
-					}
-					else if (t % 2 == 1) {
-						if (mp[q[i]] % 2 == 1)
-							ans += 1;
-					}
-					else {
-						if (mp[q[i]] % 2 == 1)
-							ans -= 1;
-					}
-					mp[q[i]] = 0;
-				}
-				return ans;
-			}
-		}
-	};
-
 	void solve() {
 		VI t;
+		t.push_back(0);
 		rep(i, 0, n)
 			t.push_back(a[i]);
 
-		SqrtDecomp sd(t, c, m); // 平方分割
+		SqrtDecomp sd(t,n,c); // 平方分割
 
 		int ans = 0;
 		rep(i,0,m) {
 			int l, r, tl, tr; 
 			l = L[i];
 			r = R[i];
-			tl = (l + ans) % n;
-			tr = (r + ans) % n;
+			tl = (l + ans) % n + 1;
+			tr = (r + ans) % n + 1;
 			if (tl > tr)
 				swap(tl, tr);
-			ans = sd.query(tl, tr + 1);
+			ans = sd.query(tl, tr);
 			print(ans);
 		}
 	}
@@ -2854,6 +2897,125 @@ namespace p236 {
 	}
 }
 
+namespace p241_part1 {
+
+	const int MAX_N = 1000, MAX_W = 1000;
+
+	int n, W;
+	int w[MAX_N], v[MAX_N];
+	int dp[MAX_N + 1][MAX_W + 1];
+
+	void read_case() {
+		read(n, W);
+		rep(i, 1, n+1)
+			read(w[i], v[i]);
+	}
+
+	void solve() {
+		rep(i, 1, n+1)
+			rep(j, 0, W + 1)
+				if (j < w[i])
+					dp[i][j] = dp[i - 1][j];
+				else
+					dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i]] + v[i]);
+		cout << dp[n][W];
+	}
+}
+
+namespace p241_part2 {
+
+	const int MAX_N = 1000, MAX_W = 1000;
+
+	int n, W;
+	int w[MAX_N], v[MAX_N];
+	int dp[MAX_N + 1][MAX_W + 1];
+
+	void read_case() {
+		read(n, W);
+		rep(i, 1, n + 1)
+			read(w[i], v[i]);
+	}
+
+	void solve() {
+		rep(i, 1, n+1)
+			rep(j, 0, W + 1)
+			if (j < w[i])
+				dp[i][j] = dp[i-1][j];
+			else
+				dp[i][j] = max(dp[i-1][j], dp[i][j - w[i]] + v[i]);
+		cout << dp[n][W];
+	}
+}
+
+namespace p242_part1 {
+
+	const int MAX_N = 100, MAX_W = 100;
+
+	int n, W;
+	int w[MAX_N], v[MAX_N], c[MAX_N];
+	int dp[MAX_N + 1][MAX_W + 1];
+
+	void read_case() {
+		read(n, W);
+		rep(i, 1, n + 1)
+			read(w[i], v[i], c[i]);
+	}
+
+	void solve() {
+		rep(i, 1, n + 1)
+			rep(j, 0, W + 1)
+				rep(k, 0, min(j / w[i], c[i])+1) // 这里注意是W[i]而不是W[i+1],因为数组下标从0开始
+					dp[i][j] = max(dp[i][j], dp[i - 1][j - k * w[i]] + k * v[i]);
+
+		cout << dp[n][W];
+	}
+}
+
+namespace p242_part2 {
+
+	const int MAX_N = 1000, MAX_W = 2000;
+
+	int n, W;
+	int w[MAX_N], v[MAX_N], c[MAX_N];
+	int dp[MAX_N + 1][MAX_W + 1];
+
+	void read_case() {
+		read(n, W);
+		rep(i, 1, n + 1)
+			read(w[i], v[i], c[i]);
+	}
+
+	void solve() {
+		int j = n;
+		rep(i, 1, n + 1) {
+			rep(k, 0, 31) {
+				int t = 1 << k;
+				if (t < c[i]) {
+					j++;
+					w[j] = t * w[i];
+					v[j] = t * v[i];
+					c[i] -= t;
+				}
+				else {
+					j++;
+					w[j] = c[i] * w[i];
+					v[j] = c[i] * v[i];
+					c[i] = 0;
+					break;
+				}
+			}
+		}
+		n = j;
+		rep(i, 1, n + 1)
+			rep(j, 0, W + 1)
+			if (j < w[i])
+				dp[i][j] = dp[i - 1][j];
+			else
+				dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i]] + v[i]);
+		cout << dp[n][W];
+	}
+}
+
 namespace p244 {
 
 	const int MAXN = 101;
@@ -2934,6 +3096,89 @@ namespace p244 {
 		printf("%d\n", ans);
 	}
 
+}
+
+namespace p245_part1 {
+
+	const int MAX_N = 100;
+	int n, t[MAX_N], d[MAX_N], p[MAX_N];
+
+	void read_case() {
+		read(n);
+		rep(i, 0, n)
+			read(t[i], d[i], p[i]);
+	}
+
+	struct Item {
+		int i, t, d, p;
+	};
+	bool cmp(const Item& i1, const Item& i2) {
+		return i1.d < i2.d;
+	}
+
+	int f[2001];
+	VI g[2001];
+
+	void solve() {
+		vector<Item> a;
+		rep(i, 0, n)
+			a.push_back({ i+1,t[i],d[i],p[i] });
+		sort(all(a), cmp);
+		f[0] = 0;
+		rep(i, 0, a.size()) {
+			repd(j, a[i].d-1, a[i].t-1)
+				if (f[j - a[i].t] + a[i].p > f[j]) {
+					f[j] = f[j - a[i].t] + a[i].p;
+					g[j] = g[j - a[i].t];
+					g[j].push_back(a[i].i);
+				}
+		}
+		int ans = 0, idx = 0;
+		rep(i,0,2000)
+			if (f[i] > ans) {
+				ans = f[i];
+				idx = i;
+			}
+		print(f[idx]);
+		print(g[idx].size());
+		sort(all(g[idx]));
+		print(g[idx]);
+	}
+}
+
+namespace p245_part2 {
+	
+	const int MAX_N = 100, MAX_M = 100000;
+	int n, m, a[MAX_N], c[MAX_N];
+
+	void read_case() {
+		read(n, m);
+		rep(i, 1, n + 1)
+			read(a[i]);
+		rep(i, 1, n + 1)
+			read(c[i]);
+	}
+
+	int dp[MAX_N + 1][MAX_M + 1];
+	void solve() {
+		memset(dp, -1, sizeof(dp));
+		dp[0][0] = 0;
+		rep(i, 1, n + 1) {
+			rep(j, 0, m + 1) {
+				if (dp[i - 1][j] >= 0)
+					dp[i][j] = c[i]; // dp[i][0]=c[i]表示拼出0无消耗
+				else if (j < a[i] || dp[i][j - a[i]] <= 0) // 前i-1个数拼不出j
+					dp[i][j] = -1;
+				else
+					dp[i][j] = dp[i][j - a[i]] - 1;
+			}
+		}
+		int ans = 0;
+		rep(i, 1, m + 1)
+			if (dp[n][i] >= 0)
+				ans++;
+		print(ans);
+	}
 }
 
 namespace p246 {
