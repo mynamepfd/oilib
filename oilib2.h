@@ -1,17 +1,5 @@
 #pragma once
 
-/*
-oilib2的结构如下
-
-namespace lib2 {
-	namespace pABC {
-
-	}
-}
-
-其中ABC表示该程序在视频教程的第A章第B节的第C个视频中
-*/
-
 namespace lib2 {
 	// 算法思想 - 分治法 - 洛谷 P1314. 聪明的质检员,二分答案
 	namespace p122 {

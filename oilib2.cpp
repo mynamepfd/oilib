@@ -3188,9 +3188,9 @@ namespace p246 {
 	int n, k, a[MAXN];
 
 	void read_case() {
-		scanf("%d%d", &n, &k);
+		read(n,k);
 		for (int i = 1; i <= n; i++)
-			scanf("%d", &a[i]);
+			read(a[i]);
 	}
 
 	void dfs();
@@ -3291,57 +3291,83 @@ namespace p251 {
 	ll l, r;
 
 	void read_case() {
-		scanf("%lld %lld", &l, &r);
+		read(l, r);
 	}
 
-	ll resolve(ll n); // 求出1~n中的同类数
+	ll count(ll n); // 求出1~n中的同类数
 	void solve() {
-		printf("%lld\n", resolve(r) - resolve(l - 1));
+		printf("%lld\n", count(r) - count(l - 1));
 	}
 
-	void itoa(ll n, int a[]) // 把n的各个位倒序拆分出来,a[0]保存位数
+	void to_str(ll n, int a[]) // 把n的各个位倒序拆分出来,a[0]保存位数
 	{
 		a[0] = 0;
 		for (; n; n /= 10) // 把n转化为字符串(倒序),a[0]保存位数
 			a[++a[0]] = n % 10;
 	}
 
-	int a[20], sum;
-	ll f[20][170][170];
-	ll dp(int eq, int dep, int cur_sum, int r);
+	int a[21], sum;
+	ll f[2][21][170][170];
+	ll dp(bool eq, int dep, int cur_sum, int r);
 
-	ll resolve(ll n)
+	ll count(ll n)
 	{
 		ll ret = 0;
-		itoa(n, a);
+		memset(a, 0, sizeof(a));
+		to_str(n, a);
 		for (int i = 1; i <= a[0] * 9; i++) // 枚举数字之和
 		{
 			sum = i;
-			memset(f, 0xff, sizeof(f)); // 使用0xff将talbe初始化为-1
+			memset(f, -1, sizeof(f)); // 使用0xff将talbe初始化为-1
 			ret += dp(1, a[0], 0, 0);
 		}
 		return ret;
 	}
 
-	ll dp(int eq, int dep, int cur_sum, int r) // cur_sum:当前各个位数之和 cur_mod:当前数字被SUM所除的余数
-	{
-		ll ret = 0;
-		int ed;
+	/*
+	eq:已枚举出的位是否与原位相同,用来确定当前位可以枚举到几
+	k:当前要枚举的位,相当于已枚举了几位,所以它应算做状态参数
+	s:已枚举出的位之和
+	r:已枚举出的位之和模sum的余数
 
-		if (cur_sum > sum) // 剪枝:当前数字和大于目标数字和时
-			return 0;
-		if (cur_sum + 9 * dep < sum) // 剪枝:未填的数字都填9仍不能达到目标数字和时
-			return 0;
-		if (!eq && f[dep][cur_sum][r] != -1) // 注意!!!table应初始化为-1.因为有很多计算最后的结果都是0!
-			return f[dep][cur_sum][r];
-		if (dep == 0)
-			return r == 0 && cur_sum == sum;
-		ed = (eq) ? a[dep] : 9;
-		for (int i = 0; i <= ed; i++)
-			ret += dp(eq && (i == ed), dep - 1, cur_sum + i, (r * 10 + i) % sum);
-		if (!eq)
-			f[dep][cur_sum][r] = ret;
-		return ret;
+	假设R是124Kxx
+	如果已枚举出的位是123xxx,那么下一位可以枚举到9
+	如果已枚举出的位是124xxx,那么下一位只能枚举到K
+
+	下列程序可以枚举1~254之间的所有数字,注意254是倒序存放的
+	int a[] = { 0,4,5,2,0 };
+	void gen(bool eq, int k, int num)
+	{
+		if (k == 0) {
+			print(num);
+			return;
+		}
+		int ed = (eq ? a[k] : 9);
+		for (int i = 0; i <= ed; i++) {
+			gen(eq && (i==ed), k - 1, (num*10+i));
+		}
+	}
+	gen(true, 3, 0);
+	*/
+	
+	ll dp(bool eq, int k, int s, int r) 
+	{
+		if (f[eq][k][s][r] >= 0) // 只!eq && f[k][s][r]>=0也可以？？？
+			return f[eq][k][s][r];
+
+		ll tot = 0;
+		if (k == 0) {
+			if (s == sum && r == 0)
+				tot = 1;
+		}
+		else {
+			int ed = (eq ? a[k] : 9);
+			for (int i = 0; i <= ed; i++) {
+				tot += dp(eq && (i == ed), k - 1, s + i, (r * 10 + i) % sum);
+			}
+		}
+		f[eq][k][s][r] = tot;
+		return tot;
 	}
 }
 
@@ -3351,7 +3377,7 @@ namespace p252 {
 	ll L, R;
 
 	void read_case() {
-		scanf("%lld%lld", &L, &R);
+		read(L,R);
 	}
 
 	ll count(ll n); // 找出1~n中的同类数
@@ -3360,94 +3386,51 @@ namespace p252 {
 		printf("%lld\n", count(R) - count(L - 1));
 	}
 
-	typedef struct STATE
-	{
-		int num;
-	}STATE;
-	typedef struct TABLE
-	{
-		//std::vector<int> nums;
-		ll amount;
-	}TABLE;
-
-	int a[20];
-	TABLE table[20][20][2000];
-
-	void reset_table();
-	TABLE dfs(int dep, int pos, int lim, int center, int sum, STATE s);
-	void itoa(ll n, int *a);
-
-	ll count(ll n)
-	{		
-		TABLE t;
-
-		if (n < 0)
-			return 0;
-		if (n == 0)
-			return 1;
-
-		itoa(n, a);
-		reset_table();
-		t.amount = 0;
-		for (int i = 1; i <= a[0]; i++) // 枚举数字之和
-		{
-			STATE s; s.num = 0;
-			TABLE t1 = dfs(0, a[0], 1, i, 0, s);
-			//t.nums.insert(t.nums.begin(), t1.nums.begin(), t1.nums.end());
-			t.amount += t1.amount;
-		}
-
-		return t.amount - a[0] + 1; // 0会在for循环中被计算多次,由于一个数字只有一个支点,所以其他数字不会被多次计算
-	}
-
-	TABLE dfs(int dep, int pos, int lim, int center, int sum, STATE s)
-	{
-		TABLE t;
-		t.amount = 0;
-
-		if (sum < 0) // 剪枝
-			;
-		else if (pos <= 0)
-		{
-			if (sum == 0)
-			{
-				//t.nums.push_back(s.num);
-				t.amount = 1;
-			}
-		}
-		else
-		{
-			if (!lim && table[pos][center][sum].amount != -1)
-				return table[pos][center][sum];
-
-			for (int i = 0; i <= (lim ? a[pos] : 9); i++)
-			{
-				STATE s1 = s;
-				s1.num = s.num * 10 + i;
-				TABLE t1 = dfs(dep + 1, pos - 1, lim && (i == a[pos]), center, sum + i * (pos - center), s1);
-				//t.nums.insert(t.nums.begin(), t1.nums.begin(), t1.nums.end());
-				t.amount += t1.amount;
-			}
-		}
-
-		if (!lim)
-			table[pos][center][sum] = t;
-		return t;
-	}
-
-	void reset_table()
-	{
-		for (int i = 0; i < 20; i++)
-			for (int j = 0; j < 20; j++)
-				for (int k = 0; k < 2000; k++)
-					table[i][j][k].amount = -1;
-	}
-
-	void itoa(ll n, int a[])
+	int a[21];
+	ll f[2][21][21][2000];
+	ll dp(bool eq, int dep, int cur_sum, int r);
+	
+	void to_str(ll n, int a[]) // 把n的各个位倒序拆分出来,a[0]保存位数
 	{
 		a[0] = 0;
-		for (; n; n /= 10)
+		for (; n; n /= 10) // 把n转化为字符串(倒序),a[0]保存位数
 			a[++a[0]] = n % 10;
+	}
+
+	ll count(ll n)
+	{
+		ll ret = 0;
+		memset(a, 0, sizeof(a));
+		to_str(n, a);
+		for (int i = 1; i <= a[0]; i++) // 枚举支点位置
+		{
+			memset(f, -1, sizeof(f)); // 使用0xff将talbe初始化为-1
+			ret += dp(1, a[0], i, 0);
+		}
+		return ret - a[0] + 1; // 0会在for循环中被计算多次,由于一个数字只有一个支点,所以其他数字不会被多次计算
+	}
+
+	// k:当前位
+	// c:支点
+	// s:力矩之和
+	ll dp(bool eq, int k, int c, int s)
+	{
+		if (f[eq][k][c][s] >= 0) // 只!eq && f[k][s][r]>=0也可以？？？
+			return f[eq][k][c][s];
+
+		ll tot = 0;
+		if (k == 0) {
+			if (s == 0)
+				tot = 1;
+		}
+		else {
+			int ed = (eq ? a[k] : 9);
+			for (int i = 0; i <= ed; i++) {
+				tot += dp(eq && (i == ed), k - 1, c, s+(k-c)*i);
+			}
+		}
+		f[eq][k][c][s] = tot;
+		return tot;
 	}
 }
 
