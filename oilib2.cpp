@@ -2793,9 +2793,9 @@ namespace p235 {
 	int n, k, a[MAXN];
 
 	void read_case() {
-		scanf("%d%d", &n, &k);
+		read(n, k);
 		for (int i = 1; i <= n; i++)
-			scanf("%d", &a[i]);
+			read(a[i]);
 	}
 
 	const int INF = 1000000000;
@@ -2836,9 +2836,9 @@ namespace p236 {
 	int a[10000];
 	
 	void read_case() {
-		scanf("%d%d", &n, &m);
+		read(n, m);
 		for (int i = 0; i < n; i++)
-			scanf("%d", &a[i]);
+			read(a[i]);
 	}
 
 	int g[10000][101], l[10000][101], mem[10000][101];
@@ -2892,8 +2892,7 @@ namespace p236 {
 				mem[i][j] = -1;
 
 		int ans = dfs(0, 1, 0);
-		//printf("%d\n%d", t, ans);
-		printf("%d\n", t + ans);
+		print(t + ans);
 	}
 }
 
@@ -3023,11 +3022,11 @@ namespace p244 {
 	int n, k, a[MAXN], b[MAXN];
 
 	void read_case() {
-		scanf("%d%d", &n, &k);
+		read(n, k);
 		for (int i = 1; i <= n; i++)
-			scanf("%d", &a[i]);
+			read(a[i]);
 		for (int i = 1; i <= n; i++)
-			scanf("%d", &b[i]);
+			read(b[i]);
 	}
 
 	const int INF = 1000000000;
@@ -3166,7 +3165,7 @@ namespace p245_part2 {
 		rep(i, 1, n + 1) {
 			rep(j, 0, m + 1) {
 				if (dp[i - 1][j] >= 0)
-					dp[i][j] = c[i]; // dp[i][0]=c[i]表示拼出0无消耗
+					dp[i][j] = c[i]; // dp[i][0]=c[i]意味着拼出0无消耗
 				else if (j < a[i] || dp[i][j - a[i]] <= 0) // 前i-1个数拼不出j
 					dp[i][j] = -1;
 				else
@@ -3436,191 +3435,643 @@ namespace p252 {
 
 namespace p262 {
 
-	//const int MAXN = 201;
-	//const int MAXM = 201;
-	//int n, m;
-	//int a[MAXN], b[MAXN];
-
-	//void read_case() {
-	//	scanf("%d%d", &n, &m);
-	//	for (int i = 1; i <= n; i++)
-	//		scanf("%d%d", &a[i], &b[i]);
-	//}
-
-	//void init();
-	//void add_child(int u, int v, int w);
-	//void dp();
-
-	//void solve() {
-	//	init();
-	//	for (int i = 1; i <= n; i++)
-	//		add_child(a[i], i, b[i]);
-	//	dp();
-	//}
-
-	//typedef struct NODE
-	//{
-	//	int left_child;
-	//	int right_sibling;
-	//	int w;
-	//}NODE;
-
-	//NODE node[MAXN];
-	//#define left_child(x) node[x].left_child
-	//#define right_sibling(x) node[x].right_sibling
-	//#define w(x) node[x].w
-
-	//int rightest_child[MAXN];
-
-	//void init()
-	//{
-	//	memset(node, 0, sizeof(node));
-	//	memset(rightest_child, 0, sizeof(rightest_child));
-	//}
-	//void add_child(int u, int v, int w)
-	//{
-	//	node[v].w = w;
-	//	if (rightest_child[u] == 0)
-	//		node[u].left_child = v;
-	//	else
-	//		node[rightest_child[u]].right_sibling = v;
-	//	rightest_child[u] = v;
-	//}
-
-	//int f[MAXN][MAXM];
-
-	//void dp()
-	//{
-	//	STATE dp1(int u, int k);
-	//	for (int i = 0; i <= n; i++)
-	//		for (int j = 0; j <= m + 1; j++)
-	//			f[i][j].amount = -1;
-
-	//	STATE s = dp1(0, m + 1);
-	//	printf("%d\n", s.amount);
-	//}
-
-	//STATE dp2(int u, int k);
-
-	//STATE dp1(int u, int k) // 在以u为根的子树中选择k门课所能得到的最大学分
-	//{	
-	//	STATE s;
-	//	s.amount = 0;
-	//	if (k >= 1 && u >= 0)
-	//	{
-	//		//s.choice.push_back(u);
-	//		s.amount = w(u);
-	//		STATE s1 = dp2(left_child(u), k - 1);
-	//		//s.choice.insert(s.choice.begin(), s1.choice.begin(), s1.choice.end());
-	//		s.amount += s1.amount;
-	//	}
-	//	return s;
-	//}
-
-	//STATE dp2(int u, int k) // 在以u及其右兄弟为根的子树中选择k门课所能得到的最大学分
-	//{
-	//	STATE s;
-	//	s.amount = 0;
-	//	if (k >= 1 && u > 0)
-	//	{
-	//		if (f[u][k].amount != -1)
-	//			return f[u][k];
-	//		STATE s1, s2;
-	//		for (int kk = 0; kk <= k; kk++)
-	//		{
-	//			s1 = dp1(u, kk);
-	//			s2 = dp2(right_sibling(u), k - kk);
-	//			if (s1.amount + s2.amount > s.amount)
-	//			{
-	//				s = s1;
-	//				//s.choice.insert(s.choice.begin(), s2.choice.begin(), s2.choice.end());
-	//				s.amount += s2.amount;
-	//			}
-	//		}
-	//		f[u][k] = s;
-	//	}
-	//	return s;
-	//}
-}
-
-namespace p264 {
-
-	const int MAXN = 1001, MAXQ = 1001;
-
-	typedef struct EDGE
-	{
-		int from, to, w, next;
-	}EDGE;
-
-	int n, q; //顶点数、要保留的枝条数
-	EDGE edge[MAXN]; // 链式前向星
-	int link_e[MAXN], etot;
-
-	void add_edge(int u, int v, int w)
-	{
-		EDGE e;
-		e.from = u;
-		e.to = v;
-		e.w = w;
-		e.next = link_e[u];
-		edge[++etot] = e;
-		link_e[u] = etot;
-	}
+	const int MAX_N = 201;
+	const int MAX_M = 201;
+	int n, m;
+	int a[MAX_N], w[MAX_N]; // b[i]是第i个点的点权
 
 	void read_case() {
-		int a, b, s;
-		scanf("%d %d\n", &n, &q);
-		for (int i = 1; i <= n - 1; i++)
-		{
-			scanf("%d %d %d\n", &a, &b, &s);
-			add_edge(a, b, s);
-			add_edge(b, a, s);
-		}
+		read(n, m);
+		rep(i,1,n+1)
+			read(a[i], w[i]);
 	}
 
-	int f[MAXN][MAXQ]; // 保留以u为根的k个枝条所得的最大苹果数
-	void dp(int u, int fa, int k);
+	vector<VI> G;
+	int f[MAX_N][MAX_M];
+	int sz[MAX_N];
+
+	void dfs(int u, int c) {
+		if (c <= 0)
+			return;
+		rep(i, 0, G[u].size()) {
+			int v = G[u][i];
+			dfs(v, c-1);
+			repd(j, c, 1)
+				rep(k, 1, j)
+					f[u][j] = max(f[u][j], f[u][j - k] + f[v][k]);
+		}
+	}
 
 	void solve() {
-		for (int i = 0; i <= n; i++)
-			for (int j = 0; j <= q; j++)
-				f[i][j] = -1;
+		G = vector<VI>(n + 1);
+		rep(i, 1, n+1)
+			G[a[i]].push_back(i);
+		rep(i, 1, n + 1)
+			f[i][1] = w[i];
+		dfs(0, m + 1);
+		print(f[0][m+1]);
+	}
+}
 
-		dp(1, 0, q);
-		printf("%d\n", f[1][q]);
+namespace p263 {
+
+	/*
+	一组极限数据
+	1
+	500000 10 1000000 1000000
+	*/
+	const int MAX_N = 500001, MAX_K = 11;
+	int N, K, A, B;
+	void read_case() {
+		read(N, K, A, B);
+	}
+	
+	vector<VI> G;
+	int f[MAX_N][MAX_K]; // f[i][k]表示在子树中的到点j的距离为k的点的数量
+	int g[MAX_N][MAX_K]; // g[i][k]表示不在子树中的到点j的距离为k的点的数量
+	int sum[MAX_N][MAX_K]; // 帮助计算g[i][k]
+
+	void dfs1(int u, int fa) {
+		rep(i, 0, G[u].size()) {
+			int v = G[u][i];
+			if (v == fa) continue;
+			dfs1(v, u);
+			rep(j, 0, K + 1) {
+				if (j > 0) f[u][j] += f[v][j - 1];
+				sum[u][j] += f[v][j];
+			}
+		}
 	}
 
-	void dp(int u, int fa, int k)
-	{
-		if (f[u][k] != -1)
-			return;
+	void dfs2(int u, int fa) {
+		if (fa)
+			rep(j, 1, K + 1)
+				g[u][j] += g[fa][j - 1];
+		rep(j, 2, K + 1)
+			if (j >= 2 && fa)
+				g[u][j] += sum[fa][j - 2] - f[u][j - 2];
+		rep(i, 0, G[u].size()) {
+			int v = G[u][i];
+			dfs2(v, u);
+		}
+			
+	}
 
-		int lc, rc; // 连向左右子节点的边
-		f[u][k] = lc = rc = 0;
-		for (int i = link_e[u]; i; i = edge[i].next)
-		{
-			int v = edge[i].to;
-			if (v != fa)
-			{
-				if (lc == 0)
-					lc = i;
+	void solve() {
+		// 建图
+		G = vector<VI>(N + 1);
+		f[1][0] = g[1][0] = 1;
+		rep(i, 2, N + 1) {
+			int fa = ((LL)A * i + B) % (i - 1) + 1;
+			G[fa].push_back(i);
+			f[i][0] = 1;
+			g[i][0] = 1;
+		}
+		dfs1(1, 0);
+		dfs2(1, 0);
+		int ans = 0;
+		rep(i, 1, N + 1) {
+			LL t = 0;
+			rep(j, 0, K + 1)
+				t += (f[i][j] + g[i][j]);
+			ans ^= (t - 1);
+		}
+		print(ans);
+	}
+}
+
+namespace p264_part1 {
+
+	const int MAX_N = 101, MAX_K = 201;
+
+	int N, K;
+	int W[MAX_N]; // 顶点的苹果数
+	int A[MAX_N], B[MAX_N]; // (A,B)
+
+	void read_case() {
+		read(N, K);
+		rep(i, 1, N + 1)
+			read(W[i]);
+		rep(i, 0, N - 1)
+			read(A[i], B[i]);
+	}
+
+	vector<VI> G;
+	int f[MAX_N][MAX_K][2];
+	int vis[MAX_N];
+
+	void dfs(int u) {
+		vis[u] = 1;
+		rep(i, 0, K + 1)
+			f[u][i][0] = f[u][i][1] = W[u];
+		rep(i, 0, G[u].size()) {
+			int v = G[u][i];
+			if (vis[v])
+				continue;
+			dfs(v);
+			repd(j, K, -1)
+				rep(k, 1, j + 1) {
+					f[u][j][1] = max(f[u][j][1], f[u][j - k][0] + f[v][k - 1][1]);
+					if(k >= 2)
+						f[u][j][1] = max(f[u][j][1], f[u][j - k][1] + f[v][k - 2][0]);
+					if (k % 2 == 0) {
+						f[u][j][0] = max(f[u][j][0], f[u][j - k][0] + f[v][k - 2][0]);
+					}
+				}
+					
+
+		}
+	}
+
+	void solve() {
+		G = vector<VI>(N + 1);
+		rep(i, 0, N - 1) {
+			G[A[i]].push_back(B[i]);
+			G[B[i]].push_back(A[i]);
+		}
+		//rep(i, 1, N + 1)
+		//	f[i][0][0] = W[i];
+		dfs(1);
+		int ans = 0;
+		rep(i, 1, N + 1) {
+			ans = max(ans, f[i][K][0]);
+			ans = max(ans, f[i][K][1]);
+		}
+		print(ans);
+	}
+}
+
+namespace p264_part2 {
+
+	const int INF = 1000000000;
+	const int MAX_N = 1001;
+
+	int N, M;
+	int A[MAX_N], B[MAX_N], W[MAX_N]; // 边(A,B)权W
+
+	void read_case() {
+		read(N, M);
+		rep(i, 0, N - 1)
+			read(A[i], B[i], W[i]);
+	}
+
+	struct Edge {
+		int to, w;
+	};
+	vector<vector<Edge> > G;
+	int f[MAX_N]; // f[i]表示断开i与其所有叶子节点的最小花费
+	int lim;// lim是二分出的最大边权
+	void dfs(int u, int fa) {
+		f[u] = 0;
+		int flag = 1; // u是不是叶子节点
+		rep(i, 0, G[u].size()) {
+			int v = G[u][i].to;
+			int w = G[u][i].w;
+			if (v != fa) {
+				flag = 0;
+				dfs(v, u);
+				if (w <= lim)
+					f[u] += min(f[v], w);
 				else
-					rc = i;
+					f[u] += f[v];
 			}
+		}
+		if (flag) f[u] = INF;
+	}
+
+	void solve() {
+		G = vector<vector<Edge> >(N + 1);
+		rep(i, 0, N - 1) {
+			G[A[i]].push_back({ B[i],W[i] });
+			G[B[i]].push_back({ A[i],W[i] });
+		}
+		int lo = -1, hi = INF, ans=0;
+		while (hi-lo>1) {
+			lim = (lo + hi) / 2;
+			dfs(1, 0);
+			if (f[1] <= M) {
+				ans = lim;
+				hi = lim;
+				//print(ans);
+			}
+			else {
+				lo = lim;
+			}
+		}
+		print(ans);
+	}
+}
+
+namespace p272 {
+	const int INF = 1000000000;
+	char str[17];
+	void read_case() {
+		read(str);
+	}
+	// 检查状态s对应的字符串是否是回文串
+	bool check(int s, int len) {
+		char buf[20];
+		int tot = 0;
+		rep(i, 0, len)
+			if (s >> i & 1)
+				buf[tot++] = str[i];
+		rep(i, 0, len / 2)
+			if (buf[i] != buf[tot - i - 1])
+				return 0;
+		return 1;
+	}
+	int f[70000], flag[70000];
+	void solve() {
+		int len = strlen(str);
+		rep(i, 1, 1 << len)
+			flag[i] = check(i, len);
+		rep(i, 0, 1 << len)
+			f[i] = INF;
+		f[0] = 0;
+		rep(i, 1, 1 << len)
+			for (int s = i; s; s = (s - 1) & i) // 枚举i的子集
+				if (flag[s])
+					f[i] = min(f[i], f[i ^ s] + 1);
+		print(f[(1 << len) - 1]);
+	}
+}
+
+namespace p273 {
+	const int MAX_N = 31, MAX_M = 160, MAX_K = 16;
+	int N, M, K; // 顶点数,边数,
+	int X[MAX_M], Y[MAX_M]; // 边
+	int V[MAX_K]; // V[i]是高点
+	void read_case() {
+		read(N, M, K);
+		rep(i, 0, M)
+			read(X[i], Y[i]);
+		rep(i, 0, K)
+			read(V[i]);
+	}
+
+	int e[MAX_N][MAX_N]; // 邻接矩阵
+	int ishigh[MAX_N];
+	VI low;
+	int f[MAX_N][70000]; // f[i][s]表示前i个低点与高点使用状态S构成的山谷数
+	void solve() {
+		rep(i, 0, M)
+			e[X[i]][Y[i]] = e[Y[i]][X[i]] = 1;
+		rep(i, 0, K)
+			ishigh[V[i]] = 1;
+		rep(i, 1, N + 1) // 找出全部低点
+			if (!ishigh[i])
+				low.push_back(i);
+		vector<PII> trans[35];//trans[i]记录低点i与哪几组高点相连
+		rep(i, 0, low.size())
+		{
+			rep(p, 0, K)
+				if (e[low[i]][V[p]])
+					rep(q, p + 1, K)
+					if (e[low[i]][V[q]])
+						trans[i].push_back({ p,q });
+		}
+		rep(i, 0, low.size()) {
+			rep(s, 0, 1 << K) {
+				f[i + 1][s] = max(f[i + 1][s], f[i][s]);
+				rep(j, 0, trans[i].size()) {
+					int p = trans[i][j].first;
+					int q = trans[i][j].second;
+					if (s >> (p - 1) & 1) continue;
+					if (s >> (q - 1) & 1) continue;
+					// 如果p,q不在高点集合里,那么使这两个高点与low[i]形成山谷
+					int s1 = s | (1 << (p - 1)) | (1 << (q - 1));
+					f[i + 1][s1] = max(f[i + 1][s1], f[i][s] + 1);
+				}
+			}
+		}
+		int ans = 0;
+		rep(i, 0, 1 << K)
+			ans = max(ans, f[low.size()][i]);
+		print(ans);
+	}
+}
+
+namespace p281 {
+/*
+2 1 1
+aa
+a
+*/
+	const int MAX_N = 201, MOD = 1000000007;
+	int n, m, K;
+	char a[MAX_N], b[MAX_N];
+	void read_case() {
+		read(n, m, K);
+		read(a+1);
+		read(b+1);
+	}
+	// f[i][j][k][p]表示从A[1...i]选出k个子串拼出B[1...j]的方案数,p表示A[i]是否在第k个子串中
+	int f[MAX_N][MAX_N][MAX_N][2];
+	void solve() {
+		f[0][0][0][0]  = 1;
+		rep(I, 1, n + 1) {
+			int i = I;
+			//memset(f[i], 0, sizeof(f[i]));
+			//f[i][0][0][0]  = 1;
+			rep(j, 0, m+1) {
+				rep(k, 0, K + 1) {
+					//if (f[i - 1][j][k][0] || f[i - 1][j][k][1])
+					if (f[i - 1][j][k][0] || f[i - 1][j][k][1])
+						if (a[i] == b[j + 1]) {
+							f[i][j + 1][k][1] += f[i - 1][j][k][1];
+							print("set1", i, j + 1, k, 1, "to", f[i][j + 1][k][1]);
+							f[i][j + 1][k+1][1] += f[i - 1][j][k][0];
+							f[i][j + 1][k+1][1] += f[i - 1][j][k][1];
+							print("set2", i, j + 1, k+1, 1, "to", f[i][j + 1][k + 1][1]);
+						}
+						else {
+							f[i][j][k][0] += f[i - 1][j][k][1];
+							f[i][j][k][0] += f[i - 1][j][k][0];
+							print("set3", i,j,k,0, "to", f[i][j][k][0]);
+						}
+							
+				}
+			}
+		}
+		print(f[n][m][K][0] + f[n][m][K][1] % MOD);
+	}
+}
+
+namespace p282 {
+	int n;
+	void read_case() {
+		read(n);
+	}
+
+	typedef std::vector<long long> vec;
+	typedef std::vector<vec> MATRIX;
+	MATRIX operator*(const MATRIX& a, const MATRIX& b);
+
+	MATRIX pow(MATRIX a, long long b)
+	{
+		MATRIX operator*(const MATRIX & a, const MATRIX & b);
+		MATRIX c(a.size(), vec(a.size()));
+		for (int i = 0; i < a.size(); i++)
+			c[i][i] = 1;
+		while (b)
+		{
+			if (b & 1)
+				c = c * a;
+			b >>= 1;
+			a = a * a;
+		}
+		return c;
+	}
+
+	const int MOD = 10007;
+	MATRIX operator*(const MATRIX& a, const MATRIX& b)
+	{
+		MATRIX t(a.size(), vec(b[0].size()));
+		for (int i = 0; i < a.size(); i++)
+			for (int j = 0; j < b[0].size(); j++)
+				for (int k = 0; k < b.size(); k++)
+					t[i][j] = (t[i][j] + a[i][k] * b[k][j]) % MOD;
+		return t;
+	}
+
+	void solve() {
+		if (n == 1)
+			printf("2\n");
+		else
+		{
+			MATRIX A(4, vec(4));
+
+			A[1][1] = 2; A[1][2] = 1; A[1][3] = 0;
+			A[2][1] = 2; A[2][2] = 2; A[2][3] = 2;
+			A[3][1] = 0; A[3][2] = 1; A[3][3] = 2;
+
+			MATRIX t = pow(A, n);
+			printf("%-4d\n", t[1][1]);
+		}
+	}
+}
+
+namespace p283 {
+
+/*
+一组简单的测试数据
+
+2 1
+1 2
+*/
+	const int MAX_N = 100001,MAX_C=101;
+	int n, c, h[MAX_N];
+	void read_case() {
+		read(n, c);
+		rep(i, 1, n + 1)
+			read(h[i]);
+	}
+	int f[MAX_N][MAX_C];
+	int p[MAX_N][MAX_C], q[MAX_N][MAX_C];
+	inline int squ(int v) {
+		return v * v;
+	}
+	const int INF = 1000000000;
+
+	/*void solve() {
+		rep(i, 1, n + 1)
+			rep(j, 1, MAX_C)
+			f[i][j] = p[i][j] = q[i][j] = INF;
+		f[1][h[1]] = 0;
+		rep(j, h[1], MAX_C)
+			f[1][j] = squ(j - h[1]);
+		rep(i, 2, n + 1) {
+			rep(j, h[i], MAX_C) {
+				rep(k, 1, MAX_C) {
+					int v = f[i - 1][k] + c * abs(j - k) + squ(j - h[i]);
+					if (v < f[i][j])
+					{
+						print("setf", i, j, "to", v);
+						f[i][j] = v;
+					}
+				}
+			}
+		}
+		int ans = INF;
+		rep(j, h[n], MAX_C)
+			ans = min(ans, f[n][j]);
+		print(ans);
+	}*/
+
+	void solve() {
+
+		rep(i, 0, n + 1)
+			rep(j, 0, MAX_C)
+				f[i][j] = p[i][j] = q[i][j] = INF;
+		f[1][h[1]] = 0;
+		rep(j, h[1], MAX_C)
+			f[1][j] = squ(j - h[1]);
+		rep(j, 1, MAX_C)
+			p[1][j] = min(p[1][j - 1], f[1][j] - c * j);
+		repd(j, MAX_C - 1, 0)
+			q[1][j] = min(q[1][j + 1], f[1][j] + c * j);
+		rep(i, 2, n + 1) {
+			rep(j, h[i], MAX_C) {
+				// 之前f[i][j]的值是通过rep(k,1,MAX_C)求出的
+				f[i][j] = min((LL)f[i][j], (LL)p[i - 1][j] + c * j + squ(j - h[i])); // 瞬间求出当k<=j时的f[i][j]
+				f[i][j] = min((LL)f[i][j], (LL)q[i - 1][j] - c * j + squ(j - h[i])); // 瞬间求出当k>=j时的f[i][j]
+			}
+			rep(j, 1, MAX_C) { // 仿照初始化阶段,更新p数组
+				p[i][j] = min(p[i][j - 1], f[i][j] - c * j);
+			}
+			repd(j, MAX_C - 1, 0) { // 更新q数组
+				q[i][j] = min(q[i][j + 1], f[i][j] + c * j);
+			}
+		}
+		int ans = INF;
+		rep(j, 1, MAX_C)
+			ans = min(ans, f[n][j]);
+		print(ans);
+	}
+}
+
+namespace p291 {
+	const int MAX_N = 500001;
+	int n, m, a[MAX_N];
+
+	void read_case() {
+		n = 0;
+		read(n, m);
+		rep(i, 1, n+1)
+			read(a[i]);
+	}
+
+	LL sum[MAX_N], f[MAX_N];
+	const double INF = 1e30;
+	double slope(int i, int j) { // i>j
+		LL Xi,Yi,Xj,Yj;
+		Xi = sum[i];
+		Yi = f[i] + sum[i]*sum[i];
+		Xj = sum[j];
+		Yj = f[j] + sum[j] * sum[j];
+		LL dY = Yi - Yj;
+		LL dX = Xi - Xj;
+		if (dX == 0) {
+			if (dY >= 0)
+				return INF;
+			else
+				return -INF;
+		}
+		else
+			return (double)(Yi - Yj) / (double)(Xi - Xj);
+	}
+
+	void solve() {
+		rep(i, 1, n + 1)
+			sum[i] = sum[i - 1] + a[i];
+		deque<int> q;
+		q.push_back(0); // 对于f[1]，k只有0
+		rep(i, 1, n + 1) {
+			while (q.size() >= 2) {
+				int I = *q.rbegin();
+				int J = *(q.rbegin() + 1);
+				if (slope(I, J) >= 2 * sum[i]) // 找到直线与凸壳的第一个交点
+					q.pop_back();
+				else
+					break;
+			}
+			int k = q.back();
+			f[i] = f[k] + (sum[i] - sum[k]) * (sum[i] - sum[k]) + m;
+			while (q.size() >= 2) {
+				int I = *q.rbegin();
+				int J = *(q.rbegin() + 1);
+				if (slope(I, J) < slope(i, I)) // 确保斜率递增
+					break;
+				else
+					q.pop_back();
+			}
+			q.push_back(i);
+		}
+		print(f[n]);
+	}
+}
+
+namespace p2A1 {
+	const int MAX_N = 500001, MAX_K = 101;
+	int n, k, p, a[MAX_N];
+	void read_case() {
+		read(n, k, p);
+		rep(i, 1, n + 1)
+			read(a[i]);
+	}
+
+	const int INF = 100000000;
+
+	// 单点修改,求区间最小值
+	struct Segment {
+		int l, r;
+		int minv; // 该线段维护的和
+		Segment* lc, * rc;
+
+		Segment(int l_, int r_)
+		{
+			l = l_; r = r_;
+			lc = rc = NULL;
+			if (l == r) {
+				minv = INF;
+				return;
+			}
+			int mid = (l + r) / 2;
+			lc = new Segment(l, mid);
+			rc = new Segment(mid + 1, r);
+			update();
 		}
 
-		if (k >= 1 && lc && rc)
+		void update() {
+			minv = min(lc->minv, rc->minv);
+		}
+
+		void add(int p, int v) {
+			if (p<l || p>r) // p在该线段外
+				return;
+			if (p == l && p == r) { // 找到了点
+				if (minv == INF)minv = v;
+				else minv += v;
+				return;
+			}
+			lc->add(p, v);
+			rc->add(p, v);
+			update();
+		}
+
+		int query(int A, int B)
 		{
-			dp(edge[lc].to, u, k - 1);
-			dp(edge[rc].to, u, k - 1);
-			f[u][k] = max(f[edge[lc].to][k - 1] + edge[lc].w, f[edge[rc].to][k - 1] + edge[rc].w);
-			for (int i = 0; i <= k - 2; i++)
-			{
-				dp(edge[lc].to, u, i);
-				dp(edge[rc].to, u, k - 2 - i);
-				f[u][k] = max(f[u][k], f[edge[lc].to][i] + f[edge[rc].to][k - 2 - i] + edge[lc].w + edge[rc].w);
+			if (l > B || r < A) // 该线段在[A,B]外
+				return INF;
+			if (l >= A && r <= B) // 该线段在[A,B]中
+				return minv;
+			return min(lc->query(A, B), rc->query(A, B));
+		}
+	};
+
+	
+	int sum[MAX_N];
+	int f[MAX_N][MAX_K];
+	void solve() {
+		rep(i, 1, n + 1)
+			sum[i] = (sum[i - 1] + a[i]) % p;
+		rep(i, 1, n + 1)
+			rep(j, 1, k + 1)
+				f[i][j] = INF;
+		f[0][0] = 0;
+		Segment seg1(0, 100);
+		Segment seg2(0, 100);
+		rep(i, 1, n + 1) {
+			rep(j, 1, k + 1) {
+				f[i][j] = min(f[i][j], seg1.query(0, sum[i]));
+				f[i][j] = min(f[i][j], seg2.query(sum[i] + 1, p)) + sum[i];
+			}
+			rep(j, 1, k + 1) {
+				seg1.add(sum[j], f[i][j] - sum[j]);
+				seg2.add(sum[j], f[i][j] - sum[j] + p);
 			}
 		}
+		print(f[n][k]);
 	}
 }
 
@@ -3629,89 +4080,64 @@ namespace p326 {
 	const int MAXN = 110; // 最大点数
 	const int MAXM = 10010; // 最大边数
 
-	typedef struct EDGE
-	{
-		int from, to, w, t, next;
-	}EDGE, * EDGE_PTR;
+	int K, n, m;
+	int u[MAXM], v[MAXM], w[MAXM], t[MAXM];
 
-	int K, n, m, u0;
-	EDGE edge[2 * MAXM]; // 无向图双倍边
-	int link_e[MAXN], etot;
-
-	void init()
-	{
-		memset(link_e, -1, sizeof(link_e));
-		etot = 0;
-	}
-
-	void add_edge(int u, int v, int w, int t)
-	{
-		EDGE e;
-		e.from = u;
-		e.to = v;
-		e.w = w;
-		e.t = t;
-		e.next = link_e[u];
-		edge[etot] = e;
-		link_e[u] = etot++;
-	}
-
-	void read_case() {
-		int u, v, w, t;
-		init();
-		scanf("%d\n%d\n%d\n", &K, &n, &m);
-		for (int i = 1; i <= m; i++)
+	struct Graph {
+		struct Edge
 		{
-			scanf("%d %d %d %d\n", &u, &v, &w, &t);
-			if (u == v) // 去掉自环
-				continue;
-			add_edge(u, v, w, t);
-			//add_edge(v,u,w,t);
+			int to, w, t;
+		};
+		typedef vector<Edge> Edges;
+		vector<Edges> G;
+
+		Graph() {
+			G = vector<Edges>(n);
 		}
-	}
+		void add_edge(int u, int v, int w, int t) {
+			G[u].push_back({ v,w,t });
+		}
 
-	int dijkstra(int u0);
-
-	void solve() {
-		int ans;
-		ans = dijkstra(1);
-		printf("%d\n", ans);
-	}
-
-	typedef pair<int, int> P;
-	int dijkstra(int u0) // u:源点
-	{
-		priority_queue<pair<int, P>, vector<pair<int, P> >, greater<pair<int, P> > > heap;
-		int ans;
-		//memset(dist, INF, sizeof(dist));
-		ans = -1;
-		//dist[u0]=0;
-		//for(int i=1; i<=n; i++)
-		//	{
-			//heap.insert(std::make_pair(0, std::make_pair(0, 1)));
-			//}
-		heap.push(make_pair(0, make_pair(0, u0)));
-		while (!heap.empty())
-		{
-			int d = heap.top().first;
-			int c = heap.top().second.first;
-			int u = heap.top().second.second;
-			if (u == n)
+		typedef pair<int, PII> Item;
+		int dijkstra(int u0) {
+			priority_queue<Item, vector<Item>, greater<Item> > heap;
+			int ans = -1;
+			heap.push({0, {0,u0}});
+			while (!heap.empty())
 			{
-				ans = d;
-				break;
-			}
-			heap.pop();
-			//if(d > dist[u]) continue;
-			for (int i = link_e[u]; i != -1; i = edge[i].next)
-			{
-				if (c + edge[i].t <= K)
+				int d = heap.top().first;
+				int c = heap.top().second.first;
+				int u = heap.top().second.second;
+				if (u == n)
 				{
-					heap.push(make_pair(d + edge[i].w, make_pair(c + edge[i].t, edge[i].to)));
+					ans = d;
+					break;
+				}
+				heap.pop();
+				rep(i,0,G[u].size())
+				{
+					Edge e = G[u][i];
+					if (c + e.t <= K)
+					{
+						heap.push({ d + e.w, {c + e.t, e.to} });
+					}
 				}
 			}
+			return ans;
 		}
-		return ans;
+	};
+
+	void read_case() {
+		read(K, n, m);
+		rep(i,0,m)
+			read(u[i], v[i], w[i], t[i]);
+	}
+
+	void solve() {
+		Graph g;
+		rep(i, 0, m)
+			g.add_edge(u[i], v[i], w[i], t[i]);
+		print(g.dijkstra(1));
 	}
 }
 
@@ -3723,102 +4149,89 @@ namespace p334 {
 	double X[MAX_N], Y1[MAX_N], Y2[MAX_N], Y3[MAX_N], Y4[MAX_N];
 
 	void read_case() {
-		scanf("%d", &n);
+		read(n);
 		for (int i = 1; i <= n; i++)
-			scanf("%lf %lf %lf %lf %lf", &X[i], &Y1[i], &Y2[i], &Y3[i], &Y4[i]);
+			read(X[i], Y1[i], Y2[i], Y3[i], Y4[i]);
 	}
 
-	typedef struct LINE
+	struct Point
+	{
+		double x, y;
+	};
+
+	struct Line
 	{
 		double x1, y1;
 		double x2, y2;
-	}LINE;
+	};
 
-	typedef struct WALL
+	struct Wall
 	{
-		double x, y1, y2, y3, y4;
-		LINE line[4];
-		int point[5];
-	}WALL, * WALL_PTR;
+		double x;
+		Line lines[4];
+	};
 
-	WALL wall[MAX_N];
-	int st, ed;
-
-	void init();
-	int add_point(double x, double y);
-	void link(int p1, int p2);
-	void bellman_ford(int u0);
-	double get_dist(int u);
-
-	void solve() {
-		init();
-		st = add_point(0, 5);
-		for (int i = 1; i <= n; i++)
+	const int INF = 100000000;
+	const double EPS = 1e-6;
+	struct Graph {
+		struct Edge
 		{
-			wall[i].x = X[i];
-			wall[i].y1 = Y1[i];
-			wall[i].y2 = Y2[i];
-			wall[i].y3 = Y3[i];
-			wall[i].y4 = Y4[i];
+			int from, to;
+			double w;
+		};
+		vector<Edge> edges;
+		vector<double> dist;
 
-			wall[i].line[1] = { X[i], 0, X[i], Y1[i]};
-			wall[i].line[2] = { X[i], Y2[i], X[i], Y3[i]};
-			wall[i].line[3] = { X[i], Y4[i], X[i], 10};
-
-			wall[i].point[1] = add_point(wall[i].x, wall[i].y1);
-			wall[i].point[2] = add_point(wall[i].x, wall[i].y2);
-			wall[i].point[3] = add_point(wall[i].x, wall[i].y3);
-			wall[i].point[4] = add_point(wall[i].x, wall[i].y4);
+		Graph() {}
+		Graph(int sz) { // 点的数量
+			edges = vector<Edge>();
+			dist = vector<double>(sz + 1, INF);
 		}
-		ed = add_point(10, 5);
-		for (int i = st; i <= ed; i++)
-		{
-			for (int j = i + 1; j <= ed; j++)
-				link(i, j);
+		void add_edge(int u, int v, double w) {
+			edges.push_back({ u,v,w });
 		}
-		bellman_ford(st);
-		printf("%.2f\n", get_dist(ed));
-	}
 
-	typedef struct POINT
-	{
-		double x, y;
-	}POINT, * POINT_PTR;
-	POINT point[MAX_N]; int ptot;
+		void bellman_ford(int u0) {
+			dist[u0] = 0;
+			while (true)
+			{
+				int updated = 0;
+				rep(i, 0, edges.size())
+				{
+					Edge& e = edges[i];
+					if (!(abs(dist[e.from] - INF) < EPS) && dist[e.from] + e.w < dist[e.to]) // 判断是否是INF的方法跟整数不一样
+					{
+						dist[e.to] = dist[e.from] + e.w;
+						updated = 1;
+					}
+				}
+				if (!updated)
+					break;
+			}
+		}
+	};
+
+	vector<Point> points;
+	Wall walls[MAX_N];
+	Graph g;
 
 	int add_point(double x, double y)
 	{
-		POINT_PTR pt = &point[++ptot];
-		pt->x = x;
-		pt->y = y;
-		return ptot;
+		points.push_back({ x,y });
+		return points.size() - 1;
 	}
 
-	int check(POINT_PTR pt1, WALL_PTR wall, POINT_PTR pt2);
-	void add_edge(int u, int v, double w);
-	double distance(POINT_PTR pt1, POINT_PTR pt2);
-
-	void link(int p1, int p2)
+	double square(double x)
 	{
-		POINT_PTR pt1;
-		POINT_PTR pt2;
-		pt1 = &point[p1];
-		pt2 = &point[p2];
-
-		if (pt2->x <= pt1->x) // 防止同一堵墙上的点相连
-			return;
-		for (int i = 1; i <= n; i++)
-		{
-			if (wall[i].x > pt1->x && wall[i].x < pt2->x) // 如果一堵墙在两点之间
-			{
-				if (check(pt1, &wall[i], pt2)) // 判断两点的连线是否被该墙阻断
-					return;
-			}
-		}
-		add_edge(p1, p2, distance(pt1, pt2));
+		return x * x;
 	}
 
-	int check(POINT_PTR pt1, WALL_PTR wall, POINT_PTR pt2) // 返回1则表示线段与某一堵墙相交
+	double calc_dist(Point* pt1, Point* pt2)
+	{
+		return sqrt(square(pt2->x - pt1->x) + square(pt2->y - pt1->y));
+	}
+
+	int check(Point* pt1, Wall* wall, Point* pt2) // 返回1则表示线段与某一堵墙相交
 	{
 		// y=mx+b
 		double m = (pt2->y - pt1->y) / (pt2->x - pt1->x);
@@ -3826,190 +4239,299 @@ namespace p334 {
 		double y = m * wall->x + b;// 代入墙的x坐标得交点得y坐标
 		for (int i = 1; i <= 3; i++)
 		{
-			if (y >= wall->line[i].y1 && y <= wall->line[i].y2)
+			if (y >= wall->lines[i].y1 && y <= wall->lines[i].y2)
 				return 1;
 		}
 		return 0;
 	}
 
-	typedef struct EDGE
+	void link(int p1, int p2)
 	{
-		int from, to;
-		double w;
-		int next;
-	}EDGE, * EDGE_PTR;
-	EDGE edge[MAX_N]; // 无向图双倍边
-	int link_e[MAX_N], etot;  // 顶点v的边链表中第一条边的id
-	double dist[MAX_N];
+		Point* pt1 = &points[p1];
+		Point* pt2 = &points[p2];
 
-	void init()
-	{
-		ptot = 0;
-		etot = 0;
-	}
-
-	void add_edge(int u, int v, double w)
-	{
-		EDGE e;
-		e.from = u;
-		e.to = v;
-		e.w = w;
-		e.next = link_e[u];
-		edge[++etot] = e;
-		link_e[u] = etot;
-		//printf("link (%.2f,%.2f) -> (%.2f,%.2f) %.2f\n", point[u].x,point[u].y, point[v].x,point[v].y, w);
-	}
-
-	const int INF = 1000000000;
-	const double EPS = 1e-10;
-
-	void bellman_ford(int u0)
-	{
-		//memset(dist, 63, sizeof(dist)); // 注意!这里不能使用0x3f3f3f3f
-		EDGE_PTR e;
-		for (int i = 1; i <= ptot; i++)
-			dist[i] = 1e9;
-		dist[u0] = 0;
-		while (1)
+		if (pt2->x <= pt1->x) // 防止同一堵墙上的点相连
+			return;
+		for (int i = 1; i <= n; i++)
 		{
-			int updated = 0;
-			for (int i = 1; i <= etot; i++)
+			if (walls[i].x > pt1->x && walls[i].x < pt2->x) // 如果一堵墙在两点之间
 			{
-				e = &edge[i];
-				if (!(abs(dist[e->from] - INF) < EPS) && dist[e->from] + e->w < dist[e->to]) // 判断是否是INF的防范跟整数不一样
+				if (check(pt1, &walls[i], pt2)) // 判断两点的连线是否被该墙阻断
+					return;
+			}
+		}
+		g.add_edge(p1, p2, calc_dist(pt1, pt2));
+	}
+
+	void solve() {
+		int st = add_point(0, 5);
+		for (int i = 1; i <= n; i++)
+		{
+			double x = X[i], y1 = Y1[i], y2 = Y2[i], y3 = Y3[i], y4 = Y4[i];
+			walls[i].x = x;
+
+			walls[i].lines[1] = { x, 0, x, y1};
+			walls[i].lines[2] = { x, y2, x, y3};
+			walls[i].lines[3] = { x, y4, x, 10};
+
+			add_point(x, y1);
+			add_point(x, y2);
+			add_point(x, y3);
+			add_point(x, y4);
+		}
+		int ed = add_point(10, 5);
+		g = Graph(ed);
+		for (int i = st; i <= ed; i++)
+			for (int j = i + 1; j <= ed; j++)
+				link(i, j);
+		g.bellman_ford(st);
+		printf("%.2f\n", g.dist[ed]);
+	}
+}
+
+namespace p335 {
+	const int MAX_N = 31;
+	int n,m; // n:货币数量 m:汇率表长度
+	string names[MAX_N];
+	string a[MAX_N], b[MAX_N]; // 货币A 兑换率 货币B
+	double w[MAX_N]; // 兑换率
+	void read_case() {
+		read(n);
+		rep(i, 1, n + 1)
+			read(names[i]);
+		if (n == 0)return;
+		read(m);
+		rep(i, 0, m)
+			read(a[i], w[i], b[i]);
+	}
+
+	struct Graph { // Graph只是简单将图算法包裹在一起,所以里面直接使用全局变量
+		struct Edge
+		{
+			int from, to;
+			double w;
+		};
+		vector<Edge> edges;
+		vector<double> dist;
+
+		void add_edge(int u, int v, double w) {
+			edges.push_back({ u,v,w });
+		}
+
+		void bellman_ford(int u0) {
+			dist = vector<double>(n + 1, 0);
+			dist[u0] = 1;
+			rep(i,1,n+1)
+			{
+				rep(i, 0, edges.size())
 				{
-					dist[e->to] = dist[e->from] + e->w;
-					updated = 1;
+					Edge& e = edges[i];
+					if (dist[e.from] * e.w > dist[e.to]) // 判断是否是INF的方法跟整数不一样
+					{
+						dist[e.to] = dist[e.from] * e.w;
+					}
 				}
 			}
-			if (!updated)
-				break;
 		}
+	};
+
+	void solve(int case_id) {
+		map<string, int> id;
+		rep(i, 1, n + 1)
+			id[names[i]] = i;
+		Graph g;
+		rep(i, 0, m)
+			g.add_edge(id[a[i]], id[b[i]], w[i]);
+		int ans = 0;
+		rep(i, 1, n + 1) {
+			g.bellman_ford(i);
+			if (g.dist[i] > 1) {
+				printf("Cast %d: Yes", case_id);
+				return;
+			}
+		}
+		printf("Cast %d: No", case_id);
+	}
+}
+
+namespace p344 {
+	const int MAX_V = 50001, MAX_E = 50001;
+	int v, e;//点数,边数
+	int w[MAX_V];//点权
+	int a[MAX_E], b[MAX_E], c[MAX_E];//u,v,w
+	void read_case() {
+		read(v, e);
+		rep(i, 1, v + 1)
+			read(w[i]);
+		rep(i, 1, e + 1)
+			read(a[i], b[i], c[i]);
 	}
 
-	double get_dist(int u)
-	{
-		return dist[u];
-	}
+	const int INF = 100000000;
+	struct Graph { // Graph只是简单将图算法包裹在一起,所以里面直接使用全局变量
+		struct Edge
+		{
+			int from, to, w;
+		};
+		vector<Edge> edges;
+		int d[MAX_V];
+		int inq[MAX_V];
 
-	double square(double x)
-	{
-		return x * x;
-	}
-	double distance(POINT_PTR pt1, POINT_PTR pt2)
-	{
-		return sqrt(square(pt2->x - pt1->x) + square(pt2->y - pt1->y));
+		void add_edge(int u, int v, int w) {
+			edges.push_back({ u,v,w });
+			edges.push_back({ v,u,w });
+		}
+
+		int spfa(int s)
+		{
+			deque<int> q;
+			rep(i, 1, v + 1) {
+				d[i] = INF;
+				inq[i] = 0;
+			}
+			d[s] = 0;
+			q.push_back(s);
+			inq[s] = 1;
+			while (!q.empty())
+			{
+				int v = q[0];
+				q.pop_front();
+				inq[v] = 0;
+				rep(i,0,edges.size())
+				{
+					Edge& e = edges[i];
+					if (d[e.from] + e.w < d[e.to])
+					{
+						d[e.to] = d[e.from] + e.w;
+						if (!inq[e.to])
+						{
+							q.push_back(e.to);
+							inq[e.to] = 1;
+						}
+					}
+				}
+			}
+			return 0;
+		}
+	};
+
+	void solve() {
+		Graph g;
+		rep(i, 1, e+1)
+			g.add_edge(a[i], b[i], c[i]);
+		g.spfa(1);
+		int ans = 0;
+		rep(i, 1, v + 1)
+			ans += (g.d[i] * w[i]);
+		print(ans);
 	}
 }
 
 namespace p345 {
 
-	//const int INF = 1000000000;
-	//typedef long long ll;
-	//typedef int G[MAXN];
-	//typedef pair<int, int> P;
+	const int INF = 100000000, MAX_N=100001, MAX_M=100001;
 
-	//struct Edge
-	//{
-	//	int from, to, w, next;
-	//};
+	int n, m, c;
+	int a[MAX_N]; //点所在的层
+	int u[MAX_M], v[MAX_M], w[MAX_M];
+	int maxl; // 最大层
 
-	//int n, m, c;
-	//int a[MAXN]; //点所在的层
-	//Edge edge[MAXN * 2];
-	//int etot;
-	//ll d[MAXN];
-	//G g;
+	void read_case() {
+		read(n, m, c); //c是层间移动代价
 
-	//void add_edge(G g, int u, int v, int w)
-	//{
-	//	edge[++etot] = { u,v,w,g[u] };
-	//	g[u] = etot;
-	//}
+		maxl = 0; 
+		for (int i = 1; i <= n; i++) //点所在的层
+		{
+			read(a[i]);
+			maxl = max(a[i], maxl);
+		}
 
-	//void read_case() {
-	//	scanf("%d%d%d", &n, &m, &c); //c是层间移动代价
+		for (int i = 1; i <= m; i++)
+			read(u[i], v[i], w[i]);
+	}
 
-	//	int maxl = 0; // 最大层
-	//	for (int i = 1; i <= n; i++) //点所在的层
-	//	{
-	//		scanf("%d", &a[i]);
-	//		maxl = max(a[i], maxl);
-	//	}
+	struct Graph { // Graph只是简单将图算法包裹在一起,所以里面直接使用全局变量
+		struct Edge
+		{
+			int from, to, w;
+		};
+		vector<Edge> edges;
+		int sz; // 最大的顶点编号,即顶点数量
+		VI d, inq;
 
-	//	etot = 0;
-	//	for (int i = 1; i <= n + maxl; i++) //要把虚拟顶点也清了
-	//		g[i] = 0;
+		Graph() {
+			sz = 0;
+		}
+		void add_edge(int u, int v, int w) {
+			edges.push_back({ u,v,w });
+			sz = max(sz, max(u, v));
+		}
 
-	//	for (int i = 1; i <= m; i++)
-	//	{
-	//		int u, v, w, c;
-	//		scanf("%d %d %d\n", &u, &v, &w);
-	//		add_edge(g, u, v, w);
-	//		add_edge(g, v, u, w);
-	//	}
-	//}
+		int spfa(int s)
+		{
+			queue<int> q;
+			d = VI(sz + 1);
+			inq = VI(sz + 1);
+			rep(i, 1, sz + 1) {
+				d[i] = INF;
+				inq[i] = 0;
+			}
+			d[s] = 0;
+			q.push(s);
+			inq[s] = 1;
+			while (!q.empty())
+			{
+				int v = q.front();
+				q.pop();
+				inq[v] = 0;
+				rep(i, 0, edges.size())
+				{
+					Edge& e = edges[i];
+					if (d[e.from] + e.w < d[e.to])
+					{
+						d[e.to] = d[e.from] + e.w;
+						if (!inq[e.to])
+						{
+							q.push(e.to);
+							inq[e.to] = 1;
+						}
+					}
+				}
+			}
+			return 0;
+		}
+	};
 
-	//int spfa(G g, int n, int s, ll d[MAXN]);
+	void solve(int case_id) {
+		Graph g;
 
-	//void solve() {
-	//	for (int i = 1; i <= n; i++) // 虚拟顶点n+1~n+maxl
-	//	{
-	//		add_edge(g, i, n + a[i], 0);
-	//		add_edge(g, n + a[i], i, 0);
-	//	}
+		rep(i, 1, m + 1) {
+			g.add_edge(u[i], v[i], w[i]);
+			g.add_edge(v[i], u[i], w[i]);
+		}
+			
+		rep(i,1,n+1) // 虚拟顶点n+1~n+maxl,每个点代表每一层
+		{
+			g.add_edge(i, n + a[i], 0); // 每个点向代表点连边
+			g.add_edge(n + a[i], i, 0);
+		}
 
-	//	for (int i = 1; i <= maxl - 1; i++)
-	//	{
-	//		add_edge(g, n + i, n + i + 1, c);
-	//		add_edge(g, n + i + 1, n + i, c);
-	//	}
+		rep(i, 1, maxl)
+		{
+			g.add_edge(n + i, n + i + 1, c); // 代表点之间连边
+			g.add_edge(n + i + 1, n + i, c);
+		}
 
-	//	for (int i = 1; i <= n + maxl; i++)
-	//		d[i] = INF;
-
-	//	spfa(g, n + maxl, 1, d);
-
-	//	if (d[n] == INF)
-	//	{
-	//		printf("Case #%d: -1\n", tc);
-	//	}
-	//	else
-	//	{
-	//		printf("Case #%d: %lld\n", tc, d[n]);
-	//	}
-	//}
-
-	//int spfa(G g, int n, int s, ll d[MAXN])
-	//{
-	//	deque<int> q;
-	//	int inq[MAXN];
-	//	for (int i = 1; i <= n; i++)
-	//		inq[i] = 0;
-	//	d[s] = 0;
-	//	q.push_back(s);
-	//	inq[s] = 1;
-	//	while (!q.empty())
-	//	{
-	//		int v = q[0];
-	//		q.pop_front();
-	//		inq[v] = 0;
-	//		for (int i = g[v]; i; i = edge[i].next)
-	//		{
-	//			Edge& e = edge[i];
-	//			if (d[e.from] != INF && (d[e.to] == INF || d[e.from] + e.w < d[e.to]))
-	//			{
-	//				d[e.to] = d[e.from] + e.w;
-	//				if (!inq[e.to])
-	//				{
-	//					q.push_back(e.to);
-	//					inq[e.to] = 1;
-	//				}
-	//			}
-	//		}
-	//	}
-	//	return 0;
-	//}
+		g.spfa(1);
+		if (g.d[n] == INF)
+		{
+			printf("Case #%d: -1\n", case_id);
+		}
+		else
+		{
+			printf("Case #%d: %d\n", case_id, g.d[n]);
+		}
+	}
 }
 
 namespace p353 {

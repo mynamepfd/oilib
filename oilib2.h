@@ -364,7 +364,7 @@ namespace lib2 {
 		void solve();
 	}
 
-	// DP - 数位DP - HDU 4507.
+	// DP - 数位DP - HDU 4507. 恨7不成妻
 	namespace p253 {
 		// TODO
 	}
@@ -379,19 +379,36 @@ namespace lib2 {
 		// TODO
 	}
 
+	// DP - 树上DP - 树上最长链
+	namespace p261_part1 {
+		// TODO
+	}
+
+	// DP - 树上DP - 最大权值和子树
+	namespace p261_part2 {
+		// TODO
+	}
+
 	// DP - 树上DP - HDU 1561. The more, the better
 	namespace p262 {
-		//void read_case();
-		//void solve();
+		void read_case();
+		void solve();
 	}
 
 	// DP - 树上DP - HDU 5593. ZYB's Tree
 	namespace p263 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
-	// DP - 树上DP - 洛谷 P2015. Apple Tree
-	namespace p264 {
+	// DP - 树上DP - POJ 2486. Apple Tree
+	namespace p264_part1 {
+		void read_case();
+		void solve();
+	}
+
+	// DP - 树上DP - HDU 3586. Information Disturbing
+	namespace p264_part2 {
 		void read_case();
 		void solve();
 	}
@@ -401,14 +418,21 @@ namespace lib2 {
 		// TODO
 	}
 
+	// DP - 状态压缩DP - 骨牌覆盖
+	namespace p271 {
+		// TODO
+	}
+
 	// DP - 状态压缩DP - HDU 4628. Pieces
 	namespace p272 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// DP - 状态压缩DP - HDU 6149. Valley Number II
 	namespace p273 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// DP - 状态压缩DP - 愤怒的小鸟
@@ -421,48 +445,69 @@ namespace lib2 {
 		// TODO
 	}
 
-	// DP - DP优化 - 滚动数组优化 - 子串
+	// DP - DP优化 - 滚动数组优化 - 洛谷 P2679. 子串
 	namespace p281 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// DP - DP优化 - 矩阵乘法优化 - POJ 3734. Blocks
 	namespace p282 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
-	// DP - DP优化 - 前缀数组优化 - BZOJ 1705. Telephone Wire
+	// DP - DP优化 - 前缀数组优化 - 洛谷 P2885. Telephone Wire
 	namespace p283 {
-		// TODO
+		void read_case();
+		void solve(); // AC
 	}
 
-	// DP - DP优化 - 换教室
+	// DP - DP优化 - 练习 - 换教室
 	namespace p284 {
 		// TODO
 	}
 
-	// DP - DP优化 - HDU 2294. Pendant
+	// DP - DP优化 - 练习 - HDU 2294. Pendant
 	namespace p285 {
 		// TODO
 	}
 
-	// DP - DP优化 - CF 985E. Pencils and boxes
+	// DP - DP优化 - 练习 - CF 985E. Pencils and boxes
 	namespace p286 {
 		// TODO
 	}
 
 	// DP - 单调性优化 - 斜率优化 - HDU 3507. Print Article
 	namespace p291 {
+		extern int n;
+		void read_case();
+		void solve(); // WA
+	}
+
+	// DP - 单调性优化 - 斜率优化 - BZOJ P1096. 仓库建设
+	namespace p292 {
 		// TODO
 	}
 
-	// 图算法 - dijkstra算法 - POJ 1724. Roads
+	// DP - 数据结构优化 - CF 958C3. Encryption
+	namespace p2A1 {
+		void read_case();
+		void solve(); // WA
+	}
+
+	// DP - 数据结构优化 - BZOJ 3939. Cow Hopscotch
+	namespace p2A2 {
+		// TODO
+	}
+
+	// 图算法 - dijkstra算法 - 练习 - POJ 1724. Roads
 	namespace p326 {
 		void read_case();
 		void solve();
 	}
 
-	// 图算法 - bellman-ford算法 - POJ 1556. The doors
+	// 图算法 - bellman-ford算法 - 洛谷 P1354. 房间最短路问题
 	namespace p334 {
 		void read_case();
 		void solve();
@@ -470,18 +515,22 @@ namespace lib2 {
 
 	// 图算法 - bellman-ford算法 - 洛谷 P1931. 套利
 	namespace p335 {
-		// TODO
+		extern int n;
+		void read_case();
+		void solve(int case_id);
 	}
 
 	// 图算法 - spfa算法 - POJ 3013. Big Christmas Tree
 	namespace p344 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// 图算法 - spfa算法 - HDU 4725. The shortest path in Nya graph
 	namespace p345 {
-		//void read_case();
-		//void solve();
+		extern int n;
+		void read_case();
+		void solve(int case_id); // WA
 	}
 
 	// 图算法 - floyd算法 - POJ 3660. Cow Contest

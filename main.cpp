@@ -52,17 +52,43 @@ template<class T, class... U> void print(const T& head, const U &... tail) { _W(
 
 #include "types.h"
 #include "oilib2.h"
-using namespace lib2::p252;
+using namespace lib2::p345;
 
 #endif
 
 int main()
 {
-    //freopen(".\\data\\P4135_1.in", "r", stdin);
+    //freopen(".\\data\\P2885_2.in", "r", stdin);
     //freopen("tmp.out","w",stdout);
 
-    read_case();
-    solve();
+    //read_case();
+    //solve();
 
+    //int T; read(T);
+    //while (T--) {
+    //    read_case();
+    //    solve();
+    //}
+
+    int T; read(T);
+    rep(i,1,T+1){
+        read_case();
+        solve(i);
+    }
+
+    //while (1) {
+    //    read_case();
+    //    if (n == 0)
+    //        break;
+    //    solve();
+    //}
+
+    //rep(i,1,100) {
+    //    read_case();
+    //    if (n == 0)
+    //        break;
+    //    solve(i);
+    //}
+    
     return 0;
 }
