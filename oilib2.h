@@ -207,32 +207,32 @@ namespace lib2 {
 		void solve();
 	}
 
-	// 算法思想 - 练习 - 逛公园
+	// 算法思想 - 逛公园
 	namespace p181 {
 		// TODO
 	}
 
-	// 算法思想 - 练习 - 天天爱跑步
+	// 算法思想 - 天天爱跑步
 	namespace p182 {
 		// TODO
 	}
 
-	// 算法思想 - 练习 - 蚯蚓
+	// 算法思想 - 蚯蚓
 	namespace p183 {
 		// TODO
 	}
 
-	// 算法思想 - 练习 - 运输计划
+	// 算法思想 - 运输计划
 	namespace p184 {
 		// TODO
 	}
 
-	// 算法思想 - 练习 - 疫情控制
+	// 算法思想 - 疫情控制
 	namespace p185 {
 		// TODO
 	}
 
-	// 算法思想 - 练习 - 华容道
+	// 算法思想 - 华容道
 	namespace p186 {
 		// TODO
 	}
@@ -460,20 +460,20 @@ namespace lib2 {
 	// DP - DP优化 - 前缀数组优化 - 洛谷 P2885. Telephone Wire
 	namespace p283 {
 		void read_case();
-		void solve(); // AC
+		void solve();
 	}
 
-	// DP - DP优化 - 练习 - 换教室
+	// DP - DP优化 - 换教室
 	namespace p284 {
 		// TODO
 	}
 
-	// DP - DP优化 - 练习 - HDU 2294. Pendant
+	// DP - DP优化 - HDU 2294. Pendant
 	namespace p285 {
 		// TODO
 	}
 
-	// DP - DP优化 - 练习 - CF 985E. Pencils and boxes
+	// DP - DP优化 - CF 985E. Pencils and boxes
 	namespace p286 {
 		// TODO
 	}
@@ -493,7 +493,7 @@ namespace lib2 {
 	// DP - 数据结构优化 - CF 958C3. Encryption
 	namespace p2A1 {
 		void read_case();
-		void solve(); // WA
+		void solve();
 	}
 
 	// DP - 数据结构优化 - BZOJ 3939. Cow Hopscotch
@@ -501,8 +501,20 @@ namespace lib2 {
 		// TODO
 	}
 
-	// 图算法 - dijkstra算法 - 练习 - POJ 1724. Roads
+	// 图算法 - dijkstra算法实现(set版)
+	namespace p325 {
+		void read_case();
+		void solve();
+	}
+
+	// 图算法 - dijkstra算法 - POJ 1724. Roads
 	namespace p326 {
+		void read_case();
+		void solve();
+	}
+
+	// 图算法 - bellman-ford算法实现
+	namespace p333 {
 		void read_case();
 		void solve();
 	}
@@ -520,6 +532,12 @@ namespace lib2 {
 		void solve(int case_id);
 	}
 
+	// 图算法 - spfa算法实现
+	namespace p343 {
+		void read_case();
+		void solve();
+	}
+
 	// 图算法 - spfa算法 - POJ 3013. Big Christmas Tree
 	namespace p344 {
 		void read_case();
@@ -530,13 +548,13 @@ namespace lib2 {
 	namespace p345 {
 		extern int n;
 		void read_case();
-		void solve(int case_id); // WA
+		void solve(int case_id);
 	}
 
 	// 图算法 - floyd算法 - POJ 3660. Cow Contest
 	namespace p353 {
-		//void read_case();
-		//void solve();
+		void read_case();
+		void solve();
 	}
 
 	// 图算法 - floyd算法 - POJ 3613. Cow Relays
@@ -546,7 +564,8 @@ namespace lib2 {
 
 	// 图算法 - 差分约束 - ZOJ 2770. 火烧连营
 	namespace p362 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// 图算法 - 差分约束 - POJ 1201. Intervals
@@ -554,13 +573,47 @@ namespace lib2 {
 		// TODO
 	}
 
-	// 图算法 - 算法总结 - HDU 6166. Senior Pan
+	// 图算法 - 最短路算法总结 - 次短路 - POJ 3255. Roadblocks
+	namespace p371 {
+		// TODO
+	}
+
+	// 图算法 - 最短路算法总结 - HDU 6166. Senior Pan
 	namespace p372 {
 		// TODO
 	}
 
-	// 图算法 - 算法总结 - HDU 4370. 0 or 1
+	// 图算法 - 最短路算法总结 - HDU 4370. 0 or 1
 	namespace p373 {
+		// TODO
+	}
+
+	// 图算法 - 无向图的联通性 - tarjan算法求无向图割点
+	namespace p393 {
+		void read_case();
+		void solve();
+	}
+
+	// 图算法 - 无向图的联通性 - tarjan算法求无向图点双连通分量
+	namespace p394 {
+		void read_case();
+		void solve();
+	}
+
+	// 图算法 - 无向图的联通性 - tarjan算法求无向图割边
+	namespace p397 {
+		void read_case();
+		void solve();
+	}
+
+	// 图算法 - 无向图的联通性 - POJ 2942. 圆桌武士
+	namespace p398_part1 {
+		void read_case();
+		void solve(); // WA
+	}
+
+	// 图算法 - 无向图的联通性 - HDU 3394. Railway
+	namespace p398_part2 {
 		// TODO
 	}
 

@@ -3,9 +3,15 @@
 
 namespace lib1 {
 
-namespace p30 {
+namespace p214q1 {
+
+	const int MAX_N = 20;
 	int a[MAX_N];
 	int n, k;
+
+	void read_case() {
+
+	}
 
 	bool dfs(int i, int sum) {
 		if (i == n) return sum == k;
@@ -20,16 +26,23 @@ namespace p30 {
 	}
 }
 
-namespace p32 {
+namespace p214q2 {
+	
+	const int MAX_N = 20;
+	const int MAX_M = 20;
+	char field[MAX_N][MAX_M];
+	int n, m;
+
+	void read_case() {
+
+	}
+
 	int dir[8][2] =
 	{
 		{-1,-1},{0,-1},{1,-1},
 		{-1,0},{1,0},
 		{-1,1},{0,1},{1,1},
 	};
-
-	char field[MAX_N][MAX_M];
-	int n, m;
 
 	int dfs(int x, int y)
 	{
@@ -62,7 +75,11 @@ namespace p32 {
 	}
 }
 
-namespace p34 {
+namespace p215 {
+
+	const int INF = 0x3f3f3f3f;
+	const int MAXN = 100;
+	const int MAXM = 100;
 
 	char maze[MAXN][MAXM+1];
 	int N, M;
@@ -70,6 +87,10 @@ namespace p34 {
 	int gx, gy;
 	int d[MAXN][MAXM];
 	int dx[4] = { 1,0,-1,0 }, dy[4] = { 0,1,0,-1 };
+
+	void read_case() {
+
+	}
 
 	int bfs()
 	{
@@ -100,11 +121,18 @@ namespace p34 {
 	}
 }
 
-namespace p51 {
+namespace p231q1 {
+
+	const int MAX_N = 100;
+	const int MAX_W = 1000;
 
 	int n, W;
 	int w[MAX_N], v[MAX_N];
 	int dp[MAX_N + 1][MAX_W + 1];
+
+	void read_case() {
+
+	}
 
 	void solve() {
 		repd(i, n - 1, -1)
@@ -117,11 +145,18 @@ namespace p51 {
 	}
 }
 
-namespace p56 {
+namespace p231q2 {
+
+	const int maxn = 1000;
+	const int maxm = 1000;
 
 	int n, m;
 	string s, t;
 	int dp[maxn + 1][maxm + 1];
+
+	void read_case() {
+
+	}
 
 	void solve() {
 		rep(i, 0, n)
@@ -134,11 +169,18 @@ namespace p56 {
 	}
 }
 
-namespace p57 {
+namespace p232q1 {
+
+	const int MAX_N = 100;
+	const int MAX_W = 1000;
 
 	int n, W;
 	int w[MAX_N], v[MAX_N];
 	int dp[MAX_N + 1][MAX_W + 1];
+
+	void read_case() {
+
+	}
 
 	void solve() {
 		rep(i, 0, n)
@@ -151,14 +193,19 @@ namespace p57 {
 	}
 }
 
-namespace p60 {
+namespace p232q2 {
 
+	const int MAX_N = 100;
 	const int MAX_V = 100;
 	const int INF = 1000000;
 
 	int n, W;
 	int w[MAX_N], v[MAX_N];
 	int dp[MAX_N + 1][MAX_N * MAX_V + 1];
+
+	void read_case() {
+
+	}
 
 	void solve() {
 		fill(dp[0], dp[0] + MAX_N * MAX_V + 1, INF);
@@ -177,13 +224,18 @@ namespace p60 {
 	}
 }
 
-namespace p62 {
+namespace p232q3v1 {
 
+	const int MAX_N = 100;
 	const int MAX_K = 100000;
 
 	int n, K;
 	int a[MAX_N], m[MAX_N];
 	bool dp[MAX_N + 1][MAX_K + 1];
+
+	void read_case() {
+
+	}
 
 	void solve() {
 		dp[0][0] = true;
@@ -199,13 +251,18 @@ namespace p62 {
 	}
 }
 
-namespace p63 {
+namespace p232q3v2 {
 
+	const int MAX_N = 100;
 	const int MAX_K = 100000;
 
 	int n, K;
 	int a[MAX_N], m[MAX_N];
 	int dp[MAX_K + 1];
+
+	void read_case() {
+
+	}
 
 	void solve() {
 		memset(dp, -1, sizeof(dp));
@@ -226,11 +283,17 @@ namespace p63 {
 	}
 }
 
-namespace p64 {
+namespace p232q4v1 {
 	
+	const int MAX_N = 1000;
+
 	int n;
 	int a[MAX_N];
 	int dp[MAX_N];
+
+	void read_case() {
+
+	}
 
 	void solve() {
 		int res = 0;
@@ -246,13 +309,18 @@ namespace p64 {
 	}
 }
 
-namespace p65 {
+namespace p232q4v2 {
 
+	const int MAX_N = 1000;
 	const int INF = 1000000;
 
 	int n;
 	int a[MAX_N];
 	int dp[MAX_N];
+
+	void read_case() {
+
+	}
 
 	void solve() {
 		fill(dp, dp + n, INF);
@@ -264,9 +332,17 @@ namespace p65 {
 	}
 }
 
-namespace p66 {
+namespace p233q1 {
+
+	const int MAX_N = 1000;
+	const int MAX_M = 1000;
 
 	int n, m, M;
+
+	void read_case() {
+
+	}
+
 	int dp[MAX_M + 1][MAX_N + 1];
 
 	void solve() {
@@ -283,9 +359,17 @@ namespace p66 {
 	}
 }
 
-namespace p68 {
+namespace p233q2 {
+
+	const int MAX_N = 1000;
+	const int MAX_M = 1000;
 
 	int n, m, a[MAX_N], M;
+
+	void read_case() {
+
+	}
+
 	int dp[MAX_N + 1][MAX_M + 1];
 
 	void solve() {
@@ -303,11 +387,17 @@ namespace p68 {
 	}
 }
 
-namespace p87 {
+namespace p244q1 {
 
-	int par[MAX_N], rank[MAX_N];
+	void read_case() {
+
+	}
+
+	int *par, *rank;
 
 	void init(int n) { 
+		par = new int[n + 1];
+		rank = new int[n + 1];
 		rep(i, 0, n) {
 			par[i] = i;
 			rank[i] = 0;
@@ -332,14 +422,23 @@ namespace p87 {
 	bool same(int u, int v) { 
 		return find(u) == find(v); 
 	}
+
+	void solve() {
+
+	}
 }
 
-namespace p88 {
+namespace p244q2 {
 
-	using namespace p87;
+	using namespace p244q1;
 
+	const int MAX_K = 100000;
 	int N, K;
 	int T[MAX_K], X[MAX_K], Y[MAX_K];//第i条信息的类型,X_i,y_i
+
+	void read_case() {
+
+	}
 
 	void solve() {
 		// x,x+N,x+2*N分别表示x-A,x-B,x-C
@@ -378,10 +477,16 @@ namespace p88 {
 	}
 }
 
-namespace p97 {
+namespace p253q1 {
+
+	const int MAX_V = 1000;
 	VI G[MAX_V];
 	int V;
 	int color[MAX_V];		//顶点i的颜色(1或-1)
+
+	void read_case() {
+
+	}
 
 	bool dfs(int v, int c) {
 		color[v] = c;
@@ -405,11 +510,18 @@ namespace p97 {
 	}
 }
 
-namespace p100 {
+namespace p254q1 {
 
+	const int INF = 1000000000;
+
+	struct edge { int from, to, cost; };
 	vector<edge> es;	//图
 	int V, E;			//顶点数
 	VI d;
+
+	void read_case() {
+
+	}
 
 	void shortest_path(int s) {
 		d = VI(V);
@@ -439,23 +551,30 @@ namespace p100 {
 		}
 		return false;
 	}
-}
 
-namespace p101 {
-
-	int cost[MAX_V][MAX_V];	//图
-	int V;					//顶点数
-
-	void dijkstra(int s) {
+	void solve() {
 
 	}
 }
 
-namespace p102 {
+namespace p254q2v1 {
+
+	// todo
+}
+
+namespace p254q2v2 {
 	
+	const int INF = 100000000;
+	const int MAX_V = 100;
+
+	struct edge { int to, cost; };
 	vector<edge> G[MAX_V];	//图
 	int V;			//顶点数
 	int d[MAX_V];
+
+	void read_case() {
+
+	}
 
 	void dijkstra(int s) {
 		priority_queue<PII, vector<PII>, greater<PII> > que;
@@ -475,12 +594,23 @@ namespace p102 {
 			}
 		}
 	}
+
+	void solve() {
+
+	}
 }
 
-namespace p103 {
+namespace p254q3 {
+
+	const int INF = 1000000000;
+	const int MAX_V = 1000;
 
 	int d[MAX_V][MAX_V];	//图
 	int V;			//顶点数
+
+	void read_case() {
+
+	}
 
 	void floyd(int s) {
 		rep(k, 0, V) 
@@ -488,9 +618,16 @@ namespace p103 {
 				rep(j, 0, V) 
 					d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
 	}
+
+	void solve() {
+
+	}
 }
 
-namespace p104 {
+namespace p254q4 {
+
+	const int INF = 1000000000;
+	const int MAX_V = 1;
 
 	int cost[MAX_V][MAX_V];
 	int d[MAX_V];
@@ -498,6 +635,10 @@ namespace p104 {
 	int V;
 
 	int pre[MAX_V];
+
+	void read_case() {
+
+	}
 
 	void dijkstra(int s)
 	{
@@ -524,16 +665,27 @@ namespace p104 {
 		reverse(path.begin(), path.end());
 		return path;
 	}
+
+	void solve() {
+
+	}
 }
 
-namespace p105 {
+namespace p255q1 {
 
+	const int INF = 1000000000;
+	const int MAX_V = 100;
 	int cost[MAX_V][MAX_V], V;
 	int mincost[MAX_V];
 	bool used[MAX_V];
 
+	void read_case() {
+
+	}
+
 	int prim(int s) {
-		rep(i, 0, V) {
+		rep(i,
+			0, V) {
 			mincost[i] = INF;
 			used[i] = false;
 		}
@@ -551,16 +703,25 @@ namespace p105 {
 		}
 		return res;
 	}
+
+	void solve() {
+
+	}
 }
 
-namespace p107 {
+namespace p255q2 {
 
-	using namespace p87;
+	using namespace p244q1;
 
+	struct edge { int u, v, cost; };
 	vector<edge> es;		//图
 	int V, E;			//顶点数,边数
 
 	bool comp(const edge& e1, const edge& e2) { return e1.cost < e2.cost; }
+
+	void read_case() {
+
+	}
 
 	int kruskal(int s) {
 		sort(es.begin(), es.begin() + E, comp);
@@ -575,16 +736,30 @@ namespace p107 {
 		}
 		return res;
 	}
+
+	void solve() {
+
+	}
 }
 
-namespace p114 {
+namespace p261q1 {
+	
 	int gcd(int a, int b) {
 		if (b == 0) return a;
 		return gcd(b, a % b);
 	}
+
+	void read_case() {
+
+	}
+
+	void solve() {
+
+	}
 }
 
-namespace p115 {
+namespace p261q2 {
+
 	int extgcd(int a, int b, int& x, int& y) {
 		int d = a;
 		if (b != 0) {
@@ -596,9 +771,22 @@ namespace p115 {
 		}
 		return d;
 	}
+
+	//void read_case() {
+
+	//}
+
+	//void solve() {
+
+	//}
 }
 
-namespace p117 {
+namespace p262q1 {
+
+	void read_case() {
+
+	}
+
 	bool is_prime(int n) {
 		for (int i = 2; i * i <= n; i++)
 			if (n % i == 0) return false;
@@ -627,12 +815,21 @@ namespace p117 {
 		if (n != 1) res[n] = 1;
 		return res;
 	}
+
+	void solve() {
+
+	}
 }
 
-namespace p118 {
+namespace p262q2 {
 
+	const int MAX_N = 100;
 	int prime[MAX_N];
 	int is_prime[MAX_N + 1];
+
+	void read_case() {
+
+	}
 
 	int sieve(int n) {
 		int p = 0;
@@ -648,9 +845,15 @@ namespace p118 {
 		return p;
 	}
 
+	void solve() {
+
+	}
 }
 
-namespace p120 {
+namespace p262q3 {
+
+	const int MAX_L = 1000;
+	const int MAX_SQRT_B = 100;
 
 	bool is_prime[MAX_L];
 	bool is_prime_small[MAX_SQRT_B + 1];
@@ -665,9 +868,21 @@ namespace p120 {
 			}
 		}
 	}
+
+	void read_case() {
+
+	}
+
+	void solve() {
+
+	}
 }
 
-namespace p122 {
+namespace p264q1 {
+
+	void read_case() {
+
+	}
 
 	LL mod_pow(LL x, LL n, LL m)
 	{
@@ -680,10 +895,19 @@ namespace p122 {
 		}
 		return res;
 	}
+
+	void solve() {
+
+	}
 }
 
-namespace p138 {
+namespace p311q1 {
+	const int MAX_N = 1000000;
 	int n, k, a[MAX_N];
+
+	void read_case() {
+
+	}
 
 	void solve()
 	{
@@ -700,10 +924,17 @@ namespace p138 {
 
 }
 
-namespace p140 {
+namespace p312q1 {
 	
+	const int INF = 1000000;
+	const int MAX_N = 10000;
+
 	int N, K;
 	double L[MAX_N];
+	
+	void read_case() {
+
+	}
 
 	bool C(double x) {
 		int num = 0;
@@ -725,9 +956,15 @@ namespace p140 {
 	}
 }
 
-namespace p142 {
+namespace p313q1 {
 	
+	const int INF = 1000000;
+	const int MAX_N = 10000;
 	int N, M, x[MAX_N];
+
+	void read_case() {
+
+	}
 
 	bool C(int d) {
 		int last = 0;
@@ -753,11 +990,17 @@ namespace p142 {
 	}
 }
 
-namespace p143 {
+namespace p314q1 {
 
+	const int INF = 1000000000;
+	const int MAX_N = 10000;
 	int n, k;
 	int w[MAX_N], v[MAX_N];
 	double y[MAX_N];
+
+	void read_case() {
+
+	}
 
 	bool C(double x) {
 		rep(i, 0, n)
@@ -781,11 +1024,16 @@ namespace p143 {
 	}
 }
 
-namespace p146 {
+namespace p321q1 {
 
+	const int MAX_N = 100000;
 	// 给定长度为n的数列a，整数S。找出最短的总和不小于S的连续子序列。
 	int n, S;
 	int a[MAX_N];
+
+	void read_case() {
+
+	}
 
 	void solve()
 	{
@@ -802,10 +1050,15 @@ namespace p146 {
 	}
 }
 
-namespace p149 {
+namespace p321q2 {
 
+	const int MAX_P = 1000000;
 	int P;
 	int a[MAX_P];
+
+	void read_case() {
+
+	}
 
 	void solve()
 	{
@@ -829,10 +1082,15 @@ namespace p149 {
 	}
 }
 
-namespace p150 {
+namespace p322q1 {
 	
+	const int MAX_N = 5000;
 	int N;
 	int dir[MAX_N]; // 牛的方向(0代表F,1代表B)
+
+	void read_case() {
+
+	}
 
 	int f[MAX_N]; //f[i]表示区间[i,i+K-1]是否反转了
 
@@ -874,7 +1132,10 @@ namespace p150 {
 	}
 }
 
-namespace p153 {
+namespace p322q2 {
+	
+	const int MAX_M = 15, MAX_N = 15;
+
 	const int dx[5] = { -1,0,0,0,1 };
 	const int dy[5] = { 0,-1,0,1,0 };
 
@@ -882,6 +1143,10 @@ namespace p153 {
 	int tile[MAX_M][MAX_N];
 	int opt[MAX_M][MAX_N]; // 最优解
 	int flip[MAX_M][MAX_N]; // 中间结果
+
+	void read_case() {
+
+	}
 
 	int get(int x, int y)
 	{
@@ -937,11 +1202,16 @@ namespace p153 {
 	}
 }
 
-namespace p158 {
+namespace p323q1 {
 	const double g = 10.0;
 
+	const int MAX_N = 100;
 	int N, H, R, T;
 	double y[MAX_N];
+
+	void read_case() {
+
+	}
 
 	// 求出T时刻球的位置
 	double calc(int T) {
@@ -968,10 +1238,16 @@ namespace p158 {
 	}
 }
 
-namespace p160 {
+namespace p324q1 {
+
+	const int  MAX_N = 4000;
 	int n;
 	int A[MAX_N], B[MAX_N], C[MAX_N], D[MAX_N];
 	int CD[MAX_N * MAX_N];
+
+	void read_case() {
+
+	}
 
 	void solve()
 	{
@@ -990,11 +1266,17 @@ namespace p160 {
 	}
 }
 
-namespace p162 {
+namespace p324q2 {
 
+	const int  INF = 1000000;
+	const int  MAX_N = 40;
 	int n;
 	LL w[MAX_N], v[MAX_N];
 	LL W;
+
+	void read_case() {
+
+	}
 
 	pair<LL, LL> ps[1 << (MAX_N / 2)];
 
@@ -1040,12 +1322,19 @@ namespace p162 {
 	}
 }
 
-namespace p164 {
+namespace p325q1 {
+
+	const int MAX_N = 500;
+
 	const int dx[4] = { 1,0,-1,0 }, dy[4] = { 0,1,0,-1 };
 
 	int W, H, N;
 	int X1[MAX_N], X2[MAX_N], Y1[MAX_N], Y2[MAX_N];
 	bool fld[MAX_N * 6][MAX_N * 6];
+
+	void read_case() {
+
+	}
 
 	int compress(int* x1, int* x2, int w) {
 		vector<int> xs;
@@ -1105,12 +1394,18 @@ namespace p164 {
 	}
 }
 
-namespace p167 {
+namespace p331q1 {
 
-	// 这种线段树的写法表现了线段树的实质，即数组中的一个索引实际对应于一个线段，数组中保存的是线段需要维护的信息。
-	// 我并不喜欢这种写法，我更喜欢将线段树封装到一个类中。这里为了使原书代码保持一致，照搬了原书的写法。
+	// 这种线段树的写法表现了线段树的实质
+	// 即数组中的一个索引实际对应于一个线段，该元素是线段需要维护的信息。
+	
+	const int MAX_N = 1 << 17; // 取一个大于N的2的幂
 
 	int n, dat[2 * MAX_N - 1];
+
+	void read_case() {
+
+	}
 
 	void init(int n_) {
 		n = 1;
@@ -1136,9 +1431,15 @@ namespace p167 {
 			return min(vl, vr);
 		}
 	}
+
+	void solve() {
+
+	}
 }
 
-namespace p170 {
+namespace p331q2 {
+
+	const int MAX_N = 10000, MAX_C = 10000;
 	const double PI = acos(-1.0);
 	const int ST_SIZE = (1 << 15) - 1;
 
@@ -1150,6 +1451,10 @@ namespace p170 {
 	double ang[ST_SIZE];
 
 	double prv[MAX_N]; // prv[s]是s相对于s-1的角度
+
+	void read_case() {
+
+	}
 
 	void init(int k, int l, int r) {
 		ang[k] = vx[k] = 0;
@@ -1195,13 +1500,52 @@ namespace p170 {
 	}
 }
 
-namespace p177 {
-	LL sum(LL* bit, int i) { LL s = 0; while (i > 0) s += bit[i], i -= (i & -i); return s; }
-	void add(LL* bit, int n, int i, int v) { while (i <= n) bit[i] += v, i += (i & -i); }
+namespace p332q1 {
+
+
+	const int MAX_N = 100;
+
+	void read_case() {
+
+	}
+
+	int bit[MAX_N + 1], n;
+
+	LL sum(int i) { LL s = 0; while (i > 0) s += bit[i], i -= (i & -i); return s; }
+	void add(int i, int v) { while (i <= n) bit[i] += v, i += (i & -i); }
+
+	void solve() {
+
+	}
 }
 
-namespace p179 {
+namespace p332q2 {
+	
+	const int MAX_N = 100;
+	int n, a[MAX_N + 1];
+	
+	void read_case() {
 
+	}
+
+	int bit[MAX_N + 1];
+	LL sum(int i) { LL s = 0; while (i > 0) s += bit[i], i -= (i & -i); return s; }
+	void add(int i, int v) { while (i <= n) bit[i] += v, i += (i & -i); }
+
+	void solve() {
+		LL ans = 0;
+		rep(j, 0, n) {
+			ans += j - sum(a[j]);
+			add(a[j], 1);
+		}
+		print(ans);
+	}
+}
+
+namespace p332q3v1 {
+
+	const int MAX_N = 100000;
+	const int MAX_Q = 100000;
 	const int DAT_SIZE = (1 << 18) - 1;
 
 	int N, Q;
@@ -1245,15 +1589,18 @@ namespace p179 {
 	}
 }
 
-namespace p181 {
+namespace p332q3v2 {
 
+	const int MAX_N = 100000;
+	const int MAX_Q = 100000;
 	int N, Q;
 	int A[MAX_N];
 	char T[MAX_Q];
 	int L[MAX_Q], R[MAX_Q], X[MAX_Q];
 
 	LL bit0[MAX_N + 1], bit1[MAX_N + 1]; // [1,n]
-	using namespace p177;
+	LL sum(LL*bit, int i) { LL s = 0; while (i > 0) s += bit[i], i -= (i & -i); return s; }
+	void add(LL *bit, int n, int i, int v) { while (i <= n) bit[i] += v, i += (i & -i); }
 
 	void solve()
 	{
@@ -1276,8 +1623,10 @@ namespace p181 {
 	}
 }
 
-namespace p185 {
+namespace p333q2v1 {
 
+	const int MAX_N = 100000;
+	const int MAX_M = 5000;
 	const int B = 1000;
 
 	int N, M;
@@ -1323,7 +1672,10 @@ namespace p185 {
 	}
 }
 
-namespace p188 {
+namespace p333q2v2 {
+
+	const int MAX_N = 100000;
+	const int MAX_M = 5000;
 	const int ST_SIZE = (1 << 18) - 1;
 
 	int N, M;
@@ -1379,7 +1731,10 @@ namespace p188 {
 	}
 }
 
-namespace p191 {
+namespace p341q1 {
+
+	const int MAX_N = 15;
+	const int INF = 1000000000;
 	int n;
 	int d[MAX_N][MAX_N];
 
@@ -1405,7 +1760,11 @@ namespace p191 {
 	}
 }
 
-namespace p193 {
+namespace p341q2 {
+
+	const int MAX_N = 8;
+	const int MAX_M = 30;
+	const int INF = 1000000000;
 
 	int n, m, a, b;
 	int t[MAX_N];
@@ -1437,7 +1796,11 @@ namespace p193 {
 	}
 }
 
-namespace p196 {
+namespace p341q3 {
+
+	const int MAX_N = 15;
+	const int MAX_M = 15;
+	const int INF = 1000000000;
 
 	int n, m, M;
 	int color[MAX_N][MAX_M];
@@ -1468,8 +1831,10 @@ namespace p196 {
 	}
 }
 
-namespace p199_part1 {
+namespace p342q1 {
 
+	typedef vector<int> vec;
+	typedef vector<vec> mat;
 	mat operator*(const mat& a, const mat& b)
 	{
 		const int M = 10000;
@@ -1494,11 +1859,6 @@ namespace p199_part1 {
 		}
 		return b;
 	}
-}
-
-namespace p199_part2 {
-
-	using namespace p199_part1;
 
 	LL n;
 
@@ -1512,9 +1872,34 @@ namespace p199_part2 {
 	}
 }
 
-namespace p202 {
+namespace p342q2 {
 
-	using namespace p199_part1;
+	typedef vector<int> vec;
+	typedef vector<vec> mat;
+	mat operator*(const mat& a, const mat& b)
+	{
+		const int M = 10000;
+		mat c(a.size(), vec(b[0].size()));
+		for (int i = 0; i < a.size(); i++)
+			for (int k = 0; k < b.size(); k++)
+				for (int j = 0; j < b[0].size(); j++)
+					c[i][j] = (c[i][j] + a[i][k] * b[k][j]) % M;
+		return c;
+	}
+
+	mat pow(mat a, LL n)
+	{
+		mat b(a.size(), vec(a.size()));
+		for (int i = 0; i < a.size(); i++)
+			b[i][i] = 1;
+		while (n)
+		{
+			if (n & 1) b = b * a;
+			a = a * a;
+			n >>= 1;
+		}
+		return b;
+	}
 
 	int n;
 
@@ -1529,10 +1914,36 @@ namespace p202 {
 	}
 }
 
-namespace p203 {
+namespace p342q3 {
 
-	using namespace p199_part1;
+	typedef vector<int> vec;
+	typedef vector<vec> mat;
+	mat operator*(const mat& a, const mat& b)
+	{
+		const int M = 10000;
+		mat c(a.size(), vec(b[0].size()));
+		for (int i = 0; i < a.size(); i++)
+			for (int k = 0; k < b.size(); k++)
+				for (int j = 0; j < b[0].size(); j++)
+					c[i][j] = (c[i][j] + a[i][k] * b[k][j]) % M;
+		return c;
+	}
 
+	mat pow(mat a, LL n)
+	{
+		mat b(a.size(), vec(a.size()));
+		for (int i = 0; i < a.size(); i++)
+			b[i][i] = 1;
+		while (n)
+		{
+			if (n & 1) b = b * a;
+			a = a * a;
+			n >>= 1;
+		}
+		return b;
+	}
+
+	const int MAX_N = 100;
 	int n, k;
 	int g[MAX_N][MAX_N];
 
@@ -1552,7 +1963,34 @@ namespace p203 {
 	}
 }
 
-namespace p204 {
+namespace p342q4 {
+
+	typedef vector<int> vec;
+	typedef vector<vec> mat;
+	mat operator*(const mat& a, const mat& b)
+	{
+		const int M = 10000;
+		mat c(a.size(), vec(b[0].size()));
+		for (int i = 0; i < a.size(); i++)
+			for (int k = 0; k < b.size(); k++)
+				for (int j = 0; j < b[0].size(); j++)
+					c[i][j] = (c[i][j] + a[i][k] * b[k][j]) % M;
+		return c;
+	}
+
+	mat pow(mat a, LL n)
+	{
+		mat b(a.size(), vec(a.size()));
+		for (int i = 0; i < a.size(); i++)
+			b[i][i] = 1;
+		while (n)
+		{
+			if (n & 1) b = b * a;
+			a = a * a;
+			n >>= 1;
+		}
+		return b;
+	}
 
 	int n, k, M;
 	mat A;
@@ -1575,9 +2013,19 @@ namespace p204 {
 	}
 }
 
-namespace p209 {
-	vector<edge> G[MAX_V];
-	bool used[MAX_V];
+namespace p351q1 {
+
+	const int INF = 1000000000;
+
+	struct edge { int to, cap, rev; };
+	typedef vector<edge> edges;
+	vector<edges> G;
+	VI used;
+
+	void set_v(int V_) {
+		G = vector<edges>(V_ + 1);
+		used = VI(V_ + 1);
+	}
 
 	void add_edge(int from, int to, int cap) {
 		G[from].push_back({ to, cap, (int)G[to].size() });
@@ -1604,19 +2052,36 @@ namespace p209 {
 	int max_flow(int s, int t) {
 		int flow = 0;
 		for (;;) {
-			memset(used, 0, sizeof(used));
+			fill(all(used), 0);
 			int f = dfs(s, t, INF);
 			if (f == 0) return flow;
 			flow += f;
 		}
 	}
+
+	//void read_case() {
+
+	//}
+
+	//void solve() {
+
+	//}
 }
 
-namespace p216 {
+namespace p352q1 {
 
-	vector<edge> G[MAX_V];
-	int level[MAX_V];
-	int iter[MAX_V];
+	const int INF = 1000000000;
+	const int MAX_V = 10;
+
+	struct edge { int to, cap, rev; };
+	typedef vector<edge> edges;
+	vector<edges> G;
+	VI level, iter;
+
+	void set_v(int V_) {
+		G = vector<edges>(V_ + 1);
+		level = iter = VI(V_ + 1);
+	}
 
 	void add_edge(int from, int to, int cap) {
 		G[from].push_back({ to, cap, (int)G[to].size() });
@@ -1624,7 +2089,7 @@ namespace p216 {
 	}
 
 	int bfs(int s) {
-		memset(level, -1, sizeof(level));
+		fill(all(level), -1);
 		queue<int> que;
 		level[s] = 0;
 		que.push(s);
@@ -1662,20 +2127,33 @@ namespace p216 {
 		for (;;) {
 			bfs(s);
 			if (level[t] < 0) return flow;
-			memset(iter, 0, sizeof(iter));
+			fill(all(iter), 0);
 			int f;
 			while ((f = dfs(s, t, INF)) > 0)
 				flow += f;
 		}
 	}
+
+	//void read_case() {
+
+	//}
+
+	//void solve() {
+
+	//}
 }
 
-namespace p219 {
+namespace p353q1 {
 
 	int V;
-	vector<int> G[MAX_V];
-	int match[MAX_V];
-	bool used[MAX_V];
+	vector<VI> G;
+	VI match, used;
+
+	void set_v(int V_) {
+		V = V_;
+		G = vector<VI>(V + 1);
+		match = used = VI(V + 1);
+	}
 
 	bool dfs(int v) {
 		used[v] = true;
@@ -1697,10 +2175,10 @@ namespace p219 {
 
 	int biparite_matching() {
 		int res = 0;
-		memset(match, -1, sizeof(match));
+		fill(all(match), -1);
 		rep(v, 0, V) {
 			if (match[v] < 0) {
-				memset(used, 0, sizeof(used));
+				fill(all(used), 0);
 				if (dfs(v))
 					res++;
 			}
@@ -1708,14 +2186,32 @@ namespace p219 {
 		return res;
 	}
 
+	//void read_case() {
+
+	//}
+
+	//void solve() {
+
+	//}
 }
 
-namespace p222 {
+namespace p356q1 {
+
+	const int INF = 100000000;
 
 	int V;
-	vector<edge> G[MAX_V];
-	int dist[MAX_V];
-	int prevv[MAX_V], preve[MAX_V];
+	struct edge { int to, cap, cost, rev; };
+	typedef vector<edge> edges;
+	vector<edges> G;
+	VI dist, prevv, preve;
+
+	void set_v(int V_) {
+		V = V_;
+		G = vector<edges>(V+1);
+		dist = VI(V + 1);
+		prevv = VI(V + 1);
+		preve = VI(V + 1);
+	}
 
 	void add_edge(int from, int to, int cap, int cost) {
 		G[from].push_back({ to, cap, cost, (int)G[to].size() });
@@ -1725,12 +2221,12 @@ namespace p222 {
 	int min_cost_flow(int s, int t, int f) {
 		int res = 0;
 		while (f > 0) {
-			fill(dist, dist + V, INF);
+			fill(all(dist), INF);
 			dist[s] = 0;
 			bool update = true;
 			while (update) {
 				update = false;
-				rep(v, 0, V) {
+				rep(v, 1, V+1) {
 					if (dist[v] == INF) continue;
 					rep(i, 0, G[v].size()) {
 						edge& e = G[v][i];
@@ -1762,24 +2258,64 @@ namespace p222 {
 
 		return res;
 	}
+
+	//void read_case() {
+
+	//}
+
+	//void solve() {
+
+	//}
 }
 
-namespace p228 {
+namespace p357q1 {
+
+	const int MAX_K = 10000;
 	int N, K;
 	int R[MAX_K], C[MAX_K];
 
-	using namespace p219;
+	using namespace p353q1;
 
 	void solve()
 	{
-		V = N * 2;
+		set_v(N * 2);
 		rep(i, 0, K)
 			add_edge(R[i] - 1, N + C[i] - 1);
 		cout << biparite_matching() << endl;
 	}
 }
 
-namespace p230 {
+namespace p357q2v2 {
+	
+	int V;
+	vector<VI> G;
+	VI match, used;
+
+	void set_v(int V_) {
+		V = V_;
+		G = vector<VI>(V + 1);
+		match = used = VI(V + 1);
+	}
+
+	bool dfs(int v) {
+		used[v] = true;
+		rep(i, 0, G[v].size()) {
+			int u = G[v][i], w = match[u];
+			if (w < 0 || !used[w] && dfs(w)) {
+				match[v] = u;
+				match[u] = v;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void add_edge(int u, int v) {
+		G[u].push_back(v);
+		G[v].push_back(u);
+	}
+
+	const int MAX_X = 12, MAX_Y = 12;
 	const int dx[4] = { -1,0,0,1 };
 	const int dy[4] = { 0,-1,1,0 };
 
@@ -1788,8 +2324,6 @@ namespace p230 {
 	vector<int> dX, dY;
 	vector<int> pX, pY;
 	int dist[MAX_X][MAX_Y][MAX_X][MAX_Y];
-
-	using namespace p219;
 
 	void bfs(int x, int y, int d[MAX_X][MAX_Y])
 	{
@@ -1832,8 +2366,8 @@ namespace p230 {
 			}
 		}
 
-		memset(G, 0, sizeof(G));
 		int d = dX.size(), p = pX.size();
+		set_v(n* d);
 		rep(i, 0, d)
 			rep(j, 0, p) {
 			if (dist[dX[i]][dY[i]][pX[j]][pY[j]] >= 0) {
@@ -1848,9 +2382,9 @@ namespace p230 {
 		}
 
 		int num = 0;
-		memset(match, -1, sizeof(match));
+		fill(all(match), -1);
 		rep(v, 0, n * d) {
-			memset(used, 0, sizeof(used));
+			fill(all(used), 0);
 			if (dfs(v)) {
 				if (++num == p) {
 					cout << v / d + 1 << endl;
@@ -1863,12 +2397,18 @@ namespace p230 {
 	}
 }
 
-namespace p234 {
+namespace p357q3 {
+
+	using namespace p351q1;
+
+	const int MAX_N = 100, MAX_F = 100, MAX_D = 100;
 	int N, F, D;
 	bool likeF[MAX_N][MAX_F];
 	bool likeD[MAX_N][MAX_D];
 
-	using namespace p209;
+	void read_case() {
+
+	}
 
 	void solve()
 	{
@@ -1904,13 +2444,19 @@ namespace p234 {
 	}
 }
 
-namespace p236 {
+namespace p357q4 {
 
+	using namespace p351q1;
+
+	const int MAX_N = 20000;
+	const int MAX_M = 200000;
 	int N, M;
 	int A[MAX_N], B[MAX_N];
 	int a[MAX_M], b[MAX_M], w[MAX_M];
 
-	using namespace p209;
+	void read_case() {
+
+	}
 
 	void solve()
 	{
@@ -1928,11 +2474,17 @@ namespace p236 {
 	}
 }
 
-namespace p238 {
+namespace p357q5 {
+	
+	using namespace p356q1;
+
+	const int MAX_M = 10000;
 	int N, M;
 	int a[MAX_M], b[MAX_M], c[MAX_M];
 
-	using namespace p222;
+	void read_case() {
+
+	}
 
 	void solve()
 	{
@@ -1947,13 +2499,19 @@ namespace p238 {
 	}
 }
 
-namespace p240 {
+namespace p357q6v1 {
+
+	using namespace p356q1;
+
+	const int MAX_N = 100, MAX_M = 100;
 	int N, M;
 	int X[MAX_N], Y[MAX_N], B[MAX_N];
 	int P[MAX_M], Q[MAX_M], C[MAX_M];
 	int E[MAX_N][MAX_N];
 
-	using namespace p222;
+	void read_case() {
+
+	}
 
 	void solve()
 	{
@@ -1991,23 +2549,21 @@ namespace p240 {
 	}
 }
 
-namespace p242 {
-
-	int N, M;
-	int X[MAX_N], Y[MAX_N], B[MAX_N];
-	int P[MAX_M], Q[MAX_M], C[MAX_M];
-	int E[MAX_N][MAX_N];
-
-	void solve() {
-		// TODO
-	}
+namespace p357q6v2 {
+	// todo
 }
 
-namespace p243 {
+namespace p357q7 {
+
+	using namespace p356q1;
+
+	const int MAX_N = 50, MAX_M = 50;
 	int N, M;
 	int Z[MAX_N][MAX_M];
 
-	using namespace p222;
+	void read_case() {
+
+	}
 
 	void solve()
 	{
@@ -2032,17 +2588,22 @@ namespace p243 {
 	}
 }
 
-namespace p246 {
+namespace p357q8 {
 
+	const int MAX_N = 200;
 	int N, K;
 	int a[MAX_N], b[MAX_N], w[MAX_N];
+
+	void read_case() {
+
+	}
 
 	void solve() {
 		// TODO
 	}
 }
 
-namespace p250_part1 {
+namespace p361q1 {
 
 	double EPS = 1e-10;
 
@@ -2068,13 +2629,8 @@ namespace p250_part1 {
 	P intersection(P p1, P p2, P q1, P q2) {
 		return p1 + (p2 - p1) * ((q2 - q1).det(q1 - p1) / (q2 - q1).det(p2 - p1));
 	}
-}
 
-
-namespace p250_part2 {
-
-	using namespace p250_part1;
-
+	const int MAX_N = 100,MAX_M=100;
 	int n;
 	P p[MAX_N], q[MAX_N];
 	int m;
@@ -2082,56 +2638,73 @@ namespace p250_part2 {
 
 	bool g[MAX_N][MAX_N];
 
-	void solve()
-	{
-		rep(i, 0, n) {
-			g[i][i] = true;
-			rep(j, 0, i) {
-				if ((p[i] - q[i]).det(p[j] - q[j]) == 0) {
-					g[i][j] = g[j][i] = on_seg(p[i], q[i], p[j])
-						|| on_seg(p[i], q[i], q[j])
-						|| on_seg(p[j], q[j], p[i])
-						|| on_seg(p[j], q[j], q[i]);
-				}
-				else {
-					P r = intersection(p[i], q[i], p[j], q[j]);
-					g[i][j] = g[j][i] = on_seg(p[i], q[i], r) && on_seg(p[j], q[j], r);
-				}
-			}
-		}
+	//void read_case() {
 
-		rep(k, 0, n)
-			rep(i, 0, n)
-			rep(j, 0, n)
-			g[i][j] |= g[i][k] && g[k][j];
+	//}
 
-		rep(i, 0, m)
-			if (g[a[i] - 1][b[i] - 1])
-				cout << "CONNECTED" << endl;
-			else
-				cout << "NOT CONNECTED" << endl;
-	}
+	//void solve()
+	//{
+	//	rep(i, 0, n) {
+	//		g[i][i] = true;
+	//		rep(j, 0, i) {
+	//			if ((p[i] - q[i]).det(p[j] - q[j]) == 0) {
+	//				g[i][j] = g[j][i] = on_seg(p[i], q[i], p[j])
+	//					|| on_seg(p[i], q[i], q[j])
+	//					|| on_seg(p[j], q[j], p[i])
+	//					|| on_seg(p[j], q[j], q[i]);
+	//			}
+	//			else {
+	//				P r = intersection(p[i], q[i], p[j], q[j]);
+	//				g[i][j] = g[j][i] = on_seg(p[i], q[i], r) && on_seg(p[j], q[j], r);
+	//			}
+	//		}
+	//	}
+
+	//	rep(k, 0, n)
+	//		rep(i, 0, n)
+	//		rep(j, 0, n)
+	//		g[i][j] |= g[i][k] && g[k][j];
+
+	//	rep(i, 0, m)
+	//		if (g[a[i] - 1][b[i] - 1])
+	//			cout << "CONNECTED" << endl;
+	//		else
+	//			cout << "NOT CONNECTED" << endl;
+	//}
 }
 
-namespace p255 {
 
+namespace p362q1 {
+
+	const int MAX_N = 50;
 	int N, V, X, Y;
 	int L[MAX_N], B[MAX_N], R[MAX_N], T[MAX_N];
+
+	void read_case() {
+
+	}
 
 	void solve() {
 		// TODO
 	}
 }
 
-namespace p258 {
+namespace p363q1 {
+
+	const int MAX_N = 40000;
 	int N;
 	double x[MAX_N], y[MAX_N], r[MAX_N];
+
+	void read_case() {
+
+	}
 
 	// 判断圆i是否在圆j内部
 	bool inside(int i, int j) {
 		double dx = x[i] - x[j], dy = y[i] - y[j];
 		return dx * dx + dy * dy <= r[j] * r[j];
 	}
+
 
 	void solve()
 	{
@@ -2167,7 +2740,9 @@ namespace p258 {
 	}
 }
 
-namespace p260 {
+namespace p364q1 {
+
+	using namespace p361q1;
 
 	bool cmp_x(const P& p, const P& q) {
 		if (p.x != q.x) return p.x < q.x;
@@ -2197,8 +2772,13 @@ namespace p260 {
 		return (p - q).dot(p - q);
 	}
 
+	const int MAX_N = 50000;
 	int N;
 	P ps[MAX_N];
+
+	void read_case() {
+
+	}
 
 	void solve()
 	{
@@ -2231,10 +2811,18 @@ namespace p260 {
 	}
 }
 
-namespace p263 {
+namespace p365q1 {
+
+	const int MAX_M = 100;
+	const int MAX_N = 100;
+	const int INF = 1000000000;
 	int M, N;
 	int X1[MAX_M], Y1[MAX_M];
 	int X2[MAX_N], Z2[MAX_N];
+
+	void read_case() {
+
+	}
 
 	// 计算按x值对多边形切片截得的线段长度
 	double clip(int* X, int* Y, int n, double x)
@@ -2274,7 +2862,7 @@ namespace p263 {
 	}
 }
 
-namespace p286 {
+namespace p411q1 {
 	const double EPS = 1e-18;
 
 	vec gauss_jordan(const mat& A, const vec& b) {
@@ -2306,9 +2894,9 @@ namespace p286 {
 	}
 }
 
-namespace p291 {
+namespace p412q1 {
 
-	using namespace p115;
+	using namespace p261q2;
 
 	int mod_inverse(int a, int m) {
 		int x, y;
@@ -2320,7 +2908,7 @@ namespace p291 {
 /*
 欧拉函数
 */
-namespace p292 {
+namespace p412q2 {
 	int euler_phi(int n) {
 		int res = n;
 		for (int i = 2; i * i <= n; i++) {
@@ -2345,9 +2933,9 @@ namespace p292 {
 	}
 }
 
-namespace p293 {
-	using namespace p114;
-	using namespace p291;
+namespace p412q3 {
+	using namespace p261q1;
+	using namespace p412q1;
 
 	PII linear_congruence(VI& A, VI& B, VI& M) {
 		int x = 0, m = 1;

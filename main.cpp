@@ -1,4 +1,4 @@
-#ifndef WIN32
+#ifndef OILIB
 #include<cstdio>
 #include<cstdlib>
 #include<cstring>
@@ -52,7 +52,7 @@ template<class T, class... U> void print(const T& head, const U &... tail) { _W(
 
 #include "types.h"
 #include "oilib2.h"
-using namespace lib2::p345;
+using namespace lib2::p398_part1;
 
 #endif
 
@@ -61,8 +61,8 @@ int main()
     //freopen(".\\data\\P2885_2.in", "r", stdin);
     //freopen("tmp.out","w",stdout);
 
-    //read_case();
-    //solve();
+    read_case();
+    solve();
 
     //int T; read(T);
     //while (T--) {
@@ -70,11 +70,11 @@ int main()
     //    solve();
     //}
 
-    int T; read(T);
-    rep(i,1,T+1){
-        read_case();
-        solve(i);
-    }
+    //int T; read(T);
+    //rep(i,1,T+1){
+    //    read_case();
+    //    solve(i);
+    //}
 
     //while (1) {
     //    read_case();
