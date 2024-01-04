@@ -17,7 +17,43 @@ namespace lib1 {
 	}
 
 	// 初级 - 穷竭搜索 - 宽度优先搜索 - 迷宫最短路径
-	namespace p215 {
+	namespace p215q1 {
+		void read_case();
+		void solve();
+	}
+
+	// 初级 - 穷竭搜索 - 特殊状态的枚举 - 特殊状态的枚举的实现
+	namespace p216q1 {
+		void read_case();
+		void solve();
+	}
+
+	// 初级 - 贪心 - 硬币问题 - 硬币问题的实现
+	namespace p221q1 {
+		void read_case();
+		void solve();
+	}
+
+	// 初级 - 贪心 - 区间问题 - 区间调度
+	namespace p222q1 {
+		void read_case();
+		void solve();
+	}
+
+	// 初级 - 贪心 - 字典序最小问题 - POJ 3617. Best Cow Line
+	namespace p223q1 {
+		void read_case();
+		void solve();
+	}
+
+	// 初级 - 贪心 - 其他 - POJ 3069. Saruman's Army
+	namespace p224q1 {
+		void read_case();
+		void solve();
+	}
+
+	// 初级 - 贪心 - 其他 - POJ 3253. Fence Repair
+	namespace p224q2 {
 		void read_case();
 		void solve();
 	}
@@ -82,12 +118,23 @@ namespace lib1 {
 		void solve();
 	}
 
-	// 初级 - 数据结构 - 并查集 - 并查集的实现
-	namespace p244q1 {
+	// 初级 - 数据结构 - 优先队列 - POJ 2431. Expedition
+	namespace p242q1 {
 		void read_case();
 		void solve();
 	}
 
+	// 初级 - 数据结构 - 优先队列 - POJ 3253. Fence Repair
+	namespace p242q2 {
+		void read_case();
+		void solve();
+	}
+
+	// 初级 - 数据结构 - 并查集 - 并查集的实现
+	namespace p244q1 {
+		//void read_case();
+		//void solve();
+	}
 
 	// 初级 - 数据结构 - 并查集 - POJ 1182. 食物链
 	namespace p244q2 {
@@ -103,55 +150,72 @@ namespace lib1 {
 
 	// 初级 - 图算法 - 最短路问题 - Bellmsn-Ford算法
 	namespace p254q1 {
-		void read_case();
-		void solve();
+		//void read_case(); // 对于算法，由于该算法可能被别的地方用到，所以注释掉这两个函数防止编译错误,等到测试该算法的时候再打开
+		//void solve();
 	}
 
 	// 初级 - 图算法 - 最短路问题 - Dijkstra算法
 	namespace p254q2v1 {
-		// todo
-	}
-
-	// 初级 - 图算法 - 最短路问题 - Dijkstra算法邻接表实现
-	namespace p254q2v2 {
-		void read_case();
-		void solve();
-	}
-
-	// 初级 - 图算法 - 最短路问题 - Floyd算法
-	namespace p254q3 {
-		void read_case();
-		void solve();
-	}
-
-	// 初级 - 图算法 - 最短路问题 - 路径还原
-	namespace p254q4 {
-		void read_case();
-		void solve();
-	}
-
-	// 初级 - 图算法 - 最小生成树 - Prim算法
-	namespace p255q1 {
-		void read_case();
-		void solve();
-	}
-
-	// 初级 - 图算法 - 最小生成树 - 最小生成树Kruskal算法
-	namespace p255q2 {
-		void read_case();
-		void solve();
-	}
-
-	// 初级 - 数学 - 辗转相除法 - 线段上格点的个数
-	namespace p261q1 {
-		int gcd(int a, int b);
 		//void read_case();
 		//void solve();
 	}
 
-	// 初级 - 数学 - 辗转相除法 - 双六
+	// 初级 - 图算法 - 最短路问题 - Dijkstra算法邻接表实现
+	namespace p254q2v2 {
+		//void read_case();
+		//void solve();
+	}
+
+	// 初级 - 图算法 - 最短路问题 - Floyd算法
+	namespace p254q3 {
+		//void read_case();
+		//void solve();
+	}
+
+	// 初级 - 图算法 - 最短路问题 - 路径还原
+	namespace p254q4 {
+		//void read_case();
+		//void solve();
+	}
+
+	// 初级 - 图算法 - 最小生成树 - Prim算法
+	namespace p255q1 {
+		//void read_case();
+		//void solve();
+	}
+
+	// 初级 - 图算法 - 最小生成树 - 最小生成树Kruskal算法
+	namespace p255q2 {
+		//void read_case();
+		//void solve();
+	}
+
+	// 初级 - 图算法 - 应用 - POJ 3255. Roadblocks
+	namespace p256q1 {
+		void read_case();
+		void solve();
+	}
+
+	// 初级 - 图算法 - 应用 - POJ 3723. Conscription
+	namespace p256q2 {
+		void read_case();
+		void solve();
+	}
+
+	// 初级 - 图算法 - 应用 - POJ 3169. Layout
+	namespace p256q3 {
+		void read_case();
+		void solve();
+	}
+
+	// 初级 - 数学 - 辗转相除法 - gcd
+	namespace p261q1 {
+		//void read_case();
+		//void solve();
+	}
+
+	// 初级 - 数学 - 辗转相除法 - exgcd
 	namespace p261q2 {
-		int extgcd(int a, int b, int& x, int& y);
 		//void read_case();
 		//void solve();
 	}
@@ -178,6 +242,30 @@ namespace lib1 {
 	namespace p264q1 {
 		void read_case();
 		void solve();
+	}
+
+	// 初级 - GCJ - Minimum Scalar Product
+	namespace p271q1 {
+		void read_case();
+		void solve(int case_id);
+	}
+
+	// 初级 - GCJ - Crazy Rows
+	namespace p272q1 {
+		void read_case();
+		void solve(int case_id);
+	}
+
+	// 初级 - GCJ - Bribe the Prisoners
+	namespace p273q1 {
+		void read_case();
+		void solve();
+	}
+
+	// 初级 - GCJ - Millionaire
+	namespace p274q1 {
+		void read_case();
+		void solve(int case_id);
 	}
 
 	// 中级 - 二分 - 二分查找 - lower_bound
@@ -338,47 +426,37 @@ namespace lib1 {
 
 	// 中级 - 网络流 - 最大流 - 最大传输费用(Ford-Fulkerson算法)
 	namespace p351q1 {
-		void set_v(int V_);
-		void add_edge(int from, int to, int cap);
-		int max_flow(int s, int t);
 		//void read_case();
 		//void solve();
 	}
 
 	// 中级 - 网络流 - 最大流 - Dinic算法
 	namespace p352q1 {
-		void set_v(int V_);
-		void add_edge(int from, int to, int cap);
-		int max_flow(int s, int t);
 		//void read_case();
 		//void solve();
 	}
 
 	// 中级 - 网络流 - 二分图匹配 - 指派问题
 	namespace p353q1 {
-		void set_v(int V_);
-		void add_edge(int u, int v);
-		int biparite_matching();
 		//void read_case();
 		//void solve();
 	}
 
 	// 中级 - 网络流 - 最小费用流 - 最小传输费用
 	namespace p356q1 {
-		void set_v(int V_);
-		void add_edge(int from, int to, int cap, int cost);
-		int min_cost_flow(int s, int t, int f);
 		//void read_case();
 		//void solve();
 	}
 
 	// 中级 - 网络流 - 应用 - POJ 3041. Asteroids
 	namespace p357q1 {
+		void read_case();
 		void solve();
 	}
 
 	// 中级 - 网络流 - 应用 - POJ 3057. Evacuation
 	namespace p357q2v2 {
+		void read_case();
 		void solve();
 	}
 
@@ -425,19 +503,6 @@ namespace lib1 {
 
 	// 中级 - 计算几何 - 计算几何基础 - POJ 1127. Jack Straws
 	namespace p361q1 {
-		struct P {
-			double x, y;
-			P();
-			P(double x, double y);
-			P operator+(P p);
-			P operator-(P p);
-			P operator*(double d);
-			double dot(P p);
-			double det(P p);
-		};
-		bool on_seg(P p1, P p2, P q);// 判断点q是否在直线上
-		P intersection(P p1, P p2, P q1, P q2);// 计算两直线的交点
-
 		//void read_case();
 		//void solve();
 	}
@@ -468,10 +533,8 @@ namespace lib1 {
 
 	// 高级 - 数学 - 矩阵 - 高斯消元法
 	namespace p411q1 {
-		typedef vector<double> vec;
-		typedef vector<vec> mat;
-
-		vec gauss_jordan(const mat& A, const vec& b);
+		//void read_case();
+		//void solve();
 	}
 
 	// 高级 - 数学 - 矩阵 - 高斯消元法 - Random Walk
@@ -481,21 +544,43 @@ namespace lib1 {
 
 	// 高级 - 数学 - 模运算 - 求逆元
 	namespace p412q1 {
-		int mod_inverse(int a, int m);
+		//void read_case();
+		//void solve();
 	}
 
 	// 高级 - 数学 - 模运算 - 费马小定理
 	namespace p412q2 {
-		int euler_phi(int n); // 求欧拉函数值
-
-		const int MAX_N = 10000;
-		extern int euler[MAX_N];
-		void euler_phi2(); // O(MAX_N)时间筛出欧拉函数值的表
+		//void read_case();
+		//void solve();
 	}
 
 	// 高级 - 数学 - 模运算 - 线性同余方程组
 	namespace p412q3 {
-		PII linear_congruence(VI& A, VI& B, VI& M);
+		//void read_case();
+		//void solve();
 	}
 
+	// 高级 - 数学 - 模运算 - 阶乘
+	namespace p412q4 {
+		//void read_case();
+		//void solve();
+	}
+
+	// 高级 - 数学 - 模运算 - 组合数
+	namespace p412q5 {
+		//void read_case();
+		//void solve();
+	}
+
+	// 高级 - 数学 - 计数 - 容斥原理
+	namespace p413q1 {
+		void read_case();
+		void solve();
+	}
+
+	// 高级 - 数学 - 计数 - 没有周期性的字符串的数量
+	namespace p413q2 {
+		void read_case();
+		void solve();
+	}
 }

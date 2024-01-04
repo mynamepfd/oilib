@@ -3998,13 +3998,13 @@ namespace p2A1 {
 	const int INF = 100000000;
 
 	// 单点修改,求区间最小值
-	struct Segment {
+	struct Interval {
 		int l, r;
 		int minv; // 该线段维护的和
-		Segment* lc, * rc;
+		Interval* lc, * rc;
 
-		Segment() { }
-		Segment(int l_, int r_)
+		Interval() { }
+		Interval(int l_, int r_)
 		{
 			l = l_; r = r_;
 			lc = rc = NULL;
@@ -4013,8 +4013,8 @@ namespace p2A1 {
 				return;
 			}
 			int mid = (l + r) / 2;
-			lc = new Segment(l, mid);
-			rc = new Segment(mid + 1, r);
+			lc = new Interval(l, mid);
+			rc = new Interval(mid + 1, r);
 			update();
 		}
 
@@ -4054,27 +4054,27 @@ namespace p2A1 {
 			rep(j, 1, k + 1)
 				f[i][j] = INF;
 
-		Segment seg[2][MAX_N]; // seg[j]维护min{f[k][j-1] + ... |k<i},用于f[i][j]
+		Interval interval[2][MAX_N]; // interval[j]维护min{f[k][j-1] + ... |k<i},用于f[i][j]
 		rep(i, 0, 2)
 			rep(j, 1, k + 1)
-				seg[i][j] = Segment(0, 100);
+				interval[i][j] = Interval(0, 100);
 
 		// 首项
 		f[1][0] = 0;
 		f[1][a[1]] = a[1];
 		rep(j, 1, k + 1) {
-			seg[0][j].change(sum[1], f[1][j - 1] - sum[1]);
-			seg[1][j].change(sum[1], f[1][j - 1] - sum[1] + p);
+			interval[0][j].change(sum[1], f[1][j - 1] - sum[1]);
+			interval[1][j].change(sum[1], f[1][j - 1] - sum[1] + p);
 		}
 			
 		rep(i, 1, n + 1) {
 			rep(j, 1, k + 1) {
-				f[i][j] = min(f[i][j], seg[0][j].query(0, sum[i]));
-				f[i][j] = min(f[i][j], seg[1][j].query(sum[i] + 1, p)) + sum[i];
+				f[i][j] = min(f[i][j], interval[0][j].query(0, sum[i]));
+				f[i][j] = min(f[i][j], interval[1][j].query(sum[i] + 1, p)) + sum[i];
 			}
 			rep(j, 1, k + 1) { // 仿照首项进行更新
-				seg[0][j].change(sum[i], f[i][j - 1] - sum[i]);
-				seg[1][j].change(sum[i], f[i][j - 1] - sum[i] + p);
+				interval[0][j].change(sum[i], f[i][j - 1] - sum[i]);
+				interval[1][j].change(sum[i], f[i][j - 1] - sum[i] + p);
 			}
 		}
 		print(f[n][k]);
@@ -4892,7 +4892,13 @@ namespace p393 {
 
 		VI vis;
 		VI dfn; // dfn[i]:顶点i的dfs序
-		VI back; // back[i]:从点i出发能到达的最小的dfn
+		VI back; // back[i]:从点i或i的子孙出发能到达的最小的dfn
+		/*
+		在一棵dfs生成树中,点u是割点的充要条件是
+		1) 如果u是根,那么u至少有两个子女
+		2) 如果u不是根,那么它至少有一个孩子v,使得back[v] >= dfn[u]
+		这意味着当把u拿走后,以v为根的子树会被割开,此时以v为根的子树不能通过任何边连接到原树
+		*/
 		VI cnt; // cnt[i]:断开点i后能形成的连通分量的个数
 		int ts; // 当前序号
 
@@ -5070,6 +5076,12 @@ namespace p397 {
 		VI vis;
 		VI dfn; // dfn[i]:顶点i的dfs序
 		VI back; // back[i]:从点i出发能到达的最小的dfn
+		/*
+		在一棵dfs生成树中,边(u,v)的充要条件是
+		1) (u,v)是生成树的边
+		2) 对于u的一个孩子v,有dfn[u]<low[v]
+		这意味着当把边(u,v)拿走后,以v为根的子树会被割开,此时以v为根的子树不能通过任何边连接到原树
+		*/
 		int ts; // 当前序号
 
 		Graph() {
@@ -5118,7 +5130,7 @@ namespace p397 {
 	}
 }
 
-namespace p398_part1 {
+namespace p398q1 {
 
 	const int MAX_N = 1001,MAX_M = 1000001;
 
@@ -5265,13 +5277,13 @@ namespace p523 {
 			read(a[i]);
 	}
 
-	struct Segment
+	struct Interval
 	{
 		int l, r;
 		int sum; // 该线段维护的和
-		Segment* lc, * rc;
+		Interval* lc, * rc;
 
-		Segment(int l_, int r_) 
+		Interval(int l_, int r_) 
 		{
 			l = l_; r = r_;
 			sum = 0;
@@ -5280,8 +5292,8 @@ namespace p523 {
 				return;
 			}
 			int mid = (l + r) / 2;
-			lc = new Segment(l, mid);
-			rc = new Segment(mid+1, r);
+			lc = new Interval(l, mid);
+			rc = new Interval(mid+1, r);
 			update();
 		}
 		
@@ -5320,11 +5332,11 @@ namespace p523 {
 		rep(i, 0, n)
 			a[i] = lower_bound(all(b), a[i]) - b.begin() + 1;
 
-		Segment* seg = new Segment(1, b.size());
+		Interval* interval = new Interval(1, b.size());
 		LL ans = 0;
 		rep(i, 0, n) {
-			ans += seg->get_sum(a[i] + 1, b.size());
-			seg->add(a[i], 1);
+			ans += interval->get_sum(a[i] + 1, b.size());
+			interval->add(a[i], 1);
 		}
 		print(ans);
 	}
@@ -5335,13 +5347,13 @@ namespace p524 {
 
 	}
 
-	struct Segment
+	struct Interval
 	{
 		int l, r;
 		int sz, tag, sum; // 该线段维护的和
-		Segment* lc, * rc;
+		Interval* lc, * rc;
 
-		Segment(VI& a, int l_, int r_)
+		Interval(VI& a, int l_, int r_)
 		{
 			l = l_; r = r_;
 			tag = sum = 0;
@@ -5352,8 +5364,8 @@ namespace p524 {
 				return;
 			}
 			int mid = (l + r) / 2;
-			lc = new Segment(a, l, mid);
-			rc = new Segment(a, mid + 1, r);
+			lc = new Interval(a, l, mid);
+			rc = new Interval(a, mid + 1, r);
 			update();
 		}
 
@@ -5408,13 +5420,13 @@ namespace p524 {
 
 namespace p525_part1 {
 
-	struct Segment
+	struct Interval
 	{
 		int l, r;
 		int sz, tag, sum; // 该线段维护的和
-		Segment* lc, * rc;
+		Interval* lc, * rc;
 
-		Segment(VI &a, int l_, int r_)
+		Interval(VI &a, int l_, int r_)
 		{
 			l = l_; r = r_;
 			sz = tag = sum = 0;
@@ -5425,8 +5437,8 @@ namespace p525_part1 {
 				return;
 			}
 			int mid = (l + r) / 2;
-			lc = new Segment(a, l, mid);
-			rc = new Segment(a, mid + 1, r);
+			lc = new Interval(a, l, mid);
+			rc = new Interval(a, mid + 1, r);
 			update();
 		}
 
@@ -5491,13 +5503,13 @@ namespace p525_part2 {
 
 	const int INF = 1000000000;
 
-	struct Segment
+	struct Interval
 	{
 		int l, r;
 		int tag, minv; // 该线段维护的值
-		Segment* lc, * rc;
+		Interval* lc, * rc;
 
-		Segment(VI& a, int l_, int r_)
+		Interval(VI& a, int l_, int r_)
 		{
 			l = l_; r = r_;
 			tag = minv = 0;
@@ -5507,8 +5519,8 @@ namespace p525_part2 {
 				return;
 			}
 			int mid = (l + r) / 2;
-			lc = new Segment(a, l, mid);
-			rc = new Segment(a, mid + 1, r);
+			lc = new Interval(a, l, mid);
+			rc = new Interval(a, mid + 1, r);
 			update();
 		}
 
@@ -5569,13 +5581,13 @@ namespace p525_part3 {
 
 	const int INF = 1000000000;
 
-	struct Segment
+	struct Interval
 	{
 		int l, r;
 		int tag, minv, cnt; // 该线段维护的值
-		Segment* lc, * rc;
+		Interval* lc, * rc;
 
-		Segment(VI& a, int l_, int r_)
+		Interval(VI& a, int l_, int r_)
 		{
 			l = l_; r = r_;
 			tag = minv = 0;
@@ -5586,8 +5598,8 @@ namespace p525_part3 {
 				return;
 			}
 			int mid = (l + r) / 2;
-			lc = new Segment(a, l, mid);
-			rc = new Segment(a, mid + 1, r);
+			lc = new Interval(a, l, mid);
+			rc = new Interval(a, mid + 1, r);
 			update();
 		}
 
@@ -5657,208 +5669,1022 @@ namespace p525_part3 {
 	}
 }
 
-namespace p531 {
+namespace p532 {
 
-	//const int MAXN = 1000000;
+	const int MAXN = 1000000;
+	struct RECT { int x1, y1, x2, y2; };
+	int n;
+	RECT r[MAXN];
 
-	//typedef long long ll;
-	//typedef struct RECT
-	//{
-	//	int x1, y1, x2, y2; // 左下角和右上角坐标
-	//}RECT, * RECT_PTR;
+	void read_case() {
+		read(n);
+		for (int i = 1; i <= n; i++)
+			read(r[i].x1, r[i].y1, r[i].x2, r[i].y2);
+	}
 
-	//int n;
-	//RECT r[MAXN];
-	//void addx(int x);
-	//void addy(int y);
+	VI xbin, ybin;
 
-	//void read_case() {
-	//	scanf("%d\n", &n);
-	//	for (int i = 1; i <= n; i++)
-	//	{
-	//		scanf("%d %d %d %d\n", &r[i].x1, &r[i].y1, &r[i].x2, &r[i].y2);
-	//		addx(r[i].x1);
-	//		addx(r[i].x2);
-	//		addy(r[i].y1);
-	//		addy(r[i].y2);
-	//	}
-	//}
+	struct EVENT
+	{
+		int x1, x2, v;
+	};
+	typedef vector<EVENT> events;
+	vector<events> g;
 
-	//void preprocess();
-	//void build();
-	//ll scan();
+	void add_event(int y, int x1, int x2, int v)
+	{
+		g[y].push_back({ x1,x2,v });
+	}
 
-	//void solve() {
-	//	preprocess(); // 坐标离散化
-	//	build();
-	//	printf("%lld\n", scan());
-	//}
+	void preprocess() 
+	{
+		for (int i = 1; i <= n; i++) // 坐标离散化
+		{
+			xbin.push_back(r[i].x1);
+			xbin.push_back(r[i].x2);
+			ybin.push_back(r[i].y1);
+			ybin.push_back(r[i].y2);
+		}
 
+		sort_unique(xbin);
+		sort_unique(ybin);
 
-	//typedef struct EVENT
-	//{
-	//	int x1, x2, v, next;
-	//}EVENT;
+		g = vector<events>(ybin.size());
+		for (int i = 1; i <= n; i++) // 添加事件
+		{
+			int x1 = lower_bound(all(xbin), r[i].x1) - xbin.begin();
+			int x2 = lower_bound(all(xbin), r[i].x2) - xbin.begin();
+			int y1 = lower_bound(all(ybin), r[i].y1) - ybin.begin();
+			int y2 = lower_bound(all(ybin), r[i].y2) - ybin.begin();
+			if (x1 < x2)
+			{
+				add_event(y1, x1 + 1, x2, 1);
+				add_event(y2, x1 + 1, x2, -1);
+			}
+		}
+	}
 
-	//EVENT event[MAXN]; // 一个矩形有两个事件
-	//int link_e[MAXN], etot;
+	const int INF = 1000000000;
+	struct Interval // 区间修改,求区间最小值
+	{
+		int l, r;
+		int tag, len, minv; // 最小值的数量(即未被覆盖的线段长度),最小值
+		Interval* lc, * rc;
 
-	//void add_event(int y, int x1, int x2, int v)
-	//{
-	//	EVENT e;
-	//	e.x1 = x1;
-	//	e.x2 = x2;
-	//	e.v = v;
-	//	e.next = link_e[y];
-	//	event[++etot] = e;
-	//	link_e[y] = etot;
-	//}
+		Interval(int l_, int r_)
+		{
+			l = l_; r = r_;
+			tag = minv = 0;
+			lc = rc = NULL;
+			if (l == r) {
+				if (l_ - 1 >= 0)
+					len = xbin[r_] - xbin[l_-1]; // [i,j]表示点i-1到点j之间线段的实际长度
+				else
+					len = 0;
+				return;
+			}
+			int mid = (l + r) / 2;
+			lc = new Interval(l, mid);
+			rc = new Interval(mid + 1, r);
+			update();
+		}
 
-	//int xbin[MAXN], ybin[MAXN], xtot, ytot; // 有2N个点!
+		void update() // 合并节点信息
+		{
+			if (lc->minv == rc->minv) {
+				minv = lc->minv;
+				len = lc->len + rc->len;
+			}
+			else if (lc->minv < rc->minv) {
+				minv = lc->minv;
+				len = lc->len;
+			}
+			else {
+				minv = rc->minv;
+				len = rc->len;
+			}
+		}
 
-	//void addx(int x)
-	//{
-	//	xbin[++xtot] = x;
-	//}
-	//void addy(int y)
-	//{
-	//	ybin[++ytot] = y;
-	//}
-	//void preprocess()
-	//{
-	//	int lower_bound(int x, int v[], int left, int right);
-	//	void sort(int v[], int left, int right);
-	//	int unique(int v[], int left, int right);
+		void pass() // 标记下传
+		{
+			if (tag) {
+				lc->tag += tag;
+				lc->minv += tag;
+				rc->tag += tag;
+				rc->minv += tag;
+				tag = 0;
+			}
+		}
 
-	//	sort(xbin, 1, xtot);
-	//	sort(ybin, 1, ytot);
-	//	xtot = unique(xbin, 1, xtot);
-	//	ytot = unique(ybin, 1, ytot);
-	//	for (int i = 1; i <= n; i++)
-	//	{
-	//		r[i].x1 = lower_bound(r[i].x1, xbin, 1, xtot);
-	//		r[i].x2 = lower_bound(r[i].x2, xbin, 1, xtot);
-	//		r[i].y1 = lower_bound(r[i].y1, ybin, 1, ytot);
-	//		r[i].y2 = lower_bound(r[i].y2, ybin, 1, ytot);
-	//		if (r[i].x1 < r[i].x2)
-	//		{
-	//			add_event(r[i].y1, r[i].x1 + 1, r[i].x2, 1);
-	//			add_event(r[i].y2, r[i].x1 + 1, r[i].x2, -1);
-	//		}
-	//	}
-	//	xbin[0] = xbin[1];
-	//	ybin[0] = ybin[1];
-	//}
+		void add(int A, int B, int v)
+		{
+			if (l > B || r < A) // 该线段在[A,B]外
+				return;
+			if (l >= A && r <= B) // 该线段在[A,B]中
+			{
+				minv += v;
+				tag += v;
+				return;
+			}
+			pass();
+			lc->add(A, B, v);
+			rc->add(A, B, v);
+			update();
+		}
 
-	//typedef struct RANGE
-	//{
-	//	int l, r, tag, min;
-	//	ll len; // 未被实线覆盖的线段长度
-	//}RANGE;
+		int get_minv(int A, int B)
+		{
+			if (l > B || r < A) // 该线段在[A,B]外
+				return INF;
+			if (l >= A && r <= B) // 该线段在[A,B]中
+				return minv;
+			pass();
+			int minv1 = lc->get_minv(A, B);
+			int minv2 = rc->get_minv(A, B);
+			return min(minv1, minv2);
+		}
+	};
 
-	//RANGE range[4 * MAXN];
+	void solve() {
+		LL len, ans;
 
-	//#define ls 2*x
-	//#define rs 2*x+1
-	//#define l(x) range[x].l
-	//#define r(x) range[x].r
-	//#define tag(x) range[x].tag
-	//#define min(x) range[x].min
-	//#define len(x) range[x].len
+		preprocess();
+		Interval interval(0, xbin.size()-1);
+		
+		len = ans = 0;
+		rep(i,0,ybin.size())
+		{
+			len = interval.len; // 被覆盖的长度=总长-未被覆盖的长度
+			if (interval.minv > 0)
+				len = 0; // 全被覆盖
+			if(i>0)
+				ans += (ybin[i] - ybin[i - 1]) * (xbin[xbin.size()-1] - xbin[0] - len);
+			rep(j,0,g[i].size())
+				interval.add(g[i][j].x1, g[i][j].x2, g[i][j].v);
+		}
 
-	//void build()
-	//{
-	//	void build(int l, int r, int x);
-	//	build(1, xtot, 1);
-	//}
-	//ll scan()
-	//{
-	//	void change(int A, int B, int v, int l, int r, int x);
+		printf("%lld\n",ans);
+	}
+}
 
-	//	ll len, ans;
-	//	len = ans = 0;
-	//	for (int i = 1; i <= ytot; i++)
-	//	{
-	//		len = len(1);
-	//		if (min(1) > 0)
-	//			len = 0;
-	//		ans += (ybin[i] - ybin[i - 1]) * (xbin[xtot] - xbin[1] - len);
-	//		for (int j = link_e[i]; j; j = event[j].next)
-	//			change(event[j].x1, event[j].x2, event[j].v, 1, xtot, 1);
-	//	}
-	//	return ans;
-	//}
+namespace p533 {
 
-	//void build(int l, int r, int x)
-	//{
-	//	void maintain(int x);
-	//	l(x) = l; r(x) = r;
-	//	if (l == r)
-	//	{
-	//		len(x) = xbin[l] - xbin[l - 1];
-	//		return;
-	//	}
-	//	int mid = (l + r) >> 1;
-	//	build(l, mid, ls);
-	//	build(mid + 1, r, rs);
-	//	maintain(x);
-	//}
-	//void change(int A, int B, int v, int l, int r, int x)
-	//{
-	//	void down(int x);
-	//	void update(int x, int v);
-	//	void maintain(int x);
+	const int MAXN = 30010;
+	const int MAXQ = 100010;
 
-	//	if (A <= l && r <= B)
-	//	{
-	//		update(x, v);
-	//	}
-	//	else
-	//	{
-	//		down(x);
-	//		int mid = (l + r) >> 1;
-	//		if (A <= mid)
-	//			change(A, B, v, l, mid, ls);
-	//		if (mid + 1 <= B)
-	//			change(A, B, v, mid + 1, r, rs);
-	//		maintain(x);
-	//	}
-	//}
-	//void down(int x)
-	//{
-	//	void update(int x, int v);
-	//	if (tag(x) != 0)
-	//	{
-	//		update(ls, tag(x));
-	//		update(rs, tag(x));
-	//		tag(x) = 0;
-	//	}
-	//}
+	typedef long long ll;
 
-	//void update(int x, int v)
-	//{
-	//	min(x) += v;
-	//	tag(x) += v;
-	//}
-	//void maintain(int x)
-	//{
-	//	if (min(ls) == min(rs)) // 子区间的最小值相等,那么父区间的最小值数量就是两子区间中最小值的数量之和
-	//	{
-	//		min(x) = min(ls);
-	//		len(x) = len(ls) + len(rs);
-	//	}
-	//	else if (min(ls) < min(rs)) // 其他两种情况同理
-	//	{
-	//		min(x) = min(ls);
-	//		len(x) = len(ls);
-	//	}
-	//	else
-	//	{
-	//		min(x) = min(rs);
-	//		len(x) = len(rs);
-	//	}
-	//}
+	struct QUERY
+	{
+		int l, r, id;
+		bool operator<(const QUERY& r) { // 按l排序
+			return l < r.l;
+		}
+	};
 
+	struct S1
+	{
+		int i; // 在输入数列A中的索引
+		int v;
+		int left; // 在输入数列A中上一个相同数字的位置
+
+		bool operator<(const S1& r) { // 按left排序
+			return left < r.left;
+		}
+	};
+
+	int n, a[MAXN];
+	int q;
+	QUERY queries[MAXQ];
+
+	void read_case() {
+		read(n);
+		for (int i = 1; i <= n; i++)
+		{
+			read(a[i]);
+		}
+		read(q);
+		for (int i = 1; i <=  q; i++)
+		{
+			read(queries[i].l, queries[i].r);
+			queries[i].id = i;
+		}
+	}
+
+	int last[MAXN];
+	S1 A[MAXN]; // 是输入数列的拷贝,并按left进行了排序
+
+	void preprocess()
+	{
+		// 比如 a{3,8,4,7}
+		// 离散化后
+		// bin{3,4,7,8}
+		// a{1,4,2,3}
+
+		VI bin;
+		for (int i = 1; i <= n; i++) // 对a离散化,用于找到一个数字左侧第一个相同数字的位置
+			bin.push_back(a[i]);
+		sort_unique(bin);
+		for (int i = 1; i <= n; i++)
+			a[i] = lower_bound(all(bin), a[i]) - bin.begin(); // 保存数字在离散化后对应的id,范围是1~N
+
+		for (int i = 1; i <= n; i++)
+			last[i] = 0;
+		// 之后的处理均针对离散化后的值(从1~N的数列a)进行
+		for (int i = 1; i <= n; i++)
+		{
+			A[i].i = i;
+			A[i].v = bin[a[i]];
+			A[i].left = last[a[i]];
+			last[a[i]] = i;
+		}
+		sort(queries+1, queries+q+1);
+		sort(A+1, A+n+1);
+	}
+
+	struct Interval
+	{
+		int l, r;
+		int sum; // 区间和
+		Interval* lc, * rc;
+
+		Interval(int l_, int r_)
+		{
+			l = l_; r = r_;
+			sum = 0;
+			lc = rc = NULL;
+			if (l == r) {
+				return;
+			}
+			int mid = (l + r) / 2;
+			lc = new Interval(l, mid);
+			rc = new Interval(mid + 1, r);
+			update();
+		}
+
+		void update()
+		{
+			sum = lc->sum + rc->sum;
+		}
+
+		void add(int p, int v)
+		{
+			if (p<l || p>r) // p在该线段外
+				return;
+			if (p == l && p == r) // p在该线段中
+			{
+				sum += v;
+				return;
+			}
+			lc->add(p, v);
+			rc->add(p, v);
+			update();
+		}
+
+		int get_sum(int A, int B)
+		{
+			if (l > B || r < A) // 该线段在[A,B]外
+				return 0;
+			if (l >= A && r <= B) // 该线段在[A,B]中
+				return sum;
+			return (lc->get_sum(A, B) + rc->get_sum(A, B));
+		}
+	};
+
+	LL ans[MAXQ];
+	void solve()
+	{
+		preprocess();
+		Interval interval(1, n);
+		int j = 1;
+		for (int i = 1; i <= q; i++) // 对询问按左端点排序
+		{
+			while (j <= n && A[j].left < queries[i].l) // 如果一个数字的left不在这个区间内，意味着它在这个区间中第一次出现
+			{
+				interval.add(A[j].i, A[j].v);
+				j++;
+			}
+			ans[queries[i].id] = interval.get_sum(queries[i].l, queries[i].r);
+		}
+		for (int i = 1; i <= q; i++)
+			printf("%I64d\n", ans[i]);
+	}
+}
+
+namespace p534 {
+
+	const int MAXN = 200009;
+
+	int n, p[MAXN], v[MAXN];
+	int ans[MAXN];
+
+	void read_case() {
+		scanf("%d", &n);
+		for (int i = 1; i <= n; i++)
+			scanf("%d %d", &p[i], &v[i]);
+	}
+
+	struct Interval
+	{
+		int l, r;
+		int sum; // 区间和
+		Interval* lc, * rc;
+
+		Interval(int l_, int r_)
+		{
+			l = l_; r = r_;
+			sum = 0;
+			lc = rc = NULL;
+			if (l == r) {
+				sum = 1;
+				return;
+			}
+			int mid = (l + r) / 2;
+			lc = new Interval(l, mid);
+			rc = new Interval(mid + 1, r);
+			update();
+		}
+
+		void update()
+		{
+			sum = lc->sum + rc->sum;
+		}
+
+		int find(int k)
+		{
+			if (l == r)
+			{
+				sum = 0;
+				return (l); // 返回被修改位置.注意!这里是l不是1
+			}
+			int mid = (l + r) / 2, ret = 0;
+			if (k <= lc->sum) // 注意!这里是小于等于
+				ret = lc->find(k);
+			else if (k > lc->sum)
+				ret = rc->find(k - lc->sum);
+			update();
+			return ret;
+		}
+	};
+
+	void solve() {
+		Interval interval(1, n);
+		for (int i = n; i >= 1; i--)
+		{
+			int k = interval.find(p[i] + 1);
+			ans[k] = v[i];
+		}
+		for (int i = 1; i <= n; i++)
+			printf("%d ", ans[i]);
+		printf("\n");
+	}
+}
+
+namespace p535 {
+
+	const int MAXN = 50009;
+
+	int n, m;
+	stack<int> last_d;
+
+	struct Interval
+	{
+		int l, r;
+		int lmax, rmax; // 以左端点为终点的连续地道长度,以右端点为终点的连续地道长度
+		Interval* lc, * rc;
+
+		Interval(int l_, int r_)
+		{
+			l = l_; r = r_;
+			lmax = rmax = 1;
+			lc = rc = NULL;
+			if (l == r) {
+				lmax = rmax = 1;
+				return;
+			}
+			int mid = (l + r) / 2;
+			lc = new Interval(l, mid);
+			rc = new Interval(mid + 1, r);
+			update();
+		}
+
+		void update()
+		{
+			int mid = (l + r) / 2;
+			if (lc->lmax == mid - l + 1) // 如果左区间被地道覆盖...
+				lmax = lc->lmax + rc->lmax;
+			else
+				lmax = lc->lmax;
+			if (rc->rmax == r - mid)  // 如果右区间被地道覆盖,那么以右端点为终点的地道长度为
+								// 整个右区间加上以左区间右端点为终点的地道长度
+				rmax = rc->rmax + lc->rmax;
+			else
+				rmax = rc->rmax;
+		}
+
+		void change(int p, int v)
+		{
+			if (l == r)
+			{
+				lmax = rmax = v;
+				return;
+			}
+			int mid = (l + r) / 2;
+			if (p <= mid) // 注意!这里是小于等于
+				lc->change(p, v);
+			else
+				rc->change(p, v);
+			update();
+		}
+
+		int query(int k) {
+			if (l == r)
+				return lmax;
+			int mid = (l + r) / 2;
+			if (k <= mid)
+			{
+				if (mid - lc->rmax + 1 <= k) // 如果k在左区间的rmax内...
+					return lc->rmax + rc->lmax;
+				else
+					return lc->query(k);
+			}
+			else if (mid + 1 <= k)
+			{
+				if (k <= mid + rc->lmax) // 如果k在右区间的lmax内,同上
+					return lc->rmax + rc->lmax;
+				else
+					return rc->query(k);
+			}
+		}
+	};
+
+	void read_case() {
+		scanf("%d %d", &n, &m);
+	}
+
+	void solve() {
+		Interval interval(1, n);
+		int ans = 0;
+		for (int i = 1; i <= m; i++)
+		{
+			char op[2]; int p = 0;
+			scanf("%s", &op);
+			switch (op[0])
+			{
+			case 'Q': // 查询含第k段的最长地道
+				scanf("%d", &p);
+				ans = interval.query(p);
+				printf("%d\n", ans);
+				break;
+			case 'D': // 炸毁第k段地道
+				scanf("%d", &p);
+				interval.change(p, 0);
+				last_d.push(p);
+				break;
+			case 'R': // 修复上一段被炸的地道
+				interval.change(last_d.top(), 1);
+				last_d.pop();
+				break;
+			}
+		}
+	}
+}
+
+namespace p536 {
+
+	const int MAXQ = 100009;
+
+	const int INF = 100000000;
+	struct Graph {
+		struct Edge
+		{
+			int to, w;
+		};
+		typedef vector<Edge> Edges;
+		vector<Edges> G; int sz;
+		VI dist;
+
+		Graph() { sz = 0; }
+
+		void init(int n_) {
+			sz = n_;
+			G = vector<Edges>(sz + 1);
+		}
+		void add_edge(int u, int v, int w) {
+			G[u].push_back({ v,w });
+		}
+		void dijkstra(int u0) {
+			dist = VI(sz + 1, INF);
+			dist[u0] = 0;
+			set<PII> q;
+			rep(i, 1, sz + 1)
+				q.insert({ dist[i],i });
+
+			while (!q.empty())
+			{
+				int d = q.begin()->first;
+				int u = q.begin()->second;
+				q.erase(q.begin());
+				if (d > dist[u]) continue;
+				rep(i, 0, G[u].size())
+				{
+					Edge e = G[u][i];
+					if (d + e.w < dist[e.to])
+					{
+						dist[e.to] = d + e.w;
+						q.insert({ dist[e.to], e.to });
+					}
+				}
+			}
+		}
+	};
+
+	int n, m, s; // 初始n个点,m个询问,起点为s
+	int vtot;
+	Graph g;
+
+	struct Interval
+	{
+		int l, r, id;
+		Interval* lc, * rc;
+
+		Interval(int l_, int r_)
+		{
+			l = l_; r = r_;
+			lc = rc = NULL;
+			if (l == r) {
+				id = l; // 叶节点对应[1,n]
+				return;
+			}
+			vtot += 1;//非叶节点
+			id = vtot;
+			int mid = (l + r) / 2;
+			lc = new Interval(l, mid);
+			rc = new Interval(mid + 1, r);
+		}
+
+		void build(bool rev = false) { // 建图,rev表示是否反向连边
+			if (l == r)
+				return;
+			if (!rev) {
+				g.add_edge(id, lc->id, 0);
+				g.add_edge(id, rc->id, 0);
+			}
+			else {
+				g.add_edge(lc->id, id, 0);
+				g.add_edge(rc->id, id, 0);
+			}
+			lc->build(rev);
+			rc->build(rev);
+		}
+
+		void add_edge(int u, int A, int B, int w, bool rev = false) {
+			if (l >= A && r <= B) { // 在[A,B]中
+				if (!rev)
+					g.add_edge(u, id, w);
+				else
+					g.add_edge(id, u, w);
+			}
+			else if (r < A || l > B) // 与[A,B]不相交
+				return;
+			else {
+				lc->add_edge(u, A, B, w, rev);
+				rc->add_edge(u, A, B, w, rev);
+			}
+		}
+	};
+
+	void read_case() {
+		
+	}
+
+	void solve() {
+		scanf("%d %d %d", &n, &m, &s);
+
+		vtot = n;
+		Interval root(1, n), root1(1, n);
+		g.init(vtot);
+		root.build();
+		root1.build(true);
+
+		rep(i, 0, m) {
+			int op, a, b, c, d;
+			op = a = b = c = d = 0;
+			scanf("%d", &op);
+			switch (op) {
+			case 1: // v to v
+				scanf("%d %d %d", &a, &b, &c);
+				g.add_edge(a,b,c);
+				break;
+			case 2: // v to range
+				scanf("%d %d %d %d", &a, &b, &c, &d);
+				root.add_edge(a,b,c,d);
+				break;
+			case 3: // range to v
+				scanf("%d %d %d %d", &a, &b, &c, &d);
+				root1.add_edge(a, b, c, d, true);
+				break;
+			}
+		}
+		g.dijkstra(s);
+		rep(i, 1, n + 1)
+			print(g.dist[i]);
+	}
+}
+
+namespace p537 {
+	
+	const int MAXN = 100009;
+	int n, m;
+
+	void read_case() {
+
+	}
+
+	struct Graph { // 只是对图算法的简单封装,所以直接用全局变量
+		struct EDGE { int from, to; };
+		typedef vector<EDGE> edges;
+		vector<edges> g;
+		int ts; VI st, ed;
+		
+		Graph() { // 将要粘贴在solve开头封装在构造函数里
+			g = vector<edges>(n + 1);
+			ts = 0; st = ed = VI(n + 1);
+		}
+
+		void add_edge(int u, int v) {
+			g[u].push_back({ u,v });
+		}
+
+		void dfs(int u, int fa) {
+			st[u] = ++ts;
+			rep(i, 0, g[u].size())
+			{
+				EDGE& e = g[u][i];
+				if (e.to != fa)
+				{
+					dfs(e.to, u);
+				}
+			}
+			ed[u] = ts;
+		}
+	};
+	
+	struct Interval
+	{
+		int l, r;
+		int sum; // 该线段维护的和
+		Interval* lc, * rc;
+
+		Interval(int l_, int r_)
+		{
+			l = l_; r = r_;
+			sum = 0;
+			lc = rc = NULL;
+			if (l == r) {
+				sum = 1;
+				return;
+			}
+			int mid = (l + r) / 2;
+			lc = new Interval(l, mid);
+			rc = new Interval(mid + 1, r);
+			update();
+		}
+
+		void update()
+		{
+			sum = lc->sum + rc->sum;
+		}
+
+		void change(int p)
+		{
+			if (p<l || p>r) // p在该线段外
+				return;
+			if (p == l && p == r) // p在该线段中
+			{
+				if (sum == 1)
+					sum = 0;
+				else
+					sum = 1;
+				return;
+			}
+			lc->change(p);
+			rc->change(p);
+			update();
+		}
+
+		int get_sum(int A, int B)
+		{
+			if (l > B || r < A) // 该线段在[A,B]外
+				return 0;
+			if (l >= A && r <= B) // 该线段在[A,B]中
+				return sum;
+			return (lc->get_sum(A, B) + rc->get_sum(A, B));
+		}
+	};
+
+	void solve() {
+		scanf("%d", &n);
+
+		Graph g;
+
+		for (int i = 1; i <= n - 1; i++)
+		{
+			int u, v;
+			scanf("%d %d", &u, &v);
+			g.add_edge(u, v);
+			g.add_edge(v, u);
+		}
+		scanf("%d", &m);
+
+		g.dfs(1, 0);
+		Interval interval(1, g.ts);
+		for (int i = 1; i <= m; i++)
+		{
+			char op[2]; int p;
+			scanf("%s%d", &op, &p);
+			if (op[0] == 'Q')
+				printf("%d\n", interval.get_sum(g.st[p], g.ed[p]));
+			else if (op[0] == 'C')
+				interval.change(g.st[p]);
+		}
+	}
+}
+
+namespace p538 {
+
+	const int MAXN = 100009;
+	int n, m, t;//共有t种颜色
+
+	void read_case() {
+
+	}
+
+	struct Interval
+	{
+		int l, r;
+		int color, tag; // 该线段维护的和
+		Interval* lc, * rc;
+
+		Interval(int l_, int r_)
+		{
+			l = l_; r = r_;
+			color = tag = 0;
+			lc = rc = NULL;
+			if (l == r) {
+				color = 1;
+				tag = 0;
+				return;
+			}
+			int mid = (l + r) / 2;
+			lc = new Interval(l, mid);
+			rc = new Interval(mid + 1, r);
+			update();
+		}
+
+		void update()
+		{
+			color = lc->color | rc->color;
+		}
+
+		void pass() // 标记下传
+		{
+			if (tag) {
+				lc->tag = tag;
+				lc->color = tag;
+				rc->tag = tag;
+				rc->color = tag;
+				tag = 0;
+			}
+		}
+
+		void change(int A, int B, int v)
+		{
+			if (l > B || r < A) // 该线段在[A,B]外
+				return;
+			if (l >= A && r <= B) // 该线段在[A,B]中
+			{
+				color = v;
+				tag = v;
+				return;
+			}
+			pass();
+			lc->change(A, B, v);
+			rc->change(A, B, v);
+			update();
+		}
+
+		int query(int A, int B)
+		{
+			if (l > B || r < A) // 该线段在[A,B]外
+				return 0;
+			if (l >= A && r <= B) // 该线段在[A,B]中
+				return color;
+			pass();
+			return (lc->query(A, B) | rc->query(A, B));
+		}
+	};
+
+	int bitcount(unsigned int x)
+	{
+		int b;
+		for (b = 0; x != 0; x >>= 1)
+			if (x & 1)
+				b++;
+		return b;
+	}
+
+	void solve() {
+		scanf("%d %d %d", &n, &t, &m);
+		Interval interval(1, n);
+		for (int i = 1; i <= m; i++)
+		{
+			char op[2]; int a, b, c;
+			scanf("%s", &op);
+			if (op[0] == 'C')
+			{
+				scanf("%d %d %d", &a, &b, &c);
+				if (a > b)
+					swap(a, b);
+				interval.change(a, b, 1 << (c - 1));
+			}
+			else if (op[0] == 'P')
+			{
+				scanf("%d %d", &a, &b);
+				if (a > b)
+					swap(a, b);
+				int res = interval.query(a, b);
+				printf("%d\n", bitcount(res));
+			}
+		}
+	}
+}
+
+namespace p539 {
+
+	const int MAXN = 100009;
+	int n, m;
+	int a[MAXN];
+
+	struct Interval
+	{
+		int l, r;
+		LL mx, he;
+		Interval* lc, * rc;
+
+		Interval(int l_, int r_)
+		{
+			l = l_; r = r_;
+			mx = he = 0;
+			lc = rc = NULL;
+			if (l == r) {
+				mx = he = a[l];
+				return;
+			}
+			int mid = (l + r) / 2;
+			lc = new Interval(l, mid);
+			rc = new Interval(mid + 1, r);
+			update();
+		}
+
+		void update()
+		{
+			mx = max(lc->mx, rc->mx);
+			he = lc->he + rc->he;
+		}
+
+		LL query(int A, int B)
+		{
+			if (l > B || r < A) // 该线段在[A,B]外
+				return 0;
+			if (l >= A && r <= B) // 该线段在[A,B]中
+				return he;
+			return (lc->query(A, B) + rc->query(A, B));
+		}
+
+		void change(int A, int B)
+		{
+			if (l == r) {
+				he = sqrt(he);
+				mx = he;
+				return;
+			}
+			int mid = (l + r) / 2;
+			if (mid >= A && lc->mx > 1)
+				lc->change(A, B);
+			if (mid + 1 <= B && rc->mx > 1)
+				rc->change(A, B);
+			update();
+		}
+
+	};
+
+	void read_case() {
+
+	}
+	void solve() {
+		scanf("%d", &n);
+		for (int i = 1; i <= n; i++)
+		scanf("%d", &a[i]);
+		Interval interval(1, n);
+		scanf("%d", &m);
+		for (int i = 1; i <= m; i++)
+		{
+			int op, a, b;
+			scanf("%d", &op);
+			if (op == 0)
+			{
+				scanf("%d %d", &a, &b);
+				interval.change(a, b);
+			}
+			else if (op == 1)
+			{
+				scanf("%d %d", &a, &b);
+				printf("%lld\n", interval.query(a, b));
+			}
+		}
+	}
+}
+
+namespace p53A {
+
+	const int MAXN = 50009;
+
+	int n, m;
+	int a[MAXN];
+
+	void read_case() {
+
+	}
+
+	const int INF = 100000000;
+	struct S1 {
+		int he, lmax, rmax, f;
+	};
+
+	struct Interval
+	{
+		int l, r;
+		int he,lmax,rmax,f; // max:最大子段和 lmax:以左端点为起点的最大和 rmax:以右端点为终点的最大和
+		Interval* lc, * rc;
+
+		Interval(int l_, int r_)
+		{
+			l = l_; r = r_;
+			lc = rc = NULL;
+			if (l == r) {
+				he = lmax = rmax = f = a[l];
+				return;
+			}
+			int mid = (l + r) / 2;
+			lc = new Interval(l, mid);
+			rc = new Interval(mid + 1, r);
+			update();
+		}
+
+		S1 query(int A, int B)
+		{
+			if (l >= A && r <= B) {// 该线段在[A,B]中
+				return { he,lmax,rmax,f };
+			}
+			S1 res1, res2;
+			res1 = res2 = { 0,-INF,-INF,-INF };
+			int mid = (l + r) / 2;
+			if(mid >= A)
+				res1 = lc->query(A, B);
+			if(mid + 1 <= B)
+				res2 = rc->query(A, B);
+			S1 res;
+			res.he = res1.he + res2.he;
+			res.lmax = max(res1.lmax, res1.he + res2.lmax);
+			res.rmax = max(res2.rmax, res2.he + res1.rmax);
+			res.f = max(max(res1.f, res2.f), res1.rmax + res2.lmax);
+			return res;
+		}
+
+		void update()
+		{
+			lmax = max(lc->lmax, lc->he + rc->lmax);
+			rmax = max(rc->rmax, rc->he + lc->rmax);
+			f = max(max(lc->f, rc->f), lc->rmax + rc->lmax);
+			he = lc->he + rc->he;
+		}
+	};
+
+	void solve() {
+		scanf("%d", &n);
+		for (int i = 1; i <= n; i++)
+			scanf("%d", &a[i]);
+		Interval interval(1, n);
+		scanf("%d", &m);
+		for (int i = 1; i <= m; i++)
+		{
+			int a, b;
+			scanf("%d %d", &a, &b);
+			S1 s = interval.query(a, b);
+			printf("%d\n", s.f);
+		}
+	}
 }
 
 }

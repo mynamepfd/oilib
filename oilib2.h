@@ -607,179 +607,187 @@ namespace lib2 {
 	}
 
 	// 图算法 - 无向图的联通性 - POJ 2942. 圆桌武士
-	namespace p398_part1 {
+	namespace p398q1 {
 		void read_case();
 		void solve(); // WA
 	}
 
 	// 图算法 - 无向图的联通性 - HDU 3394. Railway
-	namespace p398_part2 {
+	namespace p398q2 {
 		// TODO
 	}
 
-	// 线段树和BIT - 线段树基础 - 单点修改,洛谷 P1908. 逆序对
+	// 线段树 - 线段树基础 - 单点加,洛谷 P1908. 逆序对
 	namespace p523 {
 		void read_case();
 		void solve();
 	}
 
-	// 线段树和BIT - 线段树基础 - 区间修改为v,求区间和
+	// 线段树 - 线段树基础 - 区间修改,求区间和
 	namespace p524 {
 		void read_case();
 		void solve();
 	}
 
-	// 线段树和BIT - 线段树基础 - 区间加上v,求区间和
+	// 线段树 - 线段树基础 - 区间加,求区间和
 	namespace p525_part1 {
 		void read_case();
 		void solve();
 	}
 
-	// 线段树和BIT - 线段树基础 - 区间加,求区间最小值
+	// 线段树 - 线段树基础 - 区间加,求区间最小值
 	namespace p525_part2 {
 		void read_case();
 		void solve();
 	}
 
-	// 线段树和BIT - 线段树基础 - 区间加,求区间最小值的重复次数
+	// 线段树 - 线段树基础 - 区间加,求区间最小值的重复次数
 	namespace p525_part3 {
 		void read_case();
 		void solve();
 	}
 
-	// 线段树和BIT - 线段树应用 - 扫描线法,洛谷 P5490. 矩形面积并
-	namespace p531 {
-		//void read_case();
-		//void solve();
+	// 线段树 - 线段树应用 - 扫描线法,洛谷 P5490. 矩形面积并
+	namespace p532 {
+		void read_case();
+		void solve();
 	}
 
-	// 线段树和BIT - 线段树应用 - 线段树解决离线询问,HDU 3333. Turning Tree
+	// 线段树 - 线段树应用 - 线段树解决离线询问,HDU 3333. Turning Tree
 	namespace p533 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
-	// 线段树和BIT - 线段树应用 - 线段树上二分,POJ 2828. Buy Tickets
+	// 线段树 - 线段树应用 - 线段树上二分,POJ 2828. Buy Tickets
 	namespace p534 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
-	// 线段树和BIT - 线段树应用 - 线段树上找答案,HDU 1540. Tunnel Warfare
+	// 线段树 - 线段树应用 - 线段树上找答案,HDU 1540. Tunnel Warfare
 	namespace p535 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
-	// 线段树和BIT - 线段树应用 - 线段树优化建图,CF 786B. Legacy
+	// 线段树 - 线段树应用 - 线段树优化建图,CF 786B. Legacy
 	namespace p536 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
-	// 线段树和BIT - 线段树应用 - 线段树维护树上信息,POJ 3321. Apple Tree
+	// 线段树 - 线段树应用 - 线段树维护树上信息,POJ 3321. Apple Tree
 	namespace p537 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
-	// 线段树和BIT - 线段树应用 - 线段树维护区间可合并信息,POJ 2777. Count Color
+	// 线段树 - 线段树应用 - 线段树维护区间可合并信息,POJ 2777. Count Color
 	namespace p538 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
-	// 线段树和BIT - 线段树应用 - 线段树维护区间不可合并信息,SPOJ GSS4
+	// 线段树 - 线段树应用 - 线段树维护区间不可合并信息,GSS4
 	namespace p539 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
-	// 线段树和BIT - 线段树应用 - 线段树维护最大子段和,SPOJ GSS1
-	namespace p5310 {
-		// TODO
+	// 线段树 - 线段树应用 - 线段树维护最大子段和,GSS1
+	namespace p53A {
+		void read_case();
+		void solve();
 	}
 
-	// 线段树和BIT - 线段树进阶 - 线段树的分裂与合并
+	// 线段树 - 线段树进阶 - 线段树的分裂与合并
 	namespace p541 {
 		// TODO
 	}
 
-	// 线段树和BIT - 线段树进阶 - 可持久化线段树
+	// 线段树 - 线段树进阶 - 可持久化线段树
 	namespace p542 {
 		// TODO
 	}
 
-	// 线段树和BIT - 线段树进阶 - 二维线段树与四分树
+	// 线段树 - 线段树进阶 - 二维线段树与四分树
 	namespace p543 {
 		// TODO
 	}
 
-	// 线段树和BIT - 线段树进阶 - POJ 2107. K-th Number
+	// 线段树 - 线段树进阶 - POJ 2107. K-th Number
 	namespace p544 {
 		// TODO
 	}
 
-	// 线段树和BIT - 线段树进阶 - HDU 5820. Lights
+	// 线段树 - 线段树进阶 - HDU 5820. Lights
 	namespace p546 {
 		// TODO
 	}
 
-	// 线段树和BIT - 线段树进阶 - CF 813E. Army Creation
+	// 线段树 - 线段树进阶 - CF 813E. Army Creation
 	namespace p547 {
 		// TODO
 	}
 
-	// 线段树和BIT - 线段树进阶 - CF 893F. Subtree Minimum Query
+	// 线段树 - 线段树进阶 - CF 893F. Subtree Minimum Query
 	namespace p548 {
 		// TODO
 	}
 
-	// 线段树和BIT - 线段树进阶 - CF 600E. Lomsat Gelral
+	// 线段树 - 线段树进阶 - CF 600E. Lomsat Gelral
 	namespace p549 {
 		// TODO
 	}
 
-	// 线段树和BIT - BIT应用 - POJ 2352. Stars
+	// BIT - BIT应用 - POJ 2352. Stars
 	namespace p561 {
 		// TODO
 	}
 
-	// 线段树和BIT - BIT应用 - HDU 2852. Kiki's K-number
+	// BIT - BIT应用 - HDU 2852. Kiki's K-number
 	namespace p562 {
 		// TODO
 	}
 
-	// 线段树和BIT - BIT应用 - POJ 3067. Japan
+	// BIT - BIT应用 - POJ 3067. Japan
 	namespace p563 {
 		// TODO
 	}
 
-	// 线段树和BIT - BIT应用 - CF 605D.
+	// BIT - BIT应用 - CF 605D.
 	namespace p564 {
 		// TODO
 	}
 
-	// 线段树和BIT - BIT应用 - CF 961E.
+	// BIT - BIT应用 - CF 961E.
 	namespace p565 {
 		// TODO
 	}
 
-	// 线段树和BIT - BIT应用 - CF 827C.
+	// BIT - BIT应用 - CF 827C.
 	namespace p566 {
 		// TODO
 	}
 
-	// 线段树和BIT - BIT应用 - CF 980E.
+	// BIT - BIT应用 - CF 980E.
 	namespace p567 {
 		// TODO
 	}
 
-	// 线段树和BIT - BIT应用 - BZOJ 3521.
+	// BIT - BIT应用 - BZOJ 3521.
 	namespace p568 {
 		// TODO
 	}
 
-	// 线段树和BIT - BIT应用 - CF 220E.
+	// BIT - BIT应用 - CF 220E.
 	namespace p569 {
 		// TODO
 	}
 
-	// 线段树和BIT - BIT应用 - CF 383C.
-	namespace p5610 {
+	// BIT - BIT应用 - CF 383C.
+	namespace p56A {
 		// TODO
 	}
 }

@@ -1,6 +1,7 @@
 #include "types.h"
 #include "oilib1.h"
 
+
 namespace lib1 {
 
 namespace p214q1 {
@@ -75,7 +76,7 @@ namespace p214q2 {
 	}
 }
 
-namespace p215 {
+namespace p215q1 {
 
 	const int INF = 0x3f3f3f3f;
 	const int MAXN = 100;
@@ -118,6 +119,198 @@ namespace p215 {
 	void solve() {
 		int res = bfs();
 		cout << res << endl;
+	}
+}
+
+namespace p216q1 {
+	void read_case() {
+
+	}
+
+	const int MAX_N = 10;
+	bool used[MAX_N];
+	int perm[MAX_N];
+
+	// 生成0,1,...,n-1的n!种排列
+	void permutation1(int pos, int n) {
+		if (pos == n) {
+			// 处理perm
+			return;
+		}
+		rep(i, 0, n) {
+			if (!used[i]) {
+				perm[pos] = i;
+				used[i] = true;
+				permutation1(pos + 1, n);
+				used[i] = false;
+			}
+			return;
+		}
+	}
+
+	int perm2[MAX_N];
+
+	void permutation2(int n) {
+		rep(i, 0, n)
+			perm2[i] = i;
+		do {
+			// 处理perm2
+		} while (next_permutation(perm2, perm2 + n));
+		return;
+	}
+
+	void solve() {
+
+	}
+}
+
+namespace p221q1 {
+	
+	const int V[6] = { 1,5,10,50,100,500 };
+
+	int C[6];
+	int A;
+
+	void read_case() {
+
+	}
+
+	void solve()
+	{
+		int ans = 0;
+		for (int i = 5; i > -1; i--) {
+			int t = min(A / V[i], C[i]);
+			A -= t * V[i];
+			ans += t;
+		}
+		cout << ans << endl;
+	}
+}
+
+namespace p222q1 {
+
+	const int MAX_N = 100000;
+	int N, S[MAX_N], T[MAX_N];
+	PII itv[MAX_N];
+
+	void read_case() {
+
+	}
+
+	void solve()
+	{
+		rep(i, 0, N) {
+			itv[i].first = T[i];
+			itv[i].second = S[i];
+		}
+		sort(itv, itv + N);
+		int ans = 0, t = 0;
+		rep(i, 0, N) {
+			if (itv[i].second > t) {
+				ans++;
+				t = itv[i].first;
+			}
+		}
+		cout << ans << endl;
+	}
+}
+
+namespace p223q1 {
+
+	const int MAX_N = 2000;
+	int n;
+	char s[MAX_N + 1];
+
+	void read_case() {
+
+	}
+
+	void solve()
+	{
+		int c = 0;
+		int a = 0, b = n - 1;
+		while (a <= b) {
+			bool left = false;
+			for (int i = 0; a + i <= b; i++) {
+				if (s[a + i] < s[b - i]) {
+					left = true;
+					break;
+				}
+				else if (s[a + i] > s[b - i]) {
+					left = false;
+					break;
+				}
+			}
+			if (left) putchar(s[a++]);
+			else putchar(s[b--]);
+			c++;
+			if (c > 0 && (c % 80 == 0))
+				putchar('\n');
+
+		}
+	}
+}
+
+namespace p224q1 {
+
+	const int MAX_N = 1000;
+	int N, R;
+	int X[MAX_N];
+
+	void read_case() {
+
+	}
+
+	void solve()
+	{
+		sort(X, X + N);
+		int i = 0, ans = 0;
+		while (i < N) {
+			int s = X[i++];
+			while (i < N && X[i] <= s + R) i++;
+			int p = X[i - 1];
+			while (i < N && X[i] <= p + R) i++;
+
+			ans++;
+		}
+
+		cout << ans << endl;
+	}
+}
+
+namespace p224q2 {
+	
+	const int MAX_N = 20000;
+	int N, L[MAX_N];
+
+	void read_case() {
+
+	}
+
+	void solve()
+	{
+		LL ans = 0;
+		while (N > 1) {
+			int i1 = 0, i2 = 1;
+			if (L[i1] > L[i2]) swap(i1, i2);
+			rep(i, 2, N) {
+				if (L[i] < L[i1]) {
+					i2 = i1;
+					i1 = i;
+				}
+				else if (L[i] < L[i2]) {
+					i2 = i;
+				}
+			}
+			int t = L[i1] + L[i2];
+			ans += t;
+			if (i1 == N - 1) swap(i1, i2);
+			L[i1] = t;
+			L[i2] = L[N - 1];
+			N--;
+		}
+
+		cout << ans << endl;
 	}
 }
 
@@ -387,17 +580,79 @@ namespace p233q2 {
 	}
 }
 
-namespace p244q1 {
+namespace p242q1 {
+
+	const int MAX_N = 20000;
+	int L, P, N;
+	int A[MAX_N + 1], B[MAX_N + 1];
 
 	void read_case() {
 
 	}
+	
+	void solve()
+	{
+		A[N] = L;
+		B[N] = 0;
+		N++;
 
-	int *par, *rank;
+		priority_queue<int> que;
+		int ans = 0, pos = 0, tank = P;
+		rep(i, 0, N) {
+			int d = A[i] - pos;
+			while (tank - d < 0) {
+				if (que.empty()) {
+					cout << -1 << endl;
+					return;
+				}
+				tank += que.top(); que.pop();
+				ans++;
+			}
+
+			tank -= d;
+			pos = A[i];
+			que.push(B[i]);
+		}
+
+		cout << ans << endl;
+	}
+}
+
+namespace p242q2 {
+
+	const int MAX_N = 10;
+	int N, L[MAX_N];
+	
+	void read_case() {
+
+	}
+
+	void solve()
+	{
+		LL ans = 0;
+
+		priority_queue<int, vector<int>, greater<int> > que;
+		rep(i, 0, N) que.push(L[i]);
+
+		while (que.size() > 1) {
+			int l1, l2;
+			l1 = que.top(); que.pop();
+			l2 = que.top(); que.pop();
+			ans += l1 + l2;
+			que.push(l1 + l2);
+		}
+
+		cout << ans << endl;
+	}
+
+}
+
+namespace p244q1 {
+
+	VI par, rank;
 
 	void init(int n) { 
-		par = new int[n + 1];
-		rank = new int[n + 1];
+		par = rank = VI(n + 1);
 		rep(i, 0, n) {
 			par[i] = i;
 			rank[i] = 0;
@@ -423,9 +678,13 @@ namespace p244q1 {
 		return find(u) == find(v); 
 	}
 
-	void solve() {
+	//void read_case() {
 
-	}
+	//}
+
+	//void solve() {
+
+	//}
 }
 
 namespace p244q2 {
@@ -519,10 +778,6 @@ namespace p254q1 {
 	int V, E;			//顶点数
 	VI d;
 
-	void read_case() {
-
-	}
-
 	void shortest_path(int s) {
 		d = VI(V);
 		rep(i, 0, V) d[i] = INF;
@@ -552,29 +807,57 @@ namespace p254q1 {
 		return false;
 	}
 
-	void solve() {
+	//void read_case() {
 
-	}
+	//}
+
+	//void solve() {
+
+	//}
 }
 
 namespace p254q2v1 {
 
-	// todo
+	const int INF = 100000000;
+	const int MAX_V = 10;
+	int cost[MAX_V][MAX_V];
+	int d[MAX_V];
+	bool used[MAX_V];
+	int V;
+
+	void dijkstra(int s) {
+		fill(d, d + V, INF);
+		fill(used, used + V, false);
+		d[s] = 0;
+		while (true) {
+			int v = -1;
+			rep(u, 0, V)
+				if (!used[u] && (v == -1 || d[u] < d[v])) v = u;
+			if (v == -1)break;
+			used[v] = true;
+			rep(u, 0, V)
+				d[u] = min(d[u], d[v] + cost[v][u]);
+		}
+	}
+
+	//void read_case() {
+
+	//}
+
+	//void solve() {
+
+	//}
 }
 
 namespace p254q2v2 {
 	
 	const int INF = 100000000;
-	const int MAX_V = 100;
+	const int MAX_V = 10;
 
 	struct edge { int to, cost; };
 	vector<edge> G[MAX_V];	//图
 	int V;			//顶点数
 	int d[MAX_V];
-
-	void read_case() {
-
-	}
 
 	void dijkstra(int s) {
 		priority_queue<PII, vector<PII>, greater<PII> > que;
@@ -595,22 +878,22 @@ namespace p254q2v2 {
 		}
 	}
 
-	void solve() {
+	//void read_case() {
 
-	}
+	//}
+
+	//void solve() {
+
+	//}
 }
 
 namespace p254q3 {
 
 	const int INF = 1000000000;
-	const int MAX_V = 1000;
+	const int MAX_V = 10;
 
 	int d[MAX_V][MAX_V];	//图
 	int V;			//顶点数
-
-	void read_case() {
-
-	}
 
 	void floyd(int s) {
 		rep(k, 0, V) 
@@ -619,15 +902,19 @@ namespace p254q3 {
 					d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
 	}
 
-	void solve() {
+	//void read_case() {
 
-	}
+	//}
+
+	//void solve() {
+
+	//}
 }
 
 namespace p254q4 {
 
 	const int INF = 1000000000;
-	const int MAX_V = 1;
+	const int MAX_V = 10;
 
 	int cost[MAX_V][MAX_V];
 	int d[MAX_V];
@@ -635,10 +922,6 @@ namespace p254q4 {
 	int V;
 
 	int pre[MAX_V];
-
-	void read_case() {
-
-	}
 
 	void dijkstra(int s)
 	{
@@ -666,24 +949,24 @@ namespace p254q4 {
 		return path;
 	}
 
-	void solve() {
+	//void read_case() {
 
-	}
+	//}
+
+	//void solve() {
+
+	//}
 }
 
 namespace p255q1 {
 
 	const int INF = 1000000000;
-	const int MAX_V = 100;
+	const int MAX_V = 10;
 	int cost[MAX_V][MAX_V], V;
 	int mincost[MAX_V];
 	bool used[MAX_V];
 
-	void read_case() {
-
-	}
-
-	int prim(int s) {
+	int prim() {
 		rep(i,
 			0, V) {
 			mincost[i] = INF;
@@ -704,9 +987,13 @@ namespace p255q1 {
 		return res;
 	}
 
-	void solve() {
+	//void read_case() {
 
-	}
+	//}
+
+	//void solve() {
+
+	//}
 }
 
 namespace p255q2 {
@@ -719,11 +1006,7 @@ namespace p255q2 {
 
 	bool comp(const edge& e1, const edge& e2) { return e1.cost < e2.cost; }
 
-	void read_case() {
-
-	}
-
-	int kruskal(int s) {
+	int kruskal() {
 		sort(es.begin(), es.begin() + E, comp);
 		init(V);
 		int res = 0;
@@ -737,8 +1020,134 @@ namespace p255q2 {
 		return res;
 	}
 
-	void solve() {
+	//void read_case() {
 
+	//}
+
+	//void solve() {
+
+	//}
+}
+
+namespace p256q1 {
+
+	const int MAXN = 5000;
+	const int INF = 1000000000; // 1e9
+	struct edge { int to, cost; };
+
+	int N, R;
+	vector<edge> G[MAXN];
+	int dist[MAXN];
+	int dist2[MAXN];
+
+	void read_case() {
+
+	}
+
+	void solve()
+	{
+		priority_queue<PII, vector<PII>, greater<PII> > que;
+		fill(dist, dist + N, INF);
+		fill(dist2, dist2 + N, INF);
+		dist[0] = 0;
+		que.push({0,0});
+		while (!que.empty()) {
+			PII p = que.top(); que.pop();
+			int v = p.second, d = p.first;
+			if (dist2[v] < d) continue;
+			rep(i, 0, G[v].size()) {
+				edge e = G[v][i];
+				int d2 = d + e.cost;
+				if (dist[e.to] > d2) {
+					swap(dist[e.to], d2);
+					que.push({ dist[e.to], e.to });
+				}
+				if (dist2[e.to] > d2 && dist[e.to] < d2) {
+					dist2[e.to] = d2;
+					que.push({ dist2[e.to], e.to });
+				}
+			}
+		}
+
+		cout << dist2[N - 1];
+	}
+}
+
+namespace p256q2 {
+
+	using namespace p255q2;
+
+	const int MAX_R = 10;
+	int N, M, R;
+	int x[MAX_R], y[MAX_R], d[MAX_R];
+
+	void read_case() {
+
+	}
+
+	void solve()
+	{
+		V = N + M;
+		E = R;
+		rep(i, 0, R)
+			es[i] = { x[i], N + y[i], -d[i] };
+
+		cout << 10000 * (N + M) + kruskal() << endl;
+	}
+}
+
+namespace p256q3 {
+
+	const int INF = 1000000000;
+	const int MAX_N = 1000;
+	const int MAX_ML = 10000;
+	const int MAX_MD = 10000;
+
+	int N, ML, MD;
+	int AL[MAX_ML], BL[MAX_ML], DL[MAX_ML];
+	int AD[MAX_MD], BD[MAX_MD], DD[MAX_MD];
+
+	void read_case() {
+
+	}
+
+	LL d[MAX_N];
+	bool updated;
+
+	void update(LL& x, LL y) {
+		if (x > y) {
+			x = y;
+			updated = true;
+		}
+	}
+
+	void bellman_ford()
+	{
+		rep(k, 0, N + 1) {
+			updated = false;
+			rep(i, 0, N - 1)
+				if (d[i + 1] < INF) update(d[i], d[i + 1]);
+			rep(i, 0, ML)
+				if (d[AL[i] - 1] < INF) update(d[BL[i] - 1], d[AL[i] - 1] + DL[i]);
+			rep(i, 0, MD)
+				if (d[BD[i] - 1] < INF) update(d[AD[i] - 1], d[BD[i] - 1] - DD[i]);
+		}
+	}
+
+	void solve()
+	{
+		fill(d, d + N, 0);
+		bellman_ford();
+		if (updated) {
+			cout << -1 << endl;
+			return;
+		}
+		fill(d, d + N, INF);
+		d[0] = 0;
+		bellman_ford();
+		LL res = d[N - 1];
+		if (res == INF) res = -2;
+		cout << res << endl;
 	}
 }
 
@@ -787,6 +1196,7 @@ namespace p262q1 {
 
 	}
 
+	// 素数判定
 	bool is_prime(int n) {
 		for (int i = 2; i * i <= n; i++)
 			if (n % i == 0) return false;
@@ -898,6 +1308,127 @@ namespace p264q1 {
 
 	void solve() {
 
+	}
+}
+
+// 初级 - GCJ - Minimum Scalar Product
+namespace p271q1 {
+
+	const int MAX_N = 800;
+	int n;
+	int v1[MAX_N], v2[MAX_N];
+
+	void read_case() {
+
+	}
+
+	void solve(int case_id)
+	{
+		sort(v1, v1 + n);
+		sort(v2, v2 + n);
+		LL ans = 0;
+		rep(i, 0, n) ans += (LL)v1[i] * v2[n - i - 1];
+		printf("Case #%d: %d\n", case_id, ans);
+	}
+}
+
+// 初级 - GCJ - Crazy Rows
+namespace p272q1 {
+
+	const int MAX_N = 40;
+	int N;
+	int M[MAX_N][MAX_N];
+	int a[MAX_N]; //a[i]表示第i行最后出现的1的位置
+
+	void read_case() {
+
+	}
+
+	void solve(int case_id)
+	{
+		int res = 0;
+		rep(i, 0, N) {
+			a[i] = -1;
+			rep(j, 0, N)
+				if (M[i][j] == 1) a[i] = j;
+		}
+		rep(i, 0, N) {
+			int pos = -1;
+			rep(j, i, N)
+				if (a[j] <= i) { pos = j; break; }
+			for (int j = pos; j > i; j--) {
+				swap(a[j], a[j - 1]);
+				res++;
+			}
+		}
+		printf("Case #%d: %d\n", case_id, res);
+	}
+}
+
+// 初级 - GCJ - Bribe the Prisoners
+namespace p273q1 {
+
+	const int INF = 1000000000;
+	const int MAX_Q = 100;
+	int P,Q,A[MAX_Q+2];
+	// dp[i][j]表示将区间(i,j)中的囚犯释放所需的最少花费
+	int dp[MAX_Q+1][MAX_Q+2];
+
+	void read_case() {
+
+	}
+
+	void solve() {
+		A[0] = 0;
+		A[Q + 1] = P + 1;
+		rep(q, 0, Q + 1)
+			dp[q][q + 1] = 0;
+		rep(w,2,Q+2)//阶段
+			for (int i = 0; i + w < Q + 2; i++) {
+				int j = i + w, t = INF;
+				rep(k, i + 1, j + 1)
+					t = min(t, dp[i][k] + dp[k][j]);
+				dp[i][j] = t + A[j] - A[i] - 2;
+			}
+		print(dp[0][Q + 1]);
+	}
+}
+
+// 初级 - GCJ - Millionaire
+namespace p274q1 {
+
+	const int MAX_M = 15;
+	int M;
+	double P;
+	int X;
+
+	double dp[2][(1 << MAX_M) + 1];
+
+	void read_case() {
+
+	}
+
+	void solve(int case_id)
+	{
+		int n = 1 << M;
+		double* prv = dp[0], * nxt = dp[1];
+		memset(prv, 0, sizeof(double) * (n + 1));
+		prv[n] = 1.0;
+		rep(r, 0, M) {
+			rep(i, 0, n + 1) {
+				int jub = min(i, n - i);
+				double t = 0;
+				rep(j, 0, jub + 1) {
+					t = max(t, P * prv[i + j] + (1 - P) * prv[i - j]);
+				}
+				nxt[i] = t;
+				//			cout << nxt[i] << " ";
+			}
+			//		cout << endl;
+			swap(prv, nxt);
+		}
+		int i = (LL)X * n / 1000000;
+		printf("Case #%d: %.6f\n", case_id, prv[i]);
 	}
 }
 
@@ -1502,7 +2033,6 @@ namespace p331q2 {
 
 namespace p332q1 {
 
-
 	const int MAX_N = 100;
 
 	void read_case() {
@@ -1521,16 +2051,14 @@ namespace p332q1 {
 
 namespace p332q2 {
 	
+	using namespace p332q1;
+
 	const int MAX_N = 100;
 	int n, a[MAX_N + 1];
 	
 	void read_case() {
 
 	}
-
-	int bit[MAX_N + 1];
-	LL sum(int i) { LL s = 0; while (i > 0) s += bit[i], i -= (i & -i); return s; }
-	void add(int i, int v) { while (i <= n) bit[i] += v, i += (i & -i); }
 
 	void solve() {
 		LL ans = 0;
@@ -2022,7 +2550,7 @@ namespace p351q1 {
 	vector<edges> G;
 	VI used;
 
-	void set_v(int V_) {
+	void init(int V_) {
 		G = vector<edges>(V_ + 1);
 		used = VI(V_ + 1);
 	}
@@ -2078,7 +2606,7 @@ namespace p352q1 {
 	vector<edges> G;
 	VI level, iter;
 
-	void set_v(int V_) {
+	void init(int V_) {
 		G = vector<edges>(V_ + 1);
 		level = iter = VI(V_ + 1);
 	}
@@ -2149,7 +2677,7 @@ namespace p353q1 {
 	vector<VI> G;
 	VI match, used;
 
-	void set_v(int V_) {
+	void init(int V_) {
 		V = V_;
 		G = vector<VI>(V + 1);
 		match = used = VI(V + 1);
@@ -2205,7 +2733,7 @@ namespace p356q1 {
 	vector<edges> G;
 	VI dist, prevv, preve;
 
-	void set_v(int V_) {
+	void init(int V_) {
 		V = V_;
 		G = vector<edges>(V+1);
 		dist = VI(V + 1);
@@ -2276,9 +2804,13 @@ namespace p357q1 {
 
 	using namespace p353q1;
 
+	void read_case() {
+
+	}
+
 	void solve()
 	{
-		set_v(N * 2);
+		init(N * 2);
 		rep(i, 0, K)
 			add_edge(R[i] - 1, N + C[i] - 1);
 		cout << biparite_matching() << endl;
@@ -2343,6 +2875,10 @@ namespace p357q2v2 {
 				}
 			}
 		}
+	}
+
+	void read_case() {
+
 	}
 
 	void solve()
@@ -2612,13 +3148,17 @@ namespace p361q1 {
 		return a + b;
 	}
 
-	P::P() {}
-	P::P(double x, double y) : x(x), y(y) {}
-	P P::operator+(P p) { return P(add(x, p.x), add(y, p.y)); }
-	P P::operator-(P p) { return P(add(x, -p.x), add(y, -p.y)); }
-	P P::operator*(double d) { return P(x * d, y * d); }
-	double P::dot(P p) { return add(x * p.x, y * p.y); } // 点积
-	double P::det(P p) { return add(x * p.y, -y * p.x); } // 叉积
+	struct P {
+		double x, y;
+		P() {}
+		P(double x, double y) : x(x), y(y) {}
+		P operator+(P p) { return P(add(x, p.x), add(y, p.y)); }
+		P operator-(P p) { return P(add(x, -p.x), add(y, -p.y)); }
+		P operator*(double d) { return P(x * d, y * d); }
+		double dot(P p) { return add(x * p.x, y * p.y); } // 点积
+		double det(P p) { return add(x * p.y, -y * p.x); } // 叉积
+	};
+	
 
 	// 判断点q是否在直线上
 	bool on_seg(P p1, P p2, P q) {
@@ -2863,7 +3403,10 @@ namespace p365q1 {
 }
 
 namespace p411q1 {
+
 	const double EPS = 1e-18;
+	typedef vector<double> vec;
+	typedef vector<vec> mat;
 
 	vec gauss_jordan(const mat& A, const vec& b) {
 		int n = A.size();
@@ -2892,6 +3435,14 @@ namespace p411q1 {
 		rep(i, 0, n) x[i] = B[i][n];
 		return x;
 	}
+
+	//void read_case() {
+
+	//}
+
+	//void solve() {
+
+	//}
 }
 
 namespace p412q1 {
@@ -2903,11 +3454,16 @@ namespace p412q1 {
 		extgcd(a, m, x, y);
 		return (m + x % m) % m;
 	}
+
+	//void read_case() {
+
+	//}
+
+	//void solve() {
+
+	//}
 }
 
-/*
-欧拉函数
-*/
 namespace p412q2 {
 	int euler_phi(int n) {
 		int res = n;
@@ -2921,6 +3477,7 @@ namespace p412q2 {
 		return res;
 	}
 
+	const int MAX_N = 100;
 	int euler[MAX_N];
 
 	void euler_phi2() {
@@ -2931,6 +3488,14 @@ namespace p412q2 {
 					euler[j] = euler[j] / i * (i - 1);
 		}
 	}
+
+	//void read_case() {
+
+	//}
+
+	//void solve() {
+
+	//}
 }
 
 namespace p412q3 {
@@ -2947,6 +3512,129 @@ namespace p412q3 {
 			m *= M[i] / d;
 		}
 		return make_pair(x % m, m);
+	}
+
+	//void read_case() {
+
+	//}
+
+	//void solve() {
+
+	//}
+}
+
+namespace p412q4 {
+	const int MAX_P = 10;
+	int fact[MAX_P];
+
+	// 求 n!≡a%(p^e)
+	int mod_fact(int n, int p, int& e) {
+		e = 0;
+		if (n == 0)return 1;
+		int res = mod_fact(n / p, p, e);
+		e += n / p;
+		if (n / p % 2 != 0) return res * (p - fact[n % p]) % p;
+		return res * fact[n % p] % p;
+	}
+
+	//void read_case();
+	//void solve();
+}
+
+namespace p412q5 {
+	using namespace p412q1;
+	using namespace p412q4;
+
+	int mod_comb(int n, int k, int p) {
+		if (n < 0 || k < 0 || n < k) return 0;
+		int e1, e2, e3;
+		int a1 = mod_fact(n, p, e1), a2 = mod_fact(k, p, e2), a3 = mod_fact(n - k, p, e3);
+		if (e1 > e2 + e3) return 0;
+		return a1 * mod_inverse(a2 * a3 % p, p) % p;
+	}
+
+	//void read_case();
+	//void solve();
+}
+
+namespace p413q1 {
+
+	using namespace p261q1;
+
+	const int MAX_M = 16;
+	int a[MAX_M];
+	int n, m;
+
+	void read_case() {
+		read(n, m);
+		rep(i, 0, m)
+			read(a[i]);
+	}
+
+	void solve() {
+		int res = 0;
+		rep(i, 1, 1 << m) {
+			int num = 0; // 算出i的二进制表示中1的数量
+			for (int j = i; j != 0; j >>= 1) num += j & 1;
+			LL lcm = 1;
+			rep(j, 0, m) {
+				if (i >> j & 1) {
+					lcm = lcm / gcd(lcm, a[j]) * a[j];
+					if (lcm > n) break;
+				}
+			}
+			if (num % 2 == 0) res -= n / lcm;
+			else res += n / lcm;
+		}
+		print(res);
+	}
+}
+
+namespace p413q2 {
+
+	using namespace p264q1;
+
+	// 以map形式返回n的约数的莫比乌斯函数值
+	map<int, int> moebius(int n) {
+		map<int, int> res;
+		VI primes;
+		for (int i = 2; i * i <= n; i++) {
+			if (n % i == 0) {
+				primes.push_back(i);
+				while (n % i == 0) n /= i;
+			}
+		}
+		if (n != 1) primes.push_back(n);
+
+		int m = primes.size();
+		rep(i, 0, 1 << m) {
+			int mu = 1, d = 1;
+			rep(j, 0, m) {
+				if (i >> j & 1) {
+					mu *= -1;
+					d *= primes[j];
+				}
+			}
+			res[d] = mu;
+		}
+		return res;
+	}
+
+	const int MOD = 10009;
+	int n;
+
+	void read_case() {
+		read(n);
+	}
+	void solve() {
+		int res = 0;
+		map<int, int> mu = moebius(n);
+		for (map<int, int>::iterator it = mu.begin(); it != mu.end(); it++) {
+			res += it->second * mod_pow(26, n / it->first, MOD);
+			res = (res % MOD + MOD) % MOD;
+		}
+
+		print(res);
 	}
 }
 
