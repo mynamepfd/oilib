@@ -6687,5 +6687,596 @@ namespace p53A {
 	}
 }
 
+namespace p544 {
+
+/*
+5 2
+25957 6405 15770 26287 26465
+2 2 1
+3 4 1
+*/
+	const int MAXN = 200009;
+	int n, m;
+	int a[MAXN];
+
+	void read_case() {
+	}
+
+	struct Interval // 可持久化线段树
+	{
+		int l, r;
+		int sum; // 插入到该区间的数字的个数
+		Interval* lc, * rc;
+
+		Interval(int l_, int r_) {
+			l = l_; r = r_; sum = 0;
+			lc = rc = NULL;
+		}
+
+		void build() {
+			if (l == r) {
+				return;
+			}
+			int mid = (l + r) / 2;
+			lc = new Interval(l, mid);
+			lc->build();
+			rc = new Interval(mid + 1, r);
+			rc->build();
+		}
+
+		Interval* insert(int v)
+		{
+			Interval* interval = new Interval(l, r);
+			interval->lc = lc;
+			interval->rc = rc;
+			interval->sum = sum + 1;
+			if (l == r)
+				return interval;
+			int mid = (l + r) / 2;
+			if (v <= mid)
+				interval->lc = lc->insert(v);
+			else
+				interval->rc = rc->insert(v);
+			return interval;
+		}
+
+		int query(int k, Interval* prev) {
+			if (l == r)
+				return l;
+			int s = lc->sum - prev->lc->sum, mid = (l + r) / 2;
+			if (k <= s)
+				return lc->query(k, prev->lc);
+			else
+				return rc->query(k - s, prev->rc);
+		}
+	};
+
+	void solve() {
+		int l, r, k;
+		scanf("%d %d", &n, &m);
+		for (int i = 1; i <= n; i++)
+			scanf("%d", &a[i]);
+		// 离散化数列a
+		VI nums;
+		rep(i, 1, n + 1)
+			nums.push_back(a[i]);
+		sort_unique(nums);
+		rep(i, 1, n + 1)
+			a[i] = lower_bound(all(nums), a[i]) - nums.begin() + 1; // 离散化后数字编号最小是1
+		// 建树
+		vector<Interval*> trees(n + 1);
+		trees[0] = new Interval(1, nums.size());
+		trees[0]->build();
+		rep(i, 1, n + 1)
+			trees[i] = trees[i-1]->insert(a[i]);
+		for (int i = 1; i <= m; i++)
+		{
+			scanf("%d %d %d", &l, &r, &k);
+			int idx = trees[r]->query(k, trees[l-1])-1;//因编号从1开始,所以这里要减1
+			printf("%d\n", nums[idx]);
+		}
+	}
+}
+
+namespace p621 {
+
+	// 计算 a^b % c
+	int pow(int a, int b, int c)
+	{
+		int ans = 1;
+		while (b)
+		{
+			if (b & 1) ans = 1LL * ans * a % c;
+			b >>= 1;
+			a = 1LL * a * a % c;
+		}
+		return ans;
+	}
+
+
+	void read_case() {
+
+	}
+	void solve() {
+
+	}
+}
+
+
+namespace p623 {
+
+	int n, k, M;
+
+	namespace matrix {
+
+		typedef std::vector<int> vec;
+		typedef std::vector<vec> Matrix;
+
+		Matrix operator+(const Matrix& a, const Matrix& b)
+		{
+			Matrix t(a.size(), vec(a[0].size()));
+			for (int i = 0; i < a.size(); i++)
+				for (int j = 0; j < a[0].size(); j++)
+					t[i][j] = (a[i][j] + b[i][j]) % M;
+			return t;
+		}
+		Matrix operator*(const Matrix& a, const Matrix& b)
+		{
+			Matrix t(a.size(), vec(b[0].size()));
+			for (int i = 0; i < a.size(); i++)
+				for (int j = 0; j < b[0].size(); j++)
+					for (int k = 0; k < b.size(); k++)
+						t[i][j] = (t[i][j] + a[i][k] * b[k][j]) % M;
+			return t;
+		}
+
+		Matrix pow(Matrix a, int b)
+		{
+			Matrix c(a.size(), vec(a.size()));
+			for (int i = 0; i < a.size(); i++)
+				c[i][i] = 1;
+			while (b)
+			{
+				if (b & 1)
+					c = c * a;
+				b >>= 1;
+				a = a * a;
+			}
+			return c;
+		}
+
+		void print(Matrix& m)
+		{
+			for (int i = 0; i < m.size(); i++)
+			{
+				for (int j = 0; j < m[0].size(); j++)
+					printf("%d ", m[i][j]);
+				printf("\n");
+			}
+		}
+	};
+
+	using namespace matrix;
+
+	void read_case() {
+		
+	}
+
+	Matrix calc(Matrix &a, int k) // 计算A + A^2 + ... + A^k
+	{
+		Matrix I(a.size(), vec(a.size()));
+		for (int i = 0; i < a.size(); i++)
+			I[i][i] = 1;
+
+		Matrix t;
+		if (k == 1)
+		{
+			t = a;
+			return t;
+		}
+		t = calc(a, k / 2) * (I + pow(a, k / 2));
+		if (k & 1)
+			t = t + pow(a, k);
+		return t;
+	}
+
+	void solve() {  
+		scanf("%d %d %d", &n, &k, &M);
+
+		Matrix a = Matrix(n, vec(n));
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < n; j++)
+				scanf("%d", &a[i][j]);
+
+		Matrix ans = calc(a, k);
+		print(ans);
+	}
+}
+
+namespace p624 {
+
+
+	const int M = 10000;
+
+	namespace matrix {
+
+		typedef std::vector<int> vec;
+		typedef std::vector<vec> Matrix;
+
+		Matrix operator*(const Matrix& a, const Matrix& b)
+		{
+			Matrix t(a.size(), vec(b[0].size()));
+			for (int i = 0; i < a.size(); i++)
+				for (int j = 0; j < b[0].size(); j++)
+					for (int k = 0; k < b.size(); k++)
+						t[i][j] = (t[i][j] + a[i][k] * b[k][j]) % M;
+			return t;
+		}
+
+		Matrix pow(Matrix a, int b)
+		{
+			Matrix c(a.size(), vec(a.size()));
+			for (int i = 0; i < a.size(); i++)
+				c[i][i] = 1;
+			while (b)
+			{
+				if (b & 1)
+					c = c * a;
+				b >>= 1;
+				a = a * a;
+			}
+			return c;
+		}
+	};
+
+	using namespace matrix;
+
+	void read_case() {
+
+	}
+
+	void solve() {
+
+		Matrix A(3, vec(3)), fib(3, vec(2));
+
+		A[1][1] = 1; A[1][2] = 1;
+		A[2][1] = 1; A[2][2] = 0;
+
+		fib[1][1] = 1;
+		fib[2][1] = 0;
+
+		while (1)
+		{
+			int k;
+			scanf("%d", &k);
+			if (k == -1)
+				break;
+			if (k == 0)
+				printf("0\n");
+			else if (k == 1)
+				printf("1\n");
+			else
+			{
+				Matrix t = pow(A, k - 1) * fib;
+				printf("%-4d\n", t[1][1]);
+			}
+		}
+	}
+}
+
+namespace p625 {
+
+	const int MAXN = 109;
+	int n, m, k;
+
+	namespace matrix {
+
+		typedef std::vector<LL> vec;
+		typedef std::vector<vec> Matrix;
+
+		void ident(Matrix &m)
+		{
+			for (int i = 1; i <= n; i++)
+				for (int j = 1; j <= n; j++)
+					if (i != j)
+						m[i][j] = 0;
+					else
+						m[i][j] = 1;
+		}
+
+		Matrix operator*(const Matrix& a, const Matrix& b)
+		{
+			Matrix t(a.size(), vec(b[0].size()));
+			for (int i = 0; i < a.size(); i++)
+				for (int j = 0; j < b[0].size(); j++)
+					for (int k = 0; k < b.size(); k++)
+						t[i][j] = (t[i][j] + a[i][k] * b[k][j]);
+			return t;
+		}
+
+		Matrix pow(Matrix& a, int b)
+		{
+			Matrix c(a.size(), vec(a.size()));
+			for (int i = 0; i < a.size(); i++)
+				c[i][i] = 1;
+			while (b)
+			{
+				if (b & 1)
+					c = c * a;
+				b >>= 1;
+				a = a * a;
+			}
+			return c;
+		}
+	};
+
+	using namespace matrix;
+
+	void read_case() {
+
+	}
+
+	Matrix op, cat;
+
+	void init()
+	{
+		op = Matrix(MAXN, vec(MAXN));
+		ident(op);
+		cat = Matrix(MAXN, vec(MAXN));
+		cat[n][1] = 1;
+	}
+
+	void give(int i)
+	{
+		op[i][n]++;
+	}
+
+	void eat(int i)
+	{
+		for (int j = 1; j <= n; j++)
+			op[i][j] = 0;
+	}
+
+	void swp(int i, int j)
+	{
+		LL t;
+		for (int k = 1; k <= n; k++)
+		{
+			t = op[i][k];
+			op[i][k] = op[j][k];
+			op[j][k] = t;
+		}
+	}
+
+	void apply_op()
+	{
+		Matrix t(MAXN, vec(MAXN));
+
+		for (int i = 1; i <= n; i++)
+			for (int k = 1; k <= n; k++)
+				t[i][1] = (t[i][1] + op[i][k] * cat[k][1]);
+
+		cat = t;
+	}
+
+	void execute() // 执行M次操作
+	{
+		op = pow(op, m);
+		apply_op();
+		for (int i = 1; i <= n - 1; i++)
+			printf("%lld ", cat[i][1]);
+		printf("\n");
+	}
+
+	void solve() {
+		char op;
+		int a, b;
+		while (1)
+		{
+			scanf("%d %d %d", &n, &m, &k);
+			if (n == 0 && m == 0 && k == 0)
+			{
+				break;
+			}
+			n++; // 加一维用于相加操作
+			init();
+			for (int i = 1; i <= k; i++) // 根据操作构建状态转移矩阵
+			{
+				scanf("\n%c", &op);
+				if (op == 'g') // 给第i只小猫一个花生
+				{
+					scanf("%d", &a);
+					give(a);
+				}
+				else if (op == 'e') // 让第i只小猫吃掉它的花生
+				{
+					scanf("%d", &a);
+					eat(a);
+				}
+				else if (op == 's') // 交换两只小猫手里的花生
+				{
+					scanf("%d %d", &a, &b);
+					swp(a, b);
+				}
+			}
+			execute(); // 执行这些操作M次
+		}
+	}
+}
+
+namespace p632 {
+
+	int gcd(int a, int b) {
+		if (b == 0) return a;
+		return gcd(b, a % b);
+	}
+
+	int extgcd(int a, int b, int& x, int& y) {
+		int d = a;
+		if (b != 0) {
+			d = extgcd(b, a % b, y, x);
+			y -= (a / b) * x;
+		}
+		else {
+			x = 1; y = 0;
+		}
+		return d;
+	}
+
+	void read_case() {
+
+	}
+
+	void solve() {
+
+	}
+}
+
+namespace p635 {
+
+	const int mod = 1e9 + 7;
+
+	int a[105];
+	int n, m;
+	VI ans;
+
+	void read_case() {
+
+	}
+
+	bool judge(int x)
+	{
+		int sum = 0;
+		for (int i = n; i >= 1; i--)
+		{
+			sum = (LL)(a[i] + sum) * x % mod;
+		}
+		sum = (sum + a[0]) % mod;
+		return !sum;
+	}
+
+	void solve() {
+		read(n, m);
+		for (int i = 0; i <= n; i++) read(a[i]);
+
+		for (int i = 1; i <= m; i++)
+			if (judge(i)) ans.push_back(i);
+
+		print(ans.size());
+		for (int i = 0; i < ans.size(); i++)
+			print(ans[i]);
+	}
+}
+
+namespace p643 {
+
+	void read_case() {
+
+	}
+
+	const int MAXN = 100001;
+	int miu[MAXN], acc[MAXN];
+
+	namespace bitset {
+		const int BITSPERWORD = 32;
+		const int SHIFT = 5; // the value of i>>SHIFT is i/32;
+		const int MASK = 0x1F;
+		typedef int BITSET[1 + MAXN / BITSPERWORD];
+		void set(BITSET a, int i) { a[i >> SHIFT] |= (1 << (i & MASK)); }
+		void clr(BITSET a, int i) { a[i >> SHIFT] &= ~(1 << (i & MASK)); }
+		int  tst(BITSET a, int i) { return a[i >> SHIFT] & (1 << (i & MASK)); }
+	}
+	
+	using namespace bitset;
+
+	int prime[MAXN], tot;
+	BITSET bs;
+
+	void sieve(int n)
+	{
+		miu[1] = 1;
+		for (int k = 2; k <= n; k++)
+		{
+			if (!tst(bs, k))
+			{
+				prime[++tot] = k;
+				miu[k] = -1;
+			}
+			for (int i = 1; i <= tot; i++)
+			{
+				int p = prime[i];
+				if (k * p > n)
+					break;
+				set(bs, k * p);
+				if (k % p == 0)
+				{
+					miu[k * p] = 0;
+					break;
+				}
+				else
+				{
+					miu[k * p] = miu[k] * -1;
+				}
+			}
+		}
+	}
+
+	LL count(int n, int m)
+	{
+		if (n > m)
+			swap(n, m);
+
+		LL c1 = 0, c2 = 0;
+		for (int p = 1; p <= n;)
+		{
+			int t1 = n / p, t2 = m / p;
+			if (t1 == t2) // n和m/[p,q]的值均为t
+			{
+				int q = n / t1;
+				c1 += 1LL * (acc[q] - acc[p - 1]) * (n / p) * (m / p);
+				p = q + 1;
+			}
+			else
+			{
+				c1 += 1LL * miu[p] * (n / p) * (m / p);
+				p++;
+			}
+		}
+		for (int p = 1; p <= n;) // 这里相当于统计1<=x,y<=n中互素的数对.(a,b)和(b,a)视作不同的.
+		{
+			int t = n / p;
+			int q = n / t;
+			c2 += 1LL * (acc[q] - acc[p - 1]) * (n / p) * (n / p);
+			p = q + 1;
+		}
+		c1 -= (c2 / 2);
+
+		return c1;
+	}
+
+	void solve() {
+		int tc;
+
+		sieve(100000);
+		for (int i = 1; i <= 100000; i++)
+			acc[i] = acc[i - 1] + miu[i];
+
+		scanf("%d", &tc);
+		for (int i = 1; i <= tc; i++)
+		{
+			int a, b, c, d, k;
+			scanf("%d%d%d%d%d", &a, &b, &c, &d, &k);
+			if (b != 0 && d != 0 && k != 0)
+			{
+				LL c1 = count(b / k, d / k);
+				printf("Case %d: %lld\n", i, c1);
+			}
+			else
+				printf("Case %d: 0\n", i);
+		}
+
+	}
+}
+
 }
 

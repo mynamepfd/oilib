@@ -718,7 +718,8 @@ namespace lib2 {
 
 	// 线段树 - 线段树进阶 - POJ 2107. K-th Number
 	namespace p544 {
-		// TODO
+		void read_case();
+		void solve();
 	}
 
 	// 线段树 - 线段树进阶 - HDU 5820. Lights
@@ -789,5 +790,62 @@ namespace lib2 {
 	// BIT - BIT应用 - CF 383C.
 	namespace p56A {
 		// TODO
+	}
+
+	// 数学 - 快速幂 - 快速幂
+	namespace p621 {
+		void read_case();
+		void solve();
+	}
+
+	// 数学 - 快速幂 - 矩阵幂 - POJ 3233. Matrix Power Series
+	namespace p623 {
+		void read_case();
+		void solve();
+	}
+
+	// 数学 - 快速幂 - 矩阵幂优化递推 - POJ 3070. Fibonacci
+	namespace p624 {
+		void read_case();
+		void solve();
+	}
+
+	// 数学 - 快速幂 - POJ 3735. Training Little Cat
+	namespace p625 {
+		void read_case();
+		void solve();
+	}
+
+	// 数学 - 快速幂 - POJ 3150. 元胞自动机
+	namespace p626 {
+		// TODO
+	}
+
+	// 数学 - 同余 - 欧几里得算法
+	namespace p632 {
+		void read_case();
+		void solve();
+	}
+
+	// 数学 - 同余 - 多项式同余方程 - 洛谷 P2312. 解方程
+	namespace p635 {
+		void read_case();
+		void solve();
+	}
+
+	// 数学 - 同余 - 古代猪文
+	namespace p636 {
+		// TODO
+	}
+
+	// 数学 - 质数和积性函数 - 线性筛
+	namespace p642 {
+		// TODO
+	}
+
+	// 数学 - 质数和积性函数 - HDU 1695. GCD
+	namespace p643 {
+		void read_case();
+		void solve();
 	}
 }
